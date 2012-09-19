@@ -50,7 +50,7 @@
 
 (setq my-packages (append '(el-get switch-window yasnippet 
 				   ruby-compilation ruby-electric ruby-end
-				   ruby-mode ri ri-emacs
+				   ruby-mode ri ri-emacs flymake-ruby
 				   auto-complete auto-complete-emacs-lisp auto-complete-yasnippet
 				   ) 
 			  (mapcar 'el-get-source-name el-get-sources)))

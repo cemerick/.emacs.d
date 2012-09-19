@@ -24,8 +24,8 @@
 
 ;; choose your own fonts, in a system dependant way
 (if (string-match "apple-darwin" system-configuration) 
-    (set-face-font 'default "Monaco-13") 
-  (set-face-font 'default "Monospace-10"))
+    (set-face-font 'default "Monaco-13"))
+
 
 ;; El-get installation routine
 
@@ -42,10 +42,12 @@
 
 ;; El-get distributed setup
 ;; local sources
-(setq el-get-sources '((:name magit 
+(if (not (string-match "netbsd" system-configuration)) 
+    (setq el-get-sources '((:name magit 
 			      :after (global-set-key (kbd "C-x C-z") 'magit-status))
 		       (:name elisp-format)
-))
+)))
+
 (setq my-packages (append '(el-get switch-window yasnippet ruby-compilation ruby-electric ruby-end
 				   ruby-mode ruby-test ruby-test-mode) 
 			  (mapcar 'el-get-source-name el-get-sources)))

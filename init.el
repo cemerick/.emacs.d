@@ -48,7 +48,10 @@
 		       (:name elisp-format)
 )))
 
-(setq my-packages (append '(el-get switch-window yasnippet ruby-compilation ruby-electric ruby-end
-				   ruby-mode ruby-test ruby-test-mode) 
+(setq my-packages (append '(el-get switch-window yasnippet 
+				   ruby-compilation ruby-electric ruby-end
+				   ruby-mode ruby-test ruby-test-mode
+				   auto-complete auto-complete-emacs-lisp auto-complete-yasnippet
+				   ) 
 			  (mapcar 'el-get-source-name el-get-sources)))
 (el-get 'sync my-packages)

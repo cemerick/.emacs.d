@@ -1,3 +1,6 @@
+;; load theme
+(load-theme 'tango-dark t)
+
 ;;disable menu bar
 (menu-bar-mode 0)
 
@@ -49,8 +52,7 @@
 )))
 
 (setq my-packages (append '(el-get switch-window yasnippet 
-				   ruby-compilation ruby-end
-				   ruby-mode ri ri-emacs flymake-ruby
+				   ruby-compilation ruby-end ruby-mode
 				   auto-complete auto-complete-emacs-lisp auto-complete-yasnippet
 				   ) 
 			  (mapcar 'el-get-source-name el-get-sources)))

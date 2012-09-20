@@ -44,8 +44,8 @@
 ;; local sources
 (if (not (string-match "netbsd" system-configuration)) 
     (setq el-get-sources '((:name magit 
-			      :after (global-set-key (kbd "C-x C-z") 'magit-status))
-		       (:name elisp-format)
+			      :after (global-set-key (kbd "C-x C-o") 'magit-status))
+		       (:name elisp-format :features elisp-format)
 )))
 
 (setq my-packages (append '(el-get switch-window yasnippet 

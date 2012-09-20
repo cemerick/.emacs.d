@@ -49,7 +49,7 @@
 )))
 
 (setq my-packages (append '(el-get switch-window yasnippet 
-				   ruby-compilation ruby-electric ruby-end
+				   ruby-compilation ruby-end
 				   ruby-mode ri ri-emacs flymake-ruby
 				   auto-complete auto-complete-emacs-lisp auto-complete-yasnippet
 				   ) 

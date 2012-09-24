@@ -8,6 +8,9 @@
 (require 'recentf) 
 (recentf-mode 1)
 
+;; Winner mode
+(winner-mode 1)
+
 ;; Enable ido
 (setq ido-enable-flex-matching t) 
 (setq ido-everywhere t) 

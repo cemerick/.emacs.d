@@ -28,10 +28,6 @@
       (message "Opening file...") 
     (message "Aborting")))
 
-;; choose your own fonts, in a system dependant way
-(if (string-match "apple-darwin" system-configuration) 
-    (set-face-font 'default "Monaco-13"))
-
 
 ;; El-get installation routine
 

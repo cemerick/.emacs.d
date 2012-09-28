@@ -50,7 +50,7 @@
 			   (:name elisp-format 
 				  :features elisp-format))))
 
-(setq my-packages (append '(el-get switch-window yasnippet ruby-compilation ruby-end ruby-mode
+(setq my-packages (append '(el-get ack switch-window yasnippet ruby-compilation ruby-end ruby-mode
 				   auto-complete auto-complete-emacs-lisp auto-complete-yasnippet
 				   anything anything-rcodetools) 
 			  (mapcar 'el-get-source-name el-get-sources)))

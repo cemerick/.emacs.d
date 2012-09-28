@@ -5,15 +5,15 @@
 (menu-bar-mode 0)
 
 ;; Recent file list
-(require 'recentf) 
+(require 'recentf)
 (recentf-mode 1)
 
 ;; Winner mode
 (winner-mode 1)
 
 ;; Enable ido
-(setq ido-enable-flex-matching t) 
-(setq ido-everywhere t) 
+(setq ido-enable-flex-matching t)
+(setq ido-everywhere t)
 (ido-mode 1)
 
 ;; get rid of `find-file-read-only' and replace it with something
@@ -46,14 +46,21 @@
 ;; local sources
 (if (not (string-match "netbsd" system-configuration)) 
     (setq el-get-sources '((:name magit 
-			      :after (global-set-key (kbd "C-x C-o") 'magit-status))
-		       (:name elisp-format :features elisp-format)
-)))
+				  :after (global-set-key (kbd "C-x C-o") 'magit-status)) 
+			   (:name elisp-format 
+				  :features elisp-format))))
 
-(setq my-packages (append '(el-get switch-window yasnippet 
-				   ruby-compilation ruby-end ruby-mode
+(setq my-packages (append '(el-get switch-window yasnippet ruby-compilation ruby-end ruby-mode
 				   auto-complete auto-complete-emacs-lisp auto-complete-yasnippet
-				   anything anything-rcodetools
-				   ) 
+				   anything anything-rcodetools) 
 			  (mapcar 'el-get-source-name el-get-sources)))
 (el-get 'sync my-packages)
+;; El-get custom cleanup function
+(defun el-get-cleanup (list)
+  "Remove installed packages not explicitly declared"
+  (setq packages-with-dependencies (el-get-dependencies (mapcar 'el-get-as-symbol list)))
+  (setq packages-to-be-removed (set-difference (mapcar 'el-get-as-symbol
+						       (el-get-list-package-names-with-status
+							"installed")) packages-with-dependencies))
+  (mapcar 'el-get-remove packages-to-be-removed))
+(el-get-cleanup my-packages)

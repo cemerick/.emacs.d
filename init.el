@@ -49,19 +49,11 @@
 			   (:name elisp-format 
 				  :features elisp-format))))
 
+;; canonical list
 (setq my-packages (append '(el-get ack switch-window yasnippet ruby-compilation ruby-end ruby-mode
 				   auto-complete auto-complete-emacs-lisp auto-complete-yasnippet
 				   anything anything-rcodetools emacs-w3m) 
 			  (mapcar 'el-get-source-name el-get-sources)))
 
-
-;; El-get cleanup function
-(defun el-get-cleanup (packages) 
-  "Removes packages absent in the list argument function 'packages. Useful, for example, when we want to remove all packages not explicitly declared in the emacs init file." 
-  (let* ((packages-to-keep (el-get-dependencies (mapcar 'el-get-as-symbol packages))) 
-	 (packages-to-remove (set-difference (mapcar 'el-get-as-symbol
-						     (el-get-list-package-names-with-status
-						      "installed")) packages-to-keep))) 
-    (mapc 'el-get-remove packages-to-remove)))
 (el-get-cleanup my-packages)
 (el-get 'sync my-packages)

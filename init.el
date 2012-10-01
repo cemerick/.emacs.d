@@ -40,7 +40,6 @@
 		  (let (el-get-master-branch)
 		  (goto-char (point-max)) 
 		  (eval-print-last-sexp)))))
-(el-get 'sync)
 
 ;; El-get distributed setup
 ;; local sources
@@ -54,7 +53,7 @@
 				   auto-complete auto-complete-emacs-lisp auto-complete-yasnippet
 				   anything anything-rcodetools emacs-w3m) 
 			  (mapcar 'el-get-source-name el-get-sources)))
-(el-get 'sync my-packages)
+
 
 ;; El-get cleanup function
 (defun el-get-cleanup (packages) 
@@ -65,3 +64,4 @@
 						      "installed")) packages-to-keep))) 
     (mapc 'el-get-remove packages-to-remove)))
 (el-get-cleanup my-packages)
+(el-get 'sync my-packages)

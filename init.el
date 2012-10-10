@@ -28,6 +28,14 @@
       (message "Opening file...") 
     (message "Aborting")))
 
+;; enable windmove
+ (when (fboundp 'windmove-default-keybindings)
+      (windmove-default-keybindings))
+;;fix the bug that shift-up doesn't send the right escape sequence in term
+(if (equal "xterm-256color" (tty-type)) (define-key input-decode-map "\e[1;2A" [S-up]))
+
+;; turn visual mode for text files
+(add-hook 'text-mode-hook 'turn-on-visual-line-mode)
 
 ;; El-get installation routine
 
@@ -50,7 +58,7 @@
 				  :features elisp-format))))
 
 ;; canonical list
-(setq my-packages (append '(el-get ack switch-window yasnippet ruby-compilation ruby-end ruby-mode
+(setq my-packages (append '(el-get ack yasnippet ruby-compilation ruby-end ruby-mode
 				   auto-complete auto-complete-emacs-lisp auto-complete-yasnippet
 				   anything anything-rcodetools emacs-w3m yaml-mode) 
 			  (mapcar 'el-get-source-name el-get-sources)))

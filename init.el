@@ -1,6 +1,12 @@
 ;; load theme
 (load-theme 'tango-dark t)
 
+;; utf-8
+(prefer-coding-system 'utf-8)
+(set-default-coding-systems 'utf-8)
+(set-terminal-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
+
 ;;disable menu bar
 (menu-bar-mode 0)
 
@@ -28,12 +34,24 @@
       (message "Opening file...") 
     (message "Aborting")))
 
+;;fix the bug that shift-up doesn't send the right escape sequence in terminal
+(if (equal "xterm-256color" (tty-type)) (define-key input-decode-map "\e[1;2A" [S-up]))
+;; to make windmove work in tmux
+(if (equal "screen-256color" (tty-type)) 
+    (progn
+    (define-key input-decode-map "\e[1;2D" [S-left])  
+    (define-key input-decode-map (kbd "M-[ 1 ; 2 C") [S-right])  
+    (define-key input-decode-map (kbd "M-[ 1 ; 2 B")[S-down])  
+    (define-key input-decode-map "\e[1;2A" [S-up])  
+    (define-key input-decode-map "\e[1;6A" [S-C-up])
+    (define-key input-decode-map "\e[1;6B" [S-C-down])
+    )
+)
+
+
 ;; enable windmove
  (when (fboundp 'windmove-default-keybindings)
       (windmove-default-keybindings))
-
-;;fix the bug that shift-up doesn't send the right escape sequence in term
-(if (equal "xterm-256color" (tty-type)) (define-key input-decode-map "\e[1;2A" [S-up]))
 
 ;; turn visual mode for text files
 (add-hook 'text-mode-hook 'turn-on-visual-line-mode)
@@ -66,3 +84,5 @@
 
 (el-get-cleanup my-packages)
 (el-get 'sync my-packages)
+
+

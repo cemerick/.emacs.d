@@ -79,7 +79,9 @@
 ;; canonical list
 (setq my-packages (append '(el-get ack yasnippet ruby-compilation ruby-end ruby-mode
 				   auto-complete auto-complete-emacs-lisp auto-complete-yasnippet
-				   anything anything-rcodetools emacs-w3m yaml-mode windcycle) 
+				   anything anything-rcodetools emacs-w3m yaml-mode windcycle
+				   go-mode
+				   ) 
 			  (mapcar 'el-get-source-name el-get-sources)))
 
 (el-get-cleanup my-packages)

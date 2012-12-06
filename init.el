@@ -81,10 +81,9 @@
 				   auto-complete auto-complete-emacs-lisp auto-complete-yasnippet
 				   anything anything-rcodetools emacs-w3m yaml-mode windcycle
 				   go-mode coffee-mode markdown-mode less-css-mode
+				   clojure-mode nrepl paredit
 				   ) 
 			  (mapcar 'el-get-source-name el-get-sources)))
 
 (el-get-cleanup my-packages)
 (el-get 'sync my-packages)
-
-

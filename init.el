@@ -77,7 +77,7 @@
 				  :features elisp-format))))
 
 ;; canonical list
-(setq my-packages (append '(el-get ack yasnippet ruby-compilation ruby-end ruby-mode
+(setq my-packages (append '(el-get ack yasnippet ruby-compilation Enhanced-Ruby-Mode
 				   auto-complete auto-complete-emacs-lisp auto-complete-yasnippet
 				   anything anything-rcodetools emacs-w3m yaml-mode windcycle
 				   go-mode coffee-mode markdown-mode less-css-mode
@@ -87,3 +87,4 @@
 
 (el-get-cleanup my-packages)
 (el-get 'sync my-packages)
+(add-hook 'clojure-mode-hook (lambda () (paredit-mode +1)))

@@ -7,6 +7,11 @@
 (set-terminal-coding-system 'utf-8)
 (set-keyboard-coding-system 'utf-8)
 
+;; tabs
+(setq tab-width 2)
+(setq tab-stop-list (number-sequence 2 200 2))
+(setq indent-tabs-mode nil)
+
 ;;disable menu bar
 (menu-bar-mode 0)
 

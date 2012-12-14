@@ -61,6 +61,11 @@
 ;; turn visual mode for text files
 (add-hook 'text-mode-hook 'turn-on-visual-line-mode)
 
+;; recognize rake as ruby
+(add-to-list 'auto-mode-alist '("\\.rake$" . ruby-mode))
+(add-to-list 'auto-mode-alist '("Rakefile$" . ruby-mode))
+(add-to-list 'auto-mode-alist '("\\.gemspec$" . ruby-mode))
+
 ;; El-get installation routine
 
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")

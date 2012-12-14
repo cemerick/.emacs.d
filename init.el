@@ -61,10 +61,14 @@
 ;; turn visual mode for text files
 (add-hook 'text-mode-hook 'turn-on-visual-line-mode)
 
-;; recognize rake as ruby
+;; turn on paredit for clojure
+(add-hook 'clojure-mode-hook (lambda () (paredit-mode +1)))
+
+;; recognize rake and Gemfile as ruby
 (add-to-list 'auto-mode-alist '("\\.rake$" . ruby-mode))
 (add-to-list 'auto-mode-alist '("Rakefile$" . ruby-mode))
 (add-to-list 'auto-mode-alist '("\\.gemspec$" . ruby-mode))
+(add-to-list 'auto-mode-alist '("Gemfile$" . ruby-mode))
 
 ;; El-get installation routine
 
@@ -97,4 +101,3 @@
 
 (el-get-cleanup my-packages)
 (el-get 'sync my-packages)
-(add-hook 'clojure-mode-hook (lambda () (paredit-mode +1)))

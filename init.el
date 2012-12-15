@@ -94,8 +94,8 @@
 (setq my-packages (append '(el-get ack yasnippet ruby-compilation Enhanced-Ruby-Mode
 				   auto-complete auto-complete-emacs-lisp auto-complete-yasnippet
 				   anything anything-rcodetools emacs-w3m yaml-mode windcycle
-				   go-mode coffee-mode markdown-mode less-css-mode
-				   clojure-mode nrepl paredit
+				   go-mode coffee-mode markdown-mode less-css-mode mustache-mode
+				   clojure-mode nrepl paredit 
 				   ) 
 			  (mapcar 'el-get-source-name el-get-sources)))
 

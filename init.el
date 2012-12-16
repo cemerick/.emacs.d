@@ -1,6 +1,3 @@
-;; load theme
-(load-theme 'tango-dark t)
-
 ;; utf-8
 (prefer-coding-system 'utf-8)
 (set-default-coding-systems 'utf-8)
@@ -48,7 +45,6 @@
     )
 )
 
-
 ;; enable windmove
  (when (fboundp 'windmove-default-keybindings)
       (windmove-default-keybindings))
@@ -77,7 +73,7 @@
 				  :features elisp-format))))
 
 ;; canonical list
-(setq my-packages (append '(el-get ack yasnippet ruby-compilation Enhanced-Ruby-Mode
+(setq my-packages (append '(el-get ack yasnippet ruby-compilation Enhanced-Ruby-Mode color-theme-solarized
 				   auto-complete auto-complete-emacs-lisp auto-complete-yasnippet
 				   anything anything-rcodetools emacs-w3m yaml-mode windcycle
 				   go-mode coffee-mode markdown-mode less-css-mode
@@ -88,3 +84,20 @@
 (el-get-cleanup my-packages)
 (el-get 'sync my-packages)
 (add-hook 'clojure-mode-hook (lambda () (paredit-mode +1)))
+
+;; load theme
+(add-to-list 'custom-theme-load-path "el-get/color-theme-solarized")
+(load-theme 'solarized-light t)
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-safe-themes (quote ("1e7e097ec8cb1f8c3a912d7e1e0331caeed49fef6cff220be63bd2a6ba4cc365" "fc5fcb6f1f1c1bc01305694c59a1a861b008c534cae8d0e48e4d5e81ad718bc6" default))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )

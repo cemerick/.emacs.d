@@ -4,6 +4,11 @@
 (set-terminal-coding-system 'utf-8)
 (set-keyboard-coding-system 'utf-8)
 
+;; tabs
+(setq tab-width 2)
+(setq tab-stop-list (number-sequence 2 200 2))
+(setq indent-tabs-mode nil)
+
 ;;disable menu bar
 (menu-bar-mode 0)
 
@@ -52,6 +57,15 @@
 ;; turn visual mode for text files
 (add-hook 'text-mode-hook 'turn-on-visual-line-mode)
 
+;; turn on paredit for clojure
+(add-hook 'clojure-mode-hook (lambda () (paredit-mode +1)))
+
+;; recognize rake and Gemfile as ruby
+(add-to-list 'auto-mode-alist '("\\.rake$" . ruby-mode))
+(add-to-list 'auto-mode-alist '("Rakefile$" . ruby-mode))
+(add-to-list 'auto-mode-alist '("\\.gemspec$" . ruby-mode))
+(add-to-list 'auto-mode-alist '("Gemfile$" . ruby-mode))
+
 ;; El-get installation routine
 
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
@@ -76,18 +90,17 @@
 (setq my-packages (append '(el-get ack yasnippet ruby-compilation Enhanced-Ruby-Mode color-theme-solarized
 				   auto-complete auto-complete-emacs-lisp auto-complete-yasnippet
 				   anything anything-rcodetools emacs-w3m yaml-mode windcycle
-				   go-mode coffee-mode markdown-mode less-css-mode
-				   clojure-mode nrepl paredit
+				   go-mode coffee-mode markdown-mode less-css-mode mustache-mode
+				   clojure-mode nrepl paredit 
 				   ) 
 			  (mapcar 'el-get-source-name el-get-sources)))
 
 (el-get-cleanup my-packages)
 (el-get 'sync my-packages)
-(add-hook 'clojure-mode-hook (lambda () (paredit-mode +1)))
 
 ;; load theme
 (add-to-list 'custom-theme-load-path "el-get/color-theme-solarized")
-(load-theme 'solarized-light t)
+(load-theme 'solarized-dark t)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.

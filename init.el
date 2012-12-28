@@ -92,6 +92,7 @@
 				   anything anything-rcodetools emacs-w3m yaml-mode windcycle
 				   go-mode coffee-mode markdown-mode less-css-mode mustache-mode
 				   clojure-mode nrepl paredit 
+				   epresent org-html5presentation org-impress-js
 				   ) 
 			  (mapcar 'el-get-source-name el-get-sources)))
 

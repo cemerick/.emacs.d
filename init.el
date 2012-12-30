@@ -84,7 +84,42 @@
     (setq el-get-sources '((:name magit 
 				  :after (global-set-key (kbd "C-x C-o") 'magit-status)) 
 			   (:name elisp-format 
-				  :features elisp-format))))
+				  :features elisp-format)
+			   (:name nrepl
+				  :after (when (locate-file "ob" load-path load-suffixes)
+					   (require 'ob)
+					   (require 'ob-tangle)
+					   (add-to-list 'org-babel-tangle-lang-exts '("clojure" . "clj"))
+
+					   (org-babel-do-load-languages
+					    'org-babel-load-languages
+					    '((emacs-lisp . t)
+					      (clojure . t)))
+
+
+					   (defun org-babel-execute:clojure (body params)
+					     "Evaluate a block of Clojure code with Babel."
+					     (let* ((result (nrepl-send-string-sync body (nrepl-current-ns)))
+						    (value (plist-get result :value))
+						    (out (plist-get result :stdout))
+						    (out (when out
+							   (if (string= "\n" (substring out -1))
+							       (substring out 0 -1)
+							     out)))
+						    (stdout (when out
+							      (mapconcat (lambda (line)
+									   (concat ";; " line))
+									 (split-string out "\n")
+									 "\n"))))
+					       (concat stdout
+						       (when (and stdout (not (string= "\n" (substring stdout -1))))
+							 "\n")
+						       ";;=> " value)))
+
+					   (provide 'ob-clojure)
+
+					   (setq org-src-fontify-natively t)
+					   (setq org-confirm-babel-evaluate nil))))))
 
 ;; canonical list
 (setq my-packages (append '(el-get ack yasnippet ruby-compilation Enhanced-Ruby-Mode color-theme-solarized

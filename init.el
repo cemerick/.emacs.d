@@ -94,7 +94,9 @@
 					   (org-babel-do-load-languages
 					    'org-babel-load-languages
 					    '((emacs-lisp . t)
-					      (clojure . t)))
+					      (clojure . t)
+					      (js . t)
+					      (ruby . t)))
 
 
 					   (defun org-babel-execute:clojure (body params)

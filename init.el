@@ -130,7 +130,7 @@
 				   go-mode 
 				   coffee-mode markdown-mode less-css-mode scss-mode mustache-mode
 				   clojure-mode clojurescript-mode midje-mode nrepl htmlize paredit kibit-mode
-				   epresent org-html5presentation org-impress-js
+				   epresent org-html5presentation org-impress-js org-s5
 				   ) 
 			  (mapcar 'el-get-source-name el-get-sources)))
 

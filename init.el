@@ -58,7 +58,10 @@
 (add-hook 'text-mode-hook 'turn-on-visual-line-mode)
 
 ;; turn on paredit for clojure
-(add-hook 'clojure-mode-hook (lambda () (paredit-mode +1)))
+(add-hook 'clojure-mode-hook          (lambda () (paredit-mode +1)))
+(add-hook 'emacs-lisp-mode-hook       (lambda () (paredit-mode +1)))
+(add-hook 'lisp-mode-hook             (lambda () (paredit-mode +1)))
+(add-hook 'lisp-interaction-mode-hook (lambda () (paredit-mode +1)))
 
 ;; recognize rake and Gemfile as ruby
 (add-to-list 'auto-mode-alist '("\\.rake$" . ruby-mode))
@@ -78,21 +81,9 @@
 		  (goto-char (point-max)) 
 		  (eval-print-last-sexp)))))
 
-;; setup package (works with el-get-build-elpa-whatever)
-(setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
-                           ("marmalade" . "http://marmalade-repo.org/packages/")
-			   ("tromey" . "http://tromey.com/elpa/")
-                           ("melpa" . "http://melpa.milkbox.net/packages/")))
+;; org-babel setup
 
-;; El-get distributed setup
-;; local sources
-(if (not (string-match "netbsd" system-configuration)) 
-    (setq el-get-sources '((:name magit 
-				  :after (global-set-key (kbd "C-x C-o") 'magit-status)) 
-			   (:name elisp-format 
-				  :features elisp-format)
-			   (:name nrepl
-				  :after (when (locate-file "ob" load-path load-suffixes)
+(when (locate-file "ob" load-path load-suffixes)
 					   (require 'ob)
 					   (require 'ob-tangle)
 					   (add-to-list 'org-babel-tangle-lang-exts '("clojure" . "clj"))
@@ -127,8 +118,21 @@
 					   (provide 'ob-clojure)
 
 					   (setq org-src-fontify-natively t)
-					   (setq org-confirm-babel-evaluate nil))))))
+					   (setq org-confirm-babel-evaluate nil))
 
+;; setup package (works with el-get-build-elpa-whatever)
+(setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
+			 ("marmalade" . "http://marmalade-repo.org/packages/")
+			 ("tromey" . "http://tromey.com/elpa/")
+			 ("melpa" . "http://melpa.milkbox.net/packages/")))
+
+;; El-get distributed setup
+;; local sources
+(setq el-get-sources '((:name magit 
+				  :after (global-set-key (kbd "C-x C-o") 'magit-status)) 
+			   (:name elisp-format 
+				  :features elisp-format)))
+		
 ;; canonical list
 (setq my-packages (append '(el-get ack yasnippet ruby-compilation Enhanced-Ruby-Mode color-theme-solarized
 				   auto-complete auto-complete-emacs-lisp auto-complete-yasnippet

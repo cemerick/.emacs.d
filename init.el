@@ -78,6 +78,12 @@
 		  (goto-char (point-max)) 
 		  (eval-print-last-sexp)))))
 
+;; setup package (works with el-get-build-elpa-whatever)
+(setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
+                           ("marmalade" . "http://marmalade-repo.org/packages/")
+			   ("tromey" . "http://tromey.com/elpa/")
+                           ("melpa" . "http://melpa.milkbox.net/packages/")))
+
 ;; El-get distributed setup
 ;; local sources
 (if (not (string-match "netbsd" system-configuration)) 

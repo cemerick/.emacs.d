@@ -129,9 +129,11 @@
 ;; El-get distributed setup
 ;; local sources
 (setq el-get-sources '((:name magit 
-				  :after (global-set-key (kbd "C-x C-o") 'magit-status)) 
-			   (:name elisp-format 
-				  :features elisp-format)))
+			      :after (global-set-key (kbd "C-x C-o") 'magit-status))
+		       (:name Enhanced-Ruby-Mode
+			      :after (setq enh-ruby-program "ruby193"))
+		       (:name elisp-format 
+			      :features elisp-format)))
 		
 ;; canonical list
 (setq my-packages (append '(el-get ack yasnippet ruby-compilation Enhanced-Ruby-Mode color-theme-solarized

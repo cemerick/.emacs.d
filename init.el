@@ -131,7 +131,7 @@
 (setq el-get-sources '((:name magit 
 			      :after (global-set-key (kbd "C-x C-o") 'magit-status))
 		       (:name Enhanced-Ruby-Mode
-			      :after (setq enh-ruby-program "ruby193"))
+			      :after (when (eq system-type 'gnu/linux) (setq enh-ruby-program "ruby193")))
 		       (:name elisp-format 
 			      :features elisp-format)))
 		

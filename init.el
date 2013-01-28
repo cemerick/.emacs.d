@@ -57,7 +57,7 @@
 ;; turn visual mode for text files
 (add-hook 'text-mode-hook 'turn-on-visual-line-mode)
 
-;; turn on paredit for clojure
+;; turn on paredit for clojure and Lisp
 (add-hook 'clojure-mode-hook          (lambda () (paredit-mode +1)))
 (add-hook 'emacs-lisp-mode-hook       (lambda () (paredit-mode +1)))
 (add-hook 'lisp-mode-hook             (lambda () (paredit-mode +1)))

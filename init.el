@@ -130,7 +130,7 @@
 			      :features elisp-format)))
 		
 ;; canonical list
-(setq my-packages (append '(el-get ack yasnippet ruby-compilation Enhanced-Ruby-Mode color-theme-solarized
+(setq my-packages (append '(el-get ack yasnippet ruby-compilation enh-ruby-mode color-theme-solarized
 				   auto-complete auto-complete-emacs-lisp auto-complete-yasnippet
 				   anything anything-rcodetools emacs-w3m yaml-mode windcycle
 				   go-mode 

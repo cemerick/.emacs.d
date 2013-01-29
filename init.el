@@ -57,12 +57,6 @@
 ;; turn visual mode for text files
 (add-hook 'text-mode-hook 'turn-on-visual-line-mode)
 
-;; turn on paredit for clojure and Lisp
-(add-hook 'clojure-mode-hook          (lambda () (paredit-mode +1)))
-(add-hook 'emacs-lisp-mode-hook       (lambda () (paredit-mode +1)))
-(add-hook 'lisp-mode-hook             (lambda () (paredit-mode +1)))
-(add-hook 'lisp-interaction-mode-hook (lambda () (paredit-mode +1)))
-
 ;; recognize rake and Gemfile as ruby
 (add-to-list 'auto-mode-alist '("\\.rake$" . ruby-mode))
 (add-to-list 'auto-mode-alist '("Rakefile$" . ruby-mode))
@@ -145,9 +139,15 @@
 				   epresent org-html5presentation org-impress-js org-s5
 				   ) 
 			  (mapcar 'el-get-source-name el-get-sources)))
-
 (el-get-cleanup my-packages)
 (el-get 'sync my-packages)
+
+
+;; turn on paredit for clojure and Lisp
+(add-hook 'clojure-mode-hook          (lambda () (paredit-mode +1)))
+(add-hook 'emacs-lisp-mode-hook       (lambda () (paredit-mode +1)))
+(add-hook 'lisp-mode-hook             (lambda () (paredit-mode +1)))
+(add-hook 'lisp-interaction-mode-hook (lambda () (paredit-mode +1)))
 
 ;; load theme
 (add-to-list 'custom-theme-load-path "el-get/color-theme-solarized")
@@ -165,3 +165,4 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+

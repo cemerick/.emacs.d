@@ -124,7 +124,7 @@
 ;; local sources
 (setq el-get-sources '((:name magit 
 			      :after (global-set-key (kbd "C-x C-o") 'magit-status))
-		       (:name Enhanced-Ruby-Mode
+		       (:name enh-ruby-mode
 			      :after (when (string= system-name "ma.sdf.org") (setq enh-ruby-program "ruby193")))
 		       (:name elisp-format 
 			      :features elisp-format)))

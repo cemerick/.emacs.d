@@ -136,7 +136,7 @@
 (el-get-cleanup my-packages)
 (el-get 'sync my-packages)
 
-## temporary until recipe merge
+;; temporary until recipe merge
 (autoload 'enh-ruby-mode "enh-ruby-mode" "Major mode for ruby files" t)
 (add-to-list 'interpreter-mode-alist '("ruby" . enh-ruby-mode))
 (add-to-list 'auto-mode-alist '("\\.rake$" . enh-ruby-mode))

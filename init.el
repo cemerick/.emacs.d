@@ -57,12 +57,6 @@
 ;; turn visual mode for text files
 (add-hook 'text-mode-hook 'turn-on-visual-line-mode)
 
-;; recognize rake and Gemfile as ruby
-(add-to-list 'auto-mode-alist '("\\.rake$" . ruby-mode))
-(add-to-list 'auto-mode-alist '("Rakefile$" . ruby-mode))
-(add-to-list 'auto-mode-alist '("\\.gemspec$" . ruby-mode))
-(add-to-list 'auto-mode-alist '("Gemfile$" . ruby-mode))
-
 ;; El-get installation routine
 
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
@@ -142,6 +136,14 @@
 (el-get-cleanup my-packages)
 (el-get 'sync my-packages)
 
+## temporary until recipe merge
+(autoload 'enh-ruby-mode "enh-ruby-mode" "Major mode for ruby files" t)
+(add-to-list 'interpreter-mode-alist '("ruby" . enh-ruby-mode))
+(add-to-list 'auto-mode-alist '("\\.rake$" . enh-ruby-mode))
+(add-to-list 'auto-mode-alist '("Rakefile$" . enh-ruby-mode))
+(add-to-list 'auto-mode-alist '("\\.gemspec$" . enh-ruby-mode))
+(add-to-list 'auto-mode-alist '("Gemfile$" . enh-ruby-mode))
+(add-to-list 'auto-mode-alist '("\\.rb$" . enh-ruby-mode))
 
 ;; turn on paredit for clojure and Lisp
 (add-hook 'clojure-mode-hook          (lambda () (paredit-mode +1)))

@@ -131,19 +131,11 @@
 				   coffee-mode markdown-mode less-css-mode scss-mode mustache-mode
 				   clojure-mode clojurescript-mode midje-mode nrepl htmlize paredit kibit-mode
 				   epresent org-html5presentation org-impress-js org-s5
+				   palimpsest-mode
 				   ) 
 			  (mapcar 'el-get-source-name el-get-sources)))
 (el-get-cleanup my-packages)
 (el-get 'sync my-packages)
-
-;; temporary until recipe merge
-(autoload 'enh-ruby-mode "enh-ruby-mode" "Major mode for ruby files" t)
-(add-to-list 'interpreter-mode-alist '("ruby" . enh-ruby-mode))
-(add-to-list 'auto-mode-alist '("\\.rake$" . enh-ruby-mode))
-(add-to-list 'auto-mode-alist '("Rakefile$" . enh-ruby-mode))
-(add-to-list 'auto-mode-alist '("\\.gemspec$" . enh-ruby-mode))
-(add-to-list 'auto-mode-alist '("Gemfile$" . enh-ruby-mode))
-(add-to-list 'auto-mode-alist '("\\.rb$" . enh-ruby-mode))
 
 ;; turn on paredit for clojure and Lisp
 (add-hook 'clojure-mode-hook          (lambda () (paredit-mode +1)))
@@ -153,7 +145,7 @@
 
 ;; load theme
 (add-to-list 'custom-theme-load-path "el-get/color-theme-solarized")
-(load-theme 'solarized-dark t)
+(load-theme 'solarized-light t)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.

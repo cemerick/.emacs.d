@@ -127,7 +127,7 @@ Canonical list of packages
 	                    coffee-mode markdown-mode less-css-mode scss-mode mustache-mode
 	                    clojure-mode clojurescript-mode midje-mode nrepl htmlize paredit kibit-mode
 	                    epresent org-html5presentation org-impress-js org-s5
-		            palimpsest-mode) 
+		            o-blog palimpsest-mode) 
 			  (mapcar 'el-get-source-name el-get-sources)))
 (el-get-cleanup my-packages)
 (el-get 'sync my-packages)

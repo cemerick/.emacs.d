@@ -24,11 +24,16 @@ Two-width tab stops, like I'm used to
 (load-theme 'adwaita t)
 #+END_SRC
 
-* Menu bar
-Disable it
+* Graphic display
+Disable menu-bar in terminal, enable in graphic display
 #+BEGIN_SRC emacs-lisp
-(unless (display-graphic-p) 
-  (menu-bar-mode 0))
+
+ (if (display-graphic-p)
+      (progn
+        (set-frame-size (selected-frame) 90 34)
+        (menu-bar-mode t))
+     (menu-bar-mode 0))
+
 #+END_SRC
 
 * Winner mode

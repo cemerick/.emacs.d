@@ -125,7 +125,7 @@ To make windmove work in tmux
 Canonical list of packages
 #+BEGIN_SRC emacs-lisp
 
-(setq my-packages (append '(el-get ack smex yasnippet
+(setq my-packages (append '(el-get ack smex yasnippet magit
                             zenburn-theme solarized-theme 
                             ruby-mode inf-ruby rspec-mode
                             auto-complete auto-complete-emacs-lisp auto-complete-yasnippet

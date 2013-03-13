@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1"/>
 <meta name="title" content="Emacs Configuration"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2013-03-12 17:34:52 IST"/>
+<meta name="generated" content="2013-03-13T04:13+0200"/>
 <meta name="author" content="Daniel Szmulewicz"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -61,6 +61,30 @@
   /*]]>*/-->
 </style>
 <script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
 <!--/*--><![CDATA[/*><!--*/
  function CodeHighlightOn(elem, id)
  {
@@ -107,16 +131,16 @@
 <li><a href="#sec-7">7 Recent file list</a></li>
 <li><a href="#sec-8">8 Ido</a></li>
 <li><a href="#sec-9">9 Fixes</a></li>
-<li><a href="#sec-10">10 Elpa</a></li>
-<li><a href="#sec-11">11 El-get</a>
+<li><a href="#sec-10">10 El-get</a>
 <ul>
-<li><a href="#sec-11-1">11.1 Installation routine</a></li>
-<li><a href="#sec-11-2">11.2 Recipe setup</a></li>
-<li><a href="#sec-11-3">11.3 User setup</a></li>
+<li><a href="#sec-10-1">10.1 Installation routine</a></li>
+<li><a href="#sec-10-2">10.2 Recipe setup</a></li>
+<li><a href="#sec-10-3">10.3 User setup</a></li>
 </ul>
 </li>
-<li><a href="#sec-12">12 Text-files hooks</a></li>
-<li><a href="#sec-13">13 Org-mode</a>
+<li><a href="#sec-11">11 Text-files hooks</a></li>
+<li><a href="#sec-12">12 Deft</a></li>
+<li><a href="#sec-13">13 Org-mode modules</a>
 <ul>
 <li><a href="#sec-13-1">13.1 Org-babel</a></li>
 <li><a href="#sec-13-2">13.2 Org-velocity</a></li>
@@ -314,37 +338,16 @@ To make windmove work in tmux
 </div>
 
 <div id="outline-container-10" class="outline-2">
-<h2 id="sec-10"><span class="section-number-2">10</span> Elpa</h2>
+<h2 id="sec-10"><span class="section-number-2">10</span> El-get</h2>
 <div class="outline-text-2" id="text-10">
 
 
-<p>
-Repositories
-</p>
-
-
-<pre class="src src-emacs-lisp">(setq package-archives '((<span style="color: #4E9A06;">"gnu"</span> . <span style="color: #4E9A06;">"http://elpa.gnu.org/packages/"</span>)
-                         (<span style="color: #4E9A06;">"marmalade"</span> . <span style="color: #4E9A06;">"http://marmalade-repo.org/packages/"</span>)
-                         (<span style="color: #4E9A06;">"tromey"</span> . <span style="color: #4E9A06;">"http://tromey.com/elpa/"</span>)
-                         (<span style="color: #4E9A06;">"melpa"</span> . <span style="color: #4E9A06;">"http://melpa.milkbox.net/packages/"</span>)
-                         (<span style="color: #4E9A06;">"org"</span> . <span style="color: #4E9A06;">"http://orgmode.org/elpa/"</span>)))
-</pre>
 
 </div>
 
-</div>
-
-<div id="outline-container-11" class="outline-2">
-<h2 id="sec-11"><span class="section-number-2">11</span> El-get</h2>
-<div class="outline-text-2" id="text-11">
-
-
-
-</div>
-
-<div id="outline-container-11-1" class="outline-3">
-<h3 id="sec-11-1"><span class="section-number-3">11.1</span> Installation routine</h3>
-<div class="outline-text-3" id="text-11-1">
+<div id="outline-container-10-1" class="outline-3">
+<h3 id="sec-10-1"><span class="section-number-3">10.1</span> Installation routine</h3>
+<div class="outline-text-3" id="text-10-1">
 
 
 
@@ -366,9 +369,9 @@ Repositories
 
 </div>
 
-<div id="outline-container-11-2" class="outline-3">
-<h3 id="sec-11-2"><span class="section-number-3">11.2</span> Recipe setup</h3>
-<div class="outline-text-3" id="text-11-2">
+<div id="outline-container-10-2" class="outline-3">
+<h3 id="sec-10-2"><span class="section-number-3">10.2</span> Recipe setup</h3>
+<div class="outline-text-3" id="text-10-2">
 
 <p>Canonical list of packages
 </p>
@@ -383,7 +386,7 @@ Repositories
                             coffee-mode markdown-mode less-css-mode scss-mode mustache-mode
                             clojure-mode clojurescript-mode midje-mode nrepl htmlize paredit kibit-mode
                             epresent org-html5presentation org-impress-js org-s5
-                            palimpsest-mode) 
+                            o-blog deft palimpsest-mode) 
                           (mapcar 'el-get-source-name el-get-sources)))
 (el-get-cleanup my-packages)
 (el-get 'sync my-packages)
@@ -394,9 +397,9 @@ Repositories
 
 </div>
 
-<div id="outline-container-11-3" class="outline-3">
-<h3 id="sec-11-3"><span class="section-number-3">11.3</span> User setup</h3>
-<div class="outline-text-3" id="text-11-3">
+<div id="outline-container-10-3" class="outline-3">
+<h3 id="sec-10-3"><span class="section-number-3">10.3</span> User setup</h3>
+<div class="outline-text-3" id="text-10-3">
 
 
 
@@ -414,9 +417,9 @@ Repositories
 
 </div>
 
-<div id="outline-container-12" class="outline-2">
-<h2 id="sec-12"><span class="section-number-2">12</span> Text-files hooks</h2>
-<div class="outline-text-2" id="text-12">
+<div id="outline-container-11" class="outline-2">
+<h2 id="sec-11"><span class="section-number-2">11</span> Text-files hooks</h2>
+<div class="outline-text-2" id="text-11">
 
 <p>Turn visual mode for text files
 </p>
@@ -430,16 +433,25 @@ Repositories
 
 </div>
 
-<div id="outline-container-13" class="outline-2">
-<h2 id="sec-13"><span class="section-number-2">13</span> Org-mode</h2>
-<div class="outline-text-2" id="text-13">
+<div id="outline-container-12" class="outline-2">
+<h2 id="sec-12"><span class="section-number-2">12</span> Deft</h2>
+<div class="outline-text-2" id="text-12">
 
 
 
 
-<pre class="src src-emacs-lisp">(add-to-list 'load-path <span style="color: #4E9A06;">"~/.emacs.d/el-get/package/elpa/org-20130311"</span>)
-(add-to-list 'load-path <span style="color: #4E9A06;">"~/.emacs.d/el-get/package/elpa/org-plus-contrib-20130311"</span>)
+<pre class="src src-emacs-lisp">(setq deft-directory <span style="color: #4E9A06;">"~/Dropbox/notes"</span>)
+(setq deft-extension <span style="color: #4E9A06;">"org"</span>)
+(setq deft-text-mode 'org-mode)
 </pre>
+
+</div>
+
+</div>
+
+<div id="outline-container-13" class="outline-2">
+<h2 id="sec-13"><span class="section-number-2">13</span> Org-mode modules</h2>
+<div class="outline-text-2" id="text-13">
 
 
 
@@ -515,9 +527,9 @@ org-babel setup
 </div>
 
 <div id="postamble">
-<p class="date">Date: 2013-03-12 17:34:52 IST</p>
+<p class="date">Date: 2013-03-13T04:13+0200</p>
 <p class="author">Author: Daniel Szmulewicz</p>
-<p class="creator">Org version 7.8.11 with Emacs version 24</p>
+<p class="creator"><a href="http://orgmode.org">Org</a> version 7.9.4 with <a href="http://www.gnu.org/software/emacs/">Emacs</a> version 24</p>
 <a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a>
 
 </div>

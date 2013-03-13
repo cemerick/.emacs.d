@@ -27,7 +27,8 @@ Two-width tab stops, like I'm used to
 * Menu bar
 Disable it
 #+BEGIN_SRC emacs-lisp
-(menu-bar-mode 0)
+(unless (display-graphic-p) 
+  (menu-bar-mode 0))
 #+END_SRC
 
 * Winner mode

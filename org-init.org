@@ -64,8 +64,10 @@ Get rid of `find-file-read-only' and replace it with something more useful.
 (global-set-key (kbd "C-x C-r") 'ido-recentf-open)
 #+END_SRC
 
+** recentf
 Make recentf use ido
 #+BEGIN_SRC emacs-lisp
+
 (defun ido-recentf-open () 
   "Use `ido-completing-read' to \\[find-file] a recent file" 
   (interactive) 
@@ -73,6 +75,15 @@ Make recentf use ido
       (message "Opening file...") 
     (message "Aborting")))
 #+END_SRC
+
+** smex
+#+BEGIN_SRC emacs-lisp
+(global-set-key (kbd "M-x") 'smex)
+(global-set-key (kbd "M-X") 'smex-major-mode-commands)
+;; This is your old M-x.
+(global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
+#+END_SRC
+
 * Fixes
 Fix the bug that shift-up doesn't send the right escape sequence in terminal
 
@@ -114,7 +125,7 @@ To make windmove work in tmux
 Canonical list of packages
 #+BEGIN_SRC emacs-lisp
 
-(setq my-packages (append '(el-get ack yasnippet
+(setq my-packages (append '(el-get ack smex yasnippet
                             zenburn-theme solarized-theme 
                             ruby-mode inf-ruby rspec-mode
                             auto-complete auto-complete-emacs-lisp auto-complete-yasnippet

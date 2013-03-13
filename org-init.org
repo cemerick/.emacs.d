@@ -125,11 +125,11 @@ To make windmove work in tmux
 Canonical list of packages
 #+BEGIN_SRC emacs-lisp
 
-(setq my-packages (append '(el-get ack smex yasnippet magit
+(setq my-packages (append '(el-get ack smex yasnippet magit helm
                             zenburn-theme solarized-theme 
                             ruby-mode inf-ruby rspec-mode
                             auto-complete auto-complete-emacs-lisp auto-complete-yasnippet
-                            anything anything-rcodetools emacs-w3m yaml-mode windcycle
+                            emacs-w3m yaml-mode windcycle
                             go-mode 
 	                    coffee-mode markdown-mode less-css-mode scss-mode mustache-mode
 	                    clojure-mode clojurescript-mode midje-mode nrepl htmlize paredit kibit-mode
@@ -210,4 +210,22 @@ org-babel setup
 ** Org-velocity
 #+BEGIN_SRC emacs-lisp
 (global-set-key (kbd "C-c v") 'org-velocity-read)
+#+END_SRC
+* Ctags
+Find root (replace eproject-root): cd "$(git rev-parse --show-toplevel)"
+
+#+BEGIN_SRC emacs-lisp
+(defun build-ctags ()
+  (interactive)
+  (message "building project tags")
+  (let ((root (eproject-root)))
+    (shell-command (concat "ctags -e -R --extra=+fq --exclude=db --exclude=test --exclude=.git --exclude=public -f " root "TAGS " root)))
+  (visit-project-tags)
+  (message "tags built successfully"))
+
+(defun visit-project-tags ()
+  (interactive)
+  (let ((tags-file (concat (eproject-root) "TAGS")))
+    (visit-tags-table tags-file)
+    (message (concat "Loaded " tags-file))))
 #+END_SRC

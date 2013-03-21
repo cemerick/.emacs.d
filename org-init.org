@@ -128,7 +128,7 @@ Canonical list of packages
 (setq my-packages (append '(el-get ack smex yasnippet magit helm
                             zenburn-theme solarized-theme 
                             ruby-mode inf-ruby rspec-mode
-                            auto-complete auto-complete-emacs-lisp auto-complete-yasnippet
+                            company 
                             emacs-w3m yaml-mode windcycle
                             go-mode 
 	                    coffee-mode markdown-mode less-css-mode scss-mode mustache-mode

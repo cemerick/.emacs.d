@@ -3,6 +3,7 @@
 #+EMAIL: daniel.szmulewicz@gmail.com
 
 * Saving Customizations
+We want to save our customizations in a dedicated file. This file needs to be 'touched' (created) on a vanilla emacs installation.
 #+BEGIN_SRC emacs-lisp
 (setq custom-file "~/.emacs.d/emacs-custom.el")
      (load custom-file)

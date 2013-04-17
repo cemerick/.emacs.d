@@ -3,10 +3,16 @@
 #+EMAIL: daniel.szmulewicz@gmail.com
 
 * Saving Customizations
-We want to save our customizations in a dedicated file. This file needs to be 'touched' (created) on a vanilla emacs installation.
+We want to save our customizations in a dedicated file. We will check
+the existence of such a file so as not to cause errors on a vanilla
+emacs installation. Please create it yourself if you don't want your
+customizations to be saved in the init file. (default behavior)
 #+BEGIN_SRC emacs-lisp
-(setq custom-file "~/.emacs.d/emacs-custom.el")
-     (load custom-file)
+(let 
+     ((customization-file "~/.emacs.d/emacs-custom.el"))
+  (when (file-exists-p customization-file)
+    (setq custom-file customization-file)
+    (load custom-file)))
 #+END_SRC
 * UTF-8
 We want to have default utf-8 everything.

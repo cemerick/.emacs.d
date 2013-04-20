@@ -139,7 +139,7 @@ Canonical list of packages
 
 (setq my-packages (append '(el-get smex yasnippet magit helm
                             zenburn-theme solarized-theme 
-                            ruby-mode inf-ruby rspec-mode
+                            ruby-mode inf-ruby rspec-mode rbenv
                             emacs-w3m yaml-mode windcycle
 	                    coffee-mode markdown-mode scss-mode mustache-mode
 	                    clojure-mode midje-mode nrepl htmlize paredit kibit-mode

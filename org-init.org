@@ -96,7 +96,7 @@ Make recentf use ido
 (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
 #+END_SRC
 
-* Fixes
+* Key remappings
 Fix the bug that shift-up doesn't send the right escape sequence in terminal
 
 #+BEGIN_SRC emacs-lisp

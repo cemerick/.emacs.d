@@ -8,11 +8,11 @@ the existence of such a file so as not to cause errors on a vanilla
 emacs installation. Please create it yourself if you don't want your
 customizations to be saved in the init file. (default behavior)
 #+BEGIN_SRC emacs-lisp
-(let 
-     ((customization-file "~/.emacs.d/emacs-custom.el"))
-  (when (file-exists-p customization-file)
-    (setq custom-file customization-file)
-    (load custom-file)))
+  (let 
+      ((customization-file "~/.emacs.d/emacs-custom.el"))
+    (when (file-exists-p customization-file)
+      (setq custom-file customization-file)
+      (load custom-file)))
 #+END_SRC
 * UTF-8
 We want to have default utf-8 everything.
@@ -118,7 +118,6 @@ To make windmove work in tmux
 #+END_SRC
 
 * El-get
-
 ** Installation routine
 
 #+BEGIN_SRC emacs-lisp

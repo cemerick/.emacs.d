@@ -14,6 +14,18 @@ customizations to be saved in the init file. (default behavior)
     (setq custom-file customization-file)
     (load custom-file)))
 #+END_SRC
+* Backup and autosave
+Keep Backup and Auto-save Files Out of the Way
+http://emacsredux.com/blog/2013/05/09/keep-backup-and-auto-save-files-out-of-the-way/
+
+#+BEGIN_SRC emacs-lisp
+;; store all backup and autosave files in the tmp dir
+(setq backup-directory-alist
+      `((".*" . ,temporary-file-directory)))
+(setq auto-save-file-name-transforms
+      `((".*" ,temporary-file-directory t)))
+#+END_SRC
+
 * UTF-8
 We want to have default utf-8 everything.
 #+BEGIN_SRC emacs-lisp

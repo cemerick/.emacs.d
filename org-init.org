@@ -287,3 +287,12 @@ If there is a slime helper in quicklisp directory, assume a clozure installation
       (load slime-helper)
       (setq inferior-lisp-program "ccl")))
 #+END_SRC
+* w3m
+#+BEGIN_SRC emacs-lisp
+(setq w3m-coding-system 'utf-8
+          w3m-file-coding-system 'utf-8
+          w3m-file-name-coding-system 'utf-8
+          w3m-input-coding-system 'utf-8
+          w3m-output-coding-system 'utf-8
+          w3m-terminal-coding-system 'utf-8)
+#+END_SRC

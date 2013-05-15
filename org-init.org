@@ -278,3 +278,12 @@ Find root (replace eproject-root): cd "$(git rev-parse --show-toplevel)"
   (add-hook 'scheme-mode-hook           #'enable-paredit-mode)
   (add-hook 'clojure-mode-hook          #'enable-paredit-mode)
 #+END_SRC
+* Slime
+If there is a slime helper in quicklisp directory, assume a clozure installation
+#+BEGIN_SRC emacs-lisp
+  (let 
+       ((slime-helper (expand-file-name "~/quicklisp/slime-helper.el")))
+    (when (file-exists-p slime-helper)
+      (load slime-helper)
+      (setq inferior-lisp-program "ccl")))
+#+END_SRC

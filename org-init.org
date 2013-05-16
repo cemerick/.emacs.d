@@ -14,6 +14,18 @@ customizations to be saved in the init file. (default behavior)
       (setq custom-file customization-file)
       (load custom-file)))
 #+END_SRC
+* Backup and autosave
+Keep Backup and Auto-save Files Out of the Way
+http://emacsredux.com/blog/2013/05/09/keep-backup-and-auto-save-files-out-of-the-way/
+
+#+BEGIN_SRC emacs-lisp
+;; store all backup and autosave files in the tmp dir
+(setq backup-directory-alist
+      `((".*" . ,temporary-file-directory)))
+(setq auto-save-file-name-transforms
+      `((".*" ,temporary-file-directory t)))
+#+END_SRC
+
 * UTF-8
 We want to have default utf-8 everything.
 #+BEGIN_SRC emacs-lisp
@@ -116,6 +128,13 @@ To make windmove work in tmux
     (define-key input-decode-map "\e[1;6B" [S-C-down])))
 
 #+END_SRC
+Not sure it is needed.
+#+BEGIN_SRC emacs-lisp
+  (if (equal "daniels-imac.local" (system-name))
+      (add-hook 'comint-mode-hook
+                (lambda ()               
+                  (define-key comint-mode-map (kbd "M-n") 'comint-next-input))))
+#+END_SRC
 
 * El-get
 ** Installation routine
@@ -135,18 +154,19 @@ To make windmove work in tmux
 ** Recipe setup
 Canonical list of packages
 #+BEGIN_SRC emacs-lisp
-
-(setq my-packages (append '(el-get smex yasnippet magit helm
-                            zenburn-theme solarized-theme 
-                            ruby-mode inf-ruby rspec-mode rbenv
-                            emacs-w3m yaml-mode windcycle
-	                    coffee-mode markdown-mode scss-mode mustache-mode
-	                    clojure-mode midje-mode nrepl htmlize paredit kibit-mode
-	                    epresent org-html5presentation org-impress-js org-s5
-		            o-blog deft palimpsest-mode) 
-			  (mapcar 'el-get-source-name el-get-sources)))
-(el-get-cleanup my-packages)
-(el-get 'sync my-packages)
+  
+  (setq my-packages (append '(el-get smex yasnippet magit helm
+                              zenburn-theme solarized-theme 
+                              ruby-mode inf-ruby rspec-mode rbenv
+                              emacs-w3m yaml-mode windcycle
+                              flymake flymake-ruby
+                              coffee-mode markdown-mode scss-mode mustache-mode
+                              clojure-mode midje-mode nrepl htmlize paredit kibit-mode
+                              epresent org-html5presentation org-impress-js org-s5
+                              o-blog deft palimpsest-mode) 
+                            (mapcar 'el-get-source-name el-get-sources)))
+  (el-get-cleanup my-packages)
+  (el-get 'sync my-packages)
 #+END_SRC
 
 ** User setup
@@ -256,4 +276,22 @@ Find root (replace eproject-root): cd "$(git rev-parse --show-toplevel)"
   (add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
   (add-hook 'scheme-mode-hook           #'enable-paredit-mode)
   (add-hook 'clojure-mode-hook          #'enable-paredit-mode)
+#+END_SRC
+* Slime
+If there is a slime helper in quicklisp directory, assume a clozure installation
+#+BEGIN_SRC emacs-lisp
+  (let 
+       ((slime-helper (expand-file-name "~/quicklisp/slime-helper.el")))
+    (when (file-exists-p slime-helper)
+      (load slime-helper)
+      (setq inferior-lisp-program "ccl")))
+#+END_SRC
+* w3m
+#+BEGIN_SRC emacs-lisp
+(setq w3m-coding-system 'utf-8
+          w3m-file-coding-system 'utf-8
+          w3m-file-name-coding-system 'utf-8
+          w3m-input-coding-system 'utf-8
+          w3m-output-coding-system 'utf-8
+          w3m-terminal-coding-system 'utf-8)
 #+END_SRC

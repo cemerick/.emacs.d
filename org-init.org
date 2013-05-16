@@ -70,6 +70,14 @@ Disable menu-bar in terminal, enable in graphic display
  (when (fboundp 'windmove-default-keybindings)
       (windmove-default-keybindings))
 #+END_SRC
+
+Make windmove work in org-mode:
+#+BEGIN_SRC emacs-lisp
+  (add-hook 'org-shiftup-final-hook 'windmove-up)
+  (add-hook 'org-shiftleft-final-hook 'windmove-left)
+  (add-hook 'org-shiftdown-final-hook 'windmove-down)
+  (add-hook 'org-shiftright-final-hook 'windmove-right)
+#+END_SRC
 * Recent file list
 #+BEGIN_SRC emacs-lisp
 (require 'recentf)

@@ -155,7 +155,7 @@ Not sure it is needed.
 Canonical list of packages
 #+BEGIN_SRC emacs-lisp
   
-  (setq my-packages (append '(el-get smex yasnippet magit helm
+  (setq my-packages (append '(el-get smex magit helm
                               zenburn-theme solarized-theme 
                               ruby-mode inf-ruby rspec-mode rbenv
                               emacs-w3m yaml-mode windcycle
@@ -235,6 +235,7 @@ org-babel setup
 					   (setq org-confirm-babel-evaluate nil))
 
 #+END_SRC
+
 
 ** Org-velocity
 #+BEGIN_SRC emacs-lisp

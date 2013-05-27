@@ -165,7 +165,7 @@ Canonical list of packages
     
     (setq my-packages (append '(el-get smex magit helm
                                 zenburn-theme solarized-theme 
-                                ruby-mode inf-ruby rspec-mode rbenv
+                                inf-ruby rspec-mode rbenv
                                 emacs-w3m yaml-mode 
                                 windcycle pbcopy
                                 flymake flymake-ruby

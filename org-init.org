@@ -162,19 +162,20 @@ Not sure it is needed.
 ** Recipe setup
 Canonical list of packages
 #+BEGIN_SRC emacs-lisp
-  
-  (setq my-packages (append '(el-get smex magit helm
-                              zenburn-theme solarized-theme 
-                              ruby-mode inf-ruby rspec-mode rbenv
-                              emacs-w3m yaml-mode windcycle
-                              flymake flymake-ruby
-                              coffee-mode markdown-mode scss-mode mustache-mode
-                              clojure-mode midje-mode nrepl htmlize paredit kibit-mode
-                              epresent org-html5presentation org-impress-js org-s5
-                              o-blog deft palimpsest-mode org-jekyll) 
-                            (mapcar 'el-get-source-name el-get-sources)))
-  (el-get-cleanup my-packages)
-  (el-get 'sync my-packages)
+    
+    (setq my-packages (append '(el-get smex magit helm
+                                zenburn-theme solarized-theme 
+                                ruby-mode inf-ruby rspec-mode rbenv
+                                emacs-w3m yaml-mode 
+                                windcycle pbcopy
+                                flymake flymake-ruby
+                                coffee-mode markdown-mode scss-mode mustache-mode
+                                clojure-mode midje-mode nrepl htmlize paredit kibit-mode
+                                epresent org-html5presentation org-impress-js org-s5
+                                o-blog deft palimpsest-mode org-jekyll) 
+                              (mapcar 'el-get-source-name el-get-sources)))
+    (el-get-cleanup my-packages)
+    (el-get 'sync my-packages)
 #+END_SRC
 
 ** User setup
@@ -197,8 +198,28 @@ Turn visual mode for text files
 (setq deft-directory "~/Dropbox/notes")
 (setq deft-extension "org")
 (setq deft-text-mode 'org-mode)
+(global-set-key [f8] 'deft)
 #+END_SRC
-* Org-mode modules
+* Org-mode
+
+** Project configuration
+
+Publishing is configured almost entirely through setting the value of one variable, called `org-publish-project-alist
+
+#+BEGIN_SRC emacs-lisp
+    (setq org-publish-project-alist
+          '(
+            ("org-perfumed-nightmare"
+             :base-directory "~/Dropbox/notes"
+             :publishing-directory "~/Documents/danielsz.github.io/_posts"
+             :publishing-function org-publish-org-to-html
+            ;; :completion-function
+             :table-of-contents nil
+             :html-extension "html"
+             :body-only t ))
+          )
+    
+#+END_SRC
 
 ** Org-babel
 
@@ -303,4 +324,13 @@ If there is a slime helper in quicklisp directory, assume a clozure installation
           w3m-input-coding-system 'utf-8
           w3m-output-coding-system 'utf-8
           w3m-terminal-coding-system 'utf-8)
+#+END_SRC
+* Mac OS X customizations
+
+Clipboard and kill ring
+
+#+BEGIN_SRC emacs-lisp
+  (when (eq system-type 'darwin)
+    (progn
+      (turn-on-pbcopy)))  
 #+END_SRC

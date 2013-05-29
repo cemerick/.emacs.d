@@ -201,24 +201,101 @@ Turn visual mode for text files
 (global-set-key [f8] 'deft)
 #+END_SRC
 * Org-mode
+Default notes file
+#+begin_src emacs-lisp
+  (let ((destination (if (file-exists-p "~/Dropbox")
+                         "~/Dropbox/notes.org"
+                       "~/notes.org")))
+    (setq org-default-notes-file destination))    
+#+end_src
+
+** Capture templates
+#+BEGIN_SRC emacs-lisp
+ 
+  (require 'org-element)
+    
+  (defun get-headline()
+    (let ((headlines (org-map-entries '(org-element-property :title (org-element-at-point)) t 'file)))
+      (car headlines)))
+  
+  (defun filename_from_title ()
+    (replace-regexp-in-string " " "-" (get-headline)))
+  
+  (defun org-capture-blog-path ()
+    (let ((name (filename_from_title)))
+      (expand-file-name (format "%s-%s.org"
+                                (format-time-string "%Y-%m-%d")
+                                name) "~/Dropbox/notes/blog")))
+  
+  (setq org-capture-templates  
+      
+        '(
+          ("n" 
+           "New blog entry" 
+           plain 
+           (file (org-capture-blog-path)) 
+           "#+BEGIN_HTML\n---\ntitle:\nlayout: post\ncategories:\n - blog\n---\n#+END_HTML\n\n"
+           :immediate-finish t
+           )
+          
+          ("b" 
+           "Blog entry" 
+           plain 
+           (file (org-capture-blog-path)) 
+           "#+BEGIN_HTML\n---\ntitle: %(concat \"test\" (buffer-file-name))\nlayout: post\ncategories: %^{Tags (separated by spaces)}\n---\n#+END_HTML\n\n%F"
+	   :immediate-finish t
+	   :kill-buffer t
+	   )
+          
+          ("t" 
+           "Todo" 
+           entry 
+           (file+headline "" "Task")
+           "* TODO %?\n  %i\n  %a")
+          
+          ("j" 
+           "Journal" 
+           entry (file+datetree "")             
+       "* %?\nEntered on %U\n  %i\n  %a"))) 
+  
+    (setq org-capture-templates-contexts
+          '(("b" ((in-mode . "org-mode")))))
+    
+#+END_SRC
 
 ** Project configuration
 
 Publishing is configured almost entirely through setting the value of one variable, called `org-publish-project-alist
 
 #+BEGIN_SRC emacs-lisp
-    (setq org-publish-project-alist
-          '(
-            ("org-perfumed-nightmare"
-             :base-directory "~/Dropbox/notes"
-             :publishing-directory "~/Documents/danielsz.github.io/_posts"
-             :publishing-function org-publish-org-to-html
-            ;; :completion-function
-             :table-of-contents nil
-             :html-extension "html"
-             :body-only t ))
-          )
-    
+  (load "~/Documents/elisp/workflow/workflow.el")
+  
+  (setq org-publish-project-alist
+        '(
+          ("org-perfumed-nightmare"
+           :base-directory "~/Dropbox/notes/blog"
+           :publishing-directory "~/Documents/danielsz.github.io/_posts"
+           :publishing-function org-publish-org-to-html
+           :completion-function delete-blog-files
+           :preparation-function (lambda () (mapcar 'expand-blog-file (select-blog-files)))
+           :table-of-contents nil
+           :html-extension "html"
+           :body-only t 
+           :exclude "\\^\\([0-9]\\{4\\}-[0-9]+-[0-9]+\\)"
+           ))
+        )
+  
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(require 'org-publish)
+
+  (defun org-export-blog ()
+    "1-click blog publishing"
+    (interactive)
+    (org-capture nil "b")
+    (org-publish "org-perfumed-nightmare"))
+  
 #+END_SRC
 
 ** Org-babel
@@ -264,7 +341,6 @@ org-babel setup
 					   (setq org-confirm-babel-evaluate nil))
 
 #+END_SRC
-
 
 ** Org-velocity
 #+BEGIN_SRC emacs-lisp

@@ -234,15 +234,15 @@ Default notes file
            "New blog entry" 
            plain 
            (file (org-capture-blog-path)) 
-           "#+BEGIN_HTML\n---\ntitle:\nlayout: post\ncategories:\n - blog\n---\n#+END_HTML\n\n"
+           "#+BEGIN_HTML\n---\ntitle:\nlayout: post\ntags:\n - blog\n---\n#+END_HTML\n\n"
            :immediate-finish t
            )
           
           ("b" 
-           "Blog entry" 
+           "Org to Blog entry" 
            plain 
            (file (org-capture-blog-path)) 
-           "#+BEGIN_HTML\n---\ntitle: %(concat \"test\" (buffer-file-name))\nlayout: post\ncategories: %^{Tags (separated by spaces)}\n---\n#+END_HTML\n\n%F"
+           "#+BEGIN_HTML\n---\ntitle: %(concat \"test\" (buffer-file-name))\nlayout: post\ntags: %^{Tags (separated by spaces)}\n---\n#+END_HTML\n\n%F"
 	   :immediate-finish t
 	   :kill-buffer t
 	   )
@@ -268,7 +268,6 @@ Default notes file
 Publishing is configured almost entirely through setting the value of one variable, called `org-publish-project-alist
 
 #+BEGIN_SRC emacs-lisp
-  (load "~/Documents/elisp/workflow/workflow.el")
   
   (setq org-publish-project-alist
         '(
@@ -276,8 +275,8 @@ Publishing is configured almost entirely through setting the value of one variab
            :base-directory "~/Dropbox/notes/blog"
            :publishing-directory "~/Documents/danielsz.github.io/_posts"
            :publishing-function org-publish-org-to-html
-           :completion-function delete-blog-files
-           :preparation-function (lambda () (mapcar 'expand-blog-file (select-blog-files)))
+           :preparation-function (lambda () (mapcar 'pn-expand-blog-file (pn-select-blog-files)))
+           :completion-function pn-delete-blog-files
            :table-of-contents nil
            :html-extension "html"
            :body-only t 
@@ -286,6 +285,40 @@ Publishing is configured almost entirely through setting the value of one variab
         )
   
 #+END_SRC
+
+These are my helper functions for the above project. One-click exporting to jekyll.
+
+#+begin_src emacs-lisp
+(defun pn-select-blog-files ()
+  (directory-files "~/Dropbox/notes/blog" t "\\([0-9]\\{4\\}-[0-9]+-[0-9]+\\)"))
+
+(defun pn-delete-blog-files ()
+  (mapcar (lambda (file)
+	    (kill-buffer (find-buffer-visiting file))
+	    (delete-file file)) (pn-select-blog-files))
+) 
+(defun chomp (str)
+      "Chomp leading and trailing whitespace from STR."
+      (while (string-match "\\`\n+\\|^\\s-+\\|\\s-+$\\|\n+\\'"
+                           str)
+        (setq str (replace-match "" t t str)))
+      str)
+
+(defun pn-delete-line ()
+  (delete-region (point) (progn (forward-line -1) (point))))
+
+(defun pn-expand-blog-file (file)
+  (with-current-buffer (find-file-noselect file)
+    (end-of-buffer)
+    (beginning-of-line)
+    (let ((root-file (chomp (thing-at-point 'line))))
+      (pn-delete-line)
+      (insert-file-contents root-file)
+      (save-buffer))))
+
+#+end_src
+
+Interactive function to enable the 1-click custom export command in Emacs:
 
 #+BEGIN_SRC emacs-lisp
 (require 'org-publish)

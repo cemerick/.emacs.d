@@ -167,7 +167,7 @@ Canonical list of packages
                                 zenburn-theme solarized-theme 
                                 inf-ruby rspec-mode rbenv
                                 emacs-w3m yaml-mode 
-                                windcycle pbcopy
+                                windcycle pbcopy ace-jump-mode
                                 flymake flymake-ruby
                                 coffee-mode markdown-mode scss-mode mustache-mode
                                 clojure-mode midje-mode nrepl htmlize paredit kibit-mode
@@ -445,4 +445,8 @@ Clipboard and kill ring
   (when (eq system-type 'darwin)
     (progn
       (turn-on-pbcopy)))  
+#+END_SRC
+* Ace jump mode
+#+BEGIN_SRC emacs-lisp
+(define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
 #+END_SRC

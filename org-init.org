@@ -91,11 +91,6 @@ Make windmove work in org-mode:
 (ido-mode 1)
 #+END_SRC
 
-Get rid of `find-file-read-only' and replace it with something more useful.
-#+BEGIN_SRC emacs-lisp
-(global-set-key (kbd "C-x C-r") 'ido-recentf-open)
-#+END_SRC
-
 ** recentf
 Make recentf use ido
 #+BEGIN_SRC emacs-lisp
@@ -106,14 +101,6 @@ Make recentf use ido
   (if (find-file (ido-completing-read "Find recent file: " recentf-list)) 
       (message "Opening file...") 
     (message "Aborting")))
-#+END_SRC
-
-** smex
-#+BEGIN_SRC emacs-lisp
-(global-set-key (kbd "M-x") 'smex)
-(global-set-key (kbd "M-X") 'smex-major-mode-commands)
-;; This is your old M-x.
-(global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
 #+END_SRC
 
 * Key remappings
@@ -180,8 +167,7 @@ Canonical list of packages
 
 ** User setup
 #+BEGIN_SRC emacs-lisp
-(setq el-get-sources '((:name magit 
-                        :after (global-set-key (kbd "C-x C-o") 'magit-status))
+(setq el-get-sources '(
                        (:name ruby-mode
                         :after (when (string= system-name "ma.sdf.org") (setq enh-ruby-program "ruby193")))
                        (:name elisp-format 
@@ -198,7 +184,6 @@ Turn visual mode for text files
 (setq deft-directory "~/Dropbox/notes")
 (setq deft-extension "org")
 (setq deft-text-mode 'org-mode)
-(global-set-key [f8] 'deft)
 #+END_SRC
 * Org-mode
 ** Location of default notes files
@@ -378,10 +363,6 @@ org-babel setup
 
 #+END_SRC
 
-** Org-velocity
-#+BEGIN_SRC emacs-lisp
-(global-set-key (kbd "C-c v") 'org-velocity-read)
-#+END_SRC
 * Ctags
 Find root (replace eproject-root): cd "$(git rev-parse --show-toplevel)"
 
@@ -446,7 +427,21 @@ Clipboard and kill ring
     (progn
       (turn-on-pbcopy)))  
 #+END_SRC
-* Ace jump mode
+* Global keys
 #+BEGIN_SRC emacs-lisp
+;;ace-jump-mode
 (define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
+;;deft
+(global-set-key [f8] 'deft)
+;;org-velocity
+(global-set-key (kbd "C-c v") 'org-velocity-read)
+;;magit
+(global-set-key (kbd "C-x C-o") 'magit-status)
+;;;Smex is a M-x enhancement for Emacs. Built on top of IDO, it provides a convenient interface to your recently and most frequently used commands.
+(global-set-key (kbd "M-x") 'smex)
+(global-set-key (kbd "M-X") 'smex-major-mode-commands)
+;; This is your old M-x.
+(global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
+;;Get rid of `find-file-read-only' and replace it with something more useful.
+(global-set-key (kbd "C-x C-r") 'ido-recentf-open)
 #+END_SRC

@@ -150,7 +150,7 @@ Not sure it is needed.
 Canonical list of packages
 #+BEGIN_SRC emacs-lisp
     
-    (setq my-packages (append '(el-get smex magit helm
+    (setq my-packages (append '(el-get smex magit helm dash
                                 zenburn-theme solarized-theme 
                                 inf-ruby rspec-mode rbenv
                                 emacs-w3m yaml-mode 

@@ -201,7 +201,8 @@ Turn visual mode for text files
 (global-set-key [f8] 'deft)
 #+END_SRC
 * Org-mode
-Default notes file
+** Location of default notes files
+
 #+begin_src emacs-lisp
   (let ((destination (if (file-exists-p "~/Dropbox")
                          "~/Dropbox/notes.org"
@@ -210,57 +211,59 @@ Default notes file
 #+end_src
 
 ** Capture templates
+
 #+BEGIN_SRC emacs-lisp
- 
-  (require 'org-element)
+   
+    (require 'org-element)
+          
+    (defun pn-get-headline ()
+      (let* ((headlines (org-map-entries '(org-element-property :title (org-element-at-point)) t 'file)) (headline (car headlines)))
+        (org-capture-put :title headline)
+         headline))
     
-  (defun get-headline()
-    (let ((headlines (org-map-entries '(org-element-property :title (org-element-at-point)) t 'file)))
-      (car headlines)))
-  
-  (defun filename_from_title ()
-    (replace-regexp-in-string " " "-" (get-headline)))
-  
-  (defun org-capture-blog-path ()
-    (let ((name (filename_from_title)))
-      (expand-file-name (format "%s-%s.org"
-                                (format-time-string "%Y-%m-%d")
-                                name) "~/Dropbox/notes/blog")))
-  
-  (setq org-capture-templates  
+    (defun pn-filename_from_title ()
+      (replace-regexp-in-string " " "-" (pn-get-headline)))
+    
+    (defun pn-capture-blog-path ()
+      (let ((name (pn-filename_from_title)))
+        (expand-file-name (format "%s-%s.org"
+                                  (format-time-string "%Y-%m-%d")
+                                  name) "~/Dropbox/notes/blog")))
+    
+    (setq org-capture-templates  
+        
+          '(
+            ("n" 
+             "New blog entry" 
+             plain 
+             (file (pn-capture-blog-path)) 
+             "#+BEGIN_HTML\n---\ntitle:\nlayout: post\ntags:\n - blog\n---\n#+END_HTML\n\n"
+             :immediate-finish t
+             )
+            
+            ("b" 
+             "Org to Blog entry" 
+             plain 
+             (file (pn-capture-blog-path)) 
+             "#+BEGIN_HTML\n---\ntitle: %(org-capture-get :title)\nlayout: post\ntags: %^{Tags (separated by spaces)}\n---\n#+END_HTML\n\n%F"
+             :immediate-finish t
+             :kill-buffer t
+             )
+            
+            ("t" 
+             "Todo" 
+             entry 
+             (file+headline "" "Task")
+             "* TODO %?\n  %i\n  %a")
+            
+            ("j" 
+             "Journal" 
+             entry (file+datetree "")             
+         "* %?\nEntered on %U\n  %i\n  %a"))) 
+    
+      (setq org-capture-templates-contexts
+            '(("b" ((in-mode . "org-mode")))))
       
-        '(
-          ("n" 
-           "New blog entry" 
-           plain 
-           (file (org-capture-blog-path)) 
-           "#+BEGIN_HTML\n---\ntitle:\nlayout: post\ntags:\n - blog\n---\n#+END_HTML\n\n"
-           :immediate-finish t
-           )
-          
-          ("b" 
-           "Org to Blog entry" 
-           plain 
-           (file (org-capture-blog-path)) 
-           "#+BEGIN_HTML\n---\ntitle: %(concat \"test\" (buffer-file-name))\nlayout: post\ntags: %^{Tags (separated by spaces)}\n---\n#+END_HTML\n\n%F"
-	   :immediate-finish t
-	   :kill-buffer t
-	   )
-          
-          ("t" 
-           "Todo" 
-           entry 
-           (file+headline "" "Task")
-           "* TODO %?\n  %i\n  %a")
-          
-          ("j" 
-           "Journal" 
-           entry (file+datetree "")             
-       "* %?\nEntered on %U\n  %i\n  %a"))) 
-  
-    (setq org-capture-templates-contexts
-          '(("b" ((in-mode . "org-mode")))))
-    
 #+END_SRC
 
 ** Project configuration

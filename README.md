@@ -1,476 +1,406 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
-<head>
-<title>Emacs Configuration</title>
-<meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1"/>
-<meta name="title" content="Emacs Configuration"/>
-<meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2013-03-13T04:13+0200"/>
-<meta name="author" content="Daniel Szmulewicz"/>
-<meta name="description" content=""/>
-<meta name="keywords" content=""/>
-<style type="text/css">
- <!--/*--><![CDATA[/*><!--*/
-  html { font-family: Times, serif; font-size: 12pt; }
-  .title  { text-align: center; }
-  .todo   { color: red; }
-  .done   { color: green; }
-  .tag    { background-color: #add8e6; font-weight:normal }
-  .target { }
-  .timestamp { color: #bebebe; }
-  .timestamp-kwd { color: #5f9ea0; }
-  .right  {margin-left:auto; margin-right:0px;  text-align:right;}
-  .left   {margin-left:0px;  margin-right:auto; text-align:left;}
-  .center {margin-left:auto; margin-right:auto; text-align:center;}
-  p.verse { margin-left: 3% }
-  pre {
-	border: 1pt solid #AEBDCC;
-	background-color: #F3F5F7;
-	padding: 5pt;
-	font-family: courier, monospace;
-        font-size: 90%;
-        overflow:auto;
-  }
-  table { border-collapse: collapse; }
-  td, th { vertical-align: top;  }
-  th.right  { text-align:center;  }
-  th.left   { text-align:center;   }
-  th.center { text-align:center; }
-  td.right  { text-align:right;  }
-  td.left   { text-align:left;   }
-  td.center { text-align:center; }
-  dt { font-weight: bold; }
-  div.figure { padding: 0.5em; }
-  div.figure p { text-align: center; }
-  div.inlinetask {
-    padding:10px;
-    border:2px solid gray;
-    margin:10px;
-    background: #ffffcc;
-  }
-  textarea { overflow-x: auto; }
-  .linenr { font-size:smaller }
-  .code-highlighted {background-color:#ffff00;}
-  .org-info-js_info-navigation { border-style:none; }
-  #org-info-js_console-label { font-size:10px; font-weight:bold;
-                               white-space:nowrap; }
-  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
-                                 font-weight:bold; }
-  /*]]>*/-->
-</style>
-<script type="text/javascript">
-/*
-@licstart  The following is the entire license notice for the
-JavaScript code in this tag.
+Table of Contents
+-----------------
 
-Copyright (C) 2012-2013 Free Software Foundation, Inc.
+-   [1 Saving Customizations](#sec-1)
+-   [2 Backup and autosave](#sec-2)
+-   [3 UTF-8](#sec-3)
+-   [4 Tabs](#sec-4)
+-   [5 Color theme](#sec-5)
+-   [6 Graphic display](#sec-6)
+-   [7 Winner mode](#sec-7)
+-   [8 Windmove](#sec-8)
+-   [9 Recent file list](#sec-9)
+-   [10 Ido](#sec-10)
+    -   [10.1 recentf](#sec-10-1)
 
-The JavaScript code in this tag is free software: you can
-redistribute it and/or modify it under the terms of the GNU
-General Public License (GNU GPL) as published by the Free Software
-Foundation, either version 3 of the License, or (at your option)
-any later version.  The code is distributed WITHOUT ANY WARRANTY;
-without even the implied warranty of MERCHANTABILITY or FITNESS
-FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+-   [11 Key remappings](#sec-11)
+-   [12 El-get](#sec-12)
+    -   [12.1 Installation routine](#sec-12-1)
+    -   [12.2 Recipe setup](#sec-12-2)
+    -   [12.3 User setup](#sec-12-3)
 
-As additional permission under GNU GPL version 3 section 7, you
-may distribute non-source (e.g., minimized or compacted) forms of
-that code without the copy of the GNU GPL normally required by
-section 4, provided you include this license notice and a URL
-through which recipients can access the Corresponding Source.
+-   [13 Text-files hooks](#sec-13)
+-   [14 Deft](#sec-14)
+-   [15 Org-mode](#sec-15)
+    -   [15.1 Location of default notes files](#sec-15-1)
+    -   [15.2 Capture templates](#sec-15-2)
+    -   [15.3 Project configuration](#sec-15-3)
+    -   [15.4 Org-babel](#sec-15-4)
 
+-   [16 Ctags](#sec-16)
+-   [17 Repos](#sec-17)
+-   [18 Paredit](#sec-18)
+-   [19 Slime](#sec-19)
+-   [20 w3m](#sec-20)
+-   [21 Mac OS X customizations](#sec-21)
+-   [22 Global keys](#sec-22)
 
-@licend  The above is the entire license notice
-for the JavaScript code in this tag.
-*/
-<!--/*--><![CDATA[/*><!--*/
- function CodeHighlightOn(elem, id)
- {
-   var target = document.getElementById(id);
-   if(null != target) {
-     elem.cacheClassElem = elem.className;
-     elem.cacheClassTarget = target.className;
-     target.className = "code-highlighted";
-     elem.className   = "code-highlighted";
-   }
- }
- function CodeHighlightOff(elem, id)
- {
-   var target = document.getElementById(id);
-   if(elem.cacheClassElem)
-     elem.className = elem.cacheClassElem;
-   if(elem.cacheClassTarget)
-     target.className = elem.cacheClassTarget;
- }
-/*]]>*///-->
-</script>
+1 Saving Customizations
+-----------------------
 
-</head>
-<body>
+We want to save our customizations in a dedicated file. We will check
+the existence of such a file so as not to cause errors on a vanilla
+emacs installation. Please create it yourself if you don't want your
+customizations to be saved in the init file. (default behavior)
 
-<div id="preamble">
+~~~~ {.src .src-emacs-lisp}
+(let 
+    ((customization-file "~/.emacs.d/emacs-custom.el"))
+  (when (file-exists-p customization-file)
+    (setq custom-file customization-file)
+    (load custom-file)))
+~~~~
 
-</div>
+2 Backup and autosave
+---------------------
 
-<div id="content">
-<h1 class="title">Emacs Configuration</h1>
+Keep Backup and Auto-save Files Out of the Way
+[http://emacsredux.com/blog/2013/05/09/keep-backup-and-auto-save-files-out-of-the-way/](http://emacsredux.com/blog/2013/05/09/keep-backup-and-auto-save-files-out-of-the-way/)
 
+~~~~ {.src .src-emacs-lisp}
+;; store all backup and autosave files in the tmp dir
+(setq backup-directory-alist
+      `((".*" . ,temporary-file-directory)))
+(setq auto-save-file-name-transforms
+      `((".*" ,temporary-file-directory t)))
+~~~~
 
-<div id="table-of-contents">
-<h2>Table of Contents</h2>
-<div id="text-table-of-contents">
-<ul>
-<li><a href="#sec-1">1 UTF-8</a></li>
-<li><a href="#sec-2">2 Tabs</a></li>
-<li><a href="#sec-3">3 Color theme</a></li>
-<li><a href="#sec-4">4 Menu bar</a></li>
-<li><a href="#sec-5">5 Winner mode</a></li>
-<li><a href="#sec-6">6 Windmove</a></li>
-<li><a href="#sec-7">7 Recent file list</a></li>
-<li><a href="#sec-8">8 Ido</a></li>
-<li><a href="#sec-9">9 Fixes</a></li>
-<li><a href="#sec-10">10 El-get</a>
-<ul>
-<li><a href="#sec-10-1">10.1 Installation routine</a></li>
-<li><a href="#sec-10-2">10.2 Recipe setup</a></li>
-<li><a href="#sec-10-3">10.3 User setup</a></li>
-</ul>
-</li>
-<li><a href="#sec-11">11 Text-files hooks</a></li>
-<li><a href="#sec-12">12 Deft</a></li>
-<li><a href="#sec-13">13 Org-mode modules</a>
-<ul>
-<li><a href="#sec-13-1">13.1 Org-babel</a></li>
-<li><a href="#sec-13-2">13.2 Org-velocity</a></li>
-</ul>
-</li>
-</ul>
-</div>
-</div>
+3 UTF-8
+-------
 
-<div id="outline-container-1" class="outline-2">
-<h2 id="sec-1"><span class="section-number-2">1</span> UTF-8</h2>
-<div class="outline-text-2" id="text-1">
+We want to have default utf-8 everything.
 
-<p>We want to have default utf-8 everything.
-</p>
-
-
-<pre class="src src-emacs-lisp">(prefer-coding-system 'utf-8)
+~~~~ {.src .src-emacs-lisp}
+(prefer-coding-system 'utf-8)
 (set-default-coding-systems 'utf-8)
 (set-terminal-coding-system 'utf-8)
 (set-keyboard-coding-system 'utf-8)
-</pre>
+~~~~
 
+4 Tabs
+------
 
-</div>
+Two-width tab stops, like I'm used to
 
-</div>
-
-<div id="outline-container-2" class="outline-2">
-<h2 id="sec-2"><span class="section-number-2">2</span> Tabs</h2>
-<div class="outline-text-2" id="text-2">
-
-<p>Two-width tab stops, like I'm used to
-</p>
-
-
-<pre class="src src-emacs-lisp">(setq tab-width 2)
+~~~~ {.src .src-emacs-lisp}
+(setq tab-width 2)
 (setq tab-stop-list (number-sequence 2 200 2))
 (setq indent-tabs-mode nil)
-</pre>
+~~~~
 
+5 Color theme
+-------------
 
-</div>
+~~~~ {.src .src-emacs-lisp}
+(load-theme 'adwaita t)
+~~~~
 
-</div>
+6 Graphic display
+-----------------
 
-<div id="outline-container-3" class="outline-2">
-<h2 id="sec-3"><span class="section-number-2">3</span> Color theme</h2>
-<div class="outline-text-2" id="text-3">
+Disable menu-bar in terminal, enable in graphic display
 
+~~~~ {.src .src-emacs-lisp}
+(if (display-graphic-p)
+     (progn
+       (set-frame-size (selected-frame) 90 34)
+       (menu-bar-mode t))
+    (menu-bar-mode 0))
+~~~~
 
+7 Winner mode
+-------------
 
+~~~~ {.src .src-emacs-lisp}
+(winner-mode 1)
+~~~~
 
-<pre class="src src-emacs-lisp">(load-theme 'adwaita t)
-</pre>
+8 Windmove
+----------
 
-
-</div>
-
-</div>
-
-<div id="outline-container-4" class="outline-2">
-<h2 id="sec-4"><span class="section-number-2">4</span> Menu bar</h2>
-<div class="outline-text-2" id="text-4">
-
-<p>Disable it
-</p>
-
-
-<pre class="src src-emacs-lisp">(menu-bar-mode 0)
-</pre>
-
-
-</div>
-
-</div>
-
-<div id="outline-container-5" class="outline-2">
-<h2 id="sec-5"><span class="section-number-2">5</span> Winner mode</h2>
-<div class="outline-text-2" id="text-5">
-
-
-
-
-<pre class="src src-emacs-lisp">(winner-mode 1)
-</pre>
-
-
-</div>
-
-</div>
-
-<div id="outline-container-6" class="outline-2">
-<h2 id="sec-6"><span class="section-number-2">6</span> Windmove</h2>
-<div class="outline-text-2" id="text-6">
-
-
-
-
-<pre class="src src-emacs-lisp">(<span style="color: #A52A2A; font-weight: bold;">when</span> (fboundp 'windmove-default-keybindings)
+~~~~ {.src .src-emacs-lisp}
+(when (fboundp 'windmove-default-keybindings)
      (windmove-default-keybindings))
-</pre>
+~~~~
 
-</div>
+Make windmove work in org-mode:
 
-</div>
+~~~~ {.src .src-emacs-lisp}
+(add-hook 'org-shiftup-final-hook 'windmove-up)
+(add-hook 'org-shiftleft-final-hook 'windmove-left)
+(add-hook 'org-shiftdown-final-hook 'windmove-down)
+(add-hook 'org-shiftright-final-hook 'windmove-right)
+~~~~
 
-<div id="outline-container-7" class="outline-2">
-<h2 id="sec-7"><span class="section-number-2">7</span> Recent file list</h2>
-<div class="outline-text-2" id="text-7">
+9 Recent file list
+------------------
 
-
-
-
-<pre class="src src-emacs-lisp">(<span style="color: #A52A2A; font-weight: bold;">require</span> '<span style="color: #F5666D;">recentf</span>)
+~~~~ {.src .src-emacs-lisp}
+(require 'recentf)
 (recentf-mode 1)
-</pre>
+~~~~
 
+10 Ido
+------
 
-</div>
-
-</div>
-
-<div id="outline-container-8" class="outline-2">
-<h2 id="sec-8"><span class="section-number-2">8</span> Ido</h2>
-<div class="outline-text-2" id="text-8">
-
-
-
-
-<pre class="src src-emacs-lisp">(setq ido-enable-flex-matching t)
+~~~~ {.src .src-emacs-lisp}
+(setq ido-enable-flex-matching t)
 (setq ido-everywhere t)
 (ido-mode 1)
-</pre>
+~~~~
 
+### 10.1 recentf
 
-<p>
-Get rid of `find-file-read-only' and replace it with something more useful.
-</p>
-
-
-<pre class="src src-emacs-lisp">(global-set-key (kbd <span style="color: #4E9A06;">"C-x C-r"</span>) 'ido-recentf-open)
-</pre>
-
-
-<p>
 Make recentf use ido
-</p>
 
-
-<pre class="src src-emacs-lisp">(<span style="color: #A52A2A; font-weight: bold;">defun</span> <span style="color: #00578E; font-weight: bold;">ido-recentf-open</span> () 
-  <span style="color: #4E9A06;">"Use `</span><span style="color: #F5666D;">ido-completing-read</span><span style="color: #4E9A06;">' to \\[</span><span style="color: #F5666D;">find-file</span><span style="color: #4E9A06;">] a recent file"</span> 
+~~~~ {.src .src-emacs-lisp}
+(defun ido-recentf-open () 
+  "Use `ido-completing-read' to \\[find-file] a recent file" 
   (interactive) 
-  (<span style="color: #A52A2A; font-weight: bold;">if</span> (find-file (ido-completing-read <span style="color: #4E9A06;">"Find recent file: "</span> recentf-list)) 
-      (message <span style="color: #4E9A06;">"Opening file..."</span>) 
-    (message <span style="color: #4E9A06;">"Aborting"</span>)))
-</pre>
+  (if (find-file (ido-completing-read "Find recent file: " recentf-list)) 
+      (message "Opening file...") 
+    (message "Aborting")))
+~~~~
 
-</div>
+11 Key remappings
+-----------------
 
-</div>
+Fix the bug that shift-up doesn't send the right escape sequence in
+terminal
 
-<div id="outline-container-9" class="outline-2">
-<h2 id="sec-9"><span class="section-number-2">9</span> Fixes</h2>
-<div class="outline-text-2" id="text-9">
+~~~~ {.src .src-emacs-lisp}
+(if (equal "xterm-256color" (tty-type)) (define-key input-decode-map "\e[1;2A" [S-up]))
+~~~~
 
-<p>Fix the bug that shift-up doesn't send the right escape sequence in terminal
-</p>
-
-
-
-<pre class="src src-emacs-lisp">(<span style="color: #A52A2A; font-weight: bold;">if</span> (equal <span style="color: #4E9A06;">"xterm-256color"</span> (tty-type)) (define-key input-decode-map <span style="color: #4E9A06;">"\e[1;2A"</span> [S-up]))
-</pre>
-
-
-<p>
 To make windmove work in tmux
-</p>
 
+~~~~ {.src .src-emacs-lisp}
+(if (equal "screen-256color" (tty-type)) 
+    (progn
+    (define-key input-decode-map "\e[1;2D" [S-left])  
+    (define-key input-decode-map (kbd "M-[ 1 ; 2 C") [S-right])  
+    (define-key input-decode-map (kbd "M-[ 1 ; 2 B")[S-down])  
+    (define-key input-decode-map "\e[1;2A" [S-up])  
+    (define-key input-decode-map "\e[1;6A" [S-C-up])
+    (define-key input-decode-map "\e[1;6B" [S-C-down])))
+~~~~
 
-<pre class="src src-emacs-lisp">(<span style="color: #A52A2A; font-weight: bold;">if</span> (equal <span style="color: #4E9A06;">"screen-256color"</span> (tty-type)) 
-    (<span style="color: #A52A2A; font-weight: bold;">progn</span>
-    (define-key input-decode-map <span style="color: #4E9A06;">"\e[1;2D"</span> [S-left])  
-    (define-key input-decode-map (kbd <span style="color: #4E9A06;">"M-[ 1 ; 2 C"</span>) [S-right])  
-    (define-key input-decode-map (kbd <span style="color: #4E9A06;">"M-[ 1 ; 2 B"</span>)[S-down])  
-    (define-key input-decode-map <span style="color: #4E9A06;">"\e[1;2A"</span> [S-up])  
-    (define-key input-decode-map <span style="color: #4E9A06;">"\e[1;6A"</span> [S-C-up])
-    (define-key input-decode-map <span style="color: #4E9A06;">"\e[1;6B"</span> [S-C-down])))
+Not sure it is needed.
 
-</pre>
+~~~~ {.src .src-emacs-lisp}
+(if (equal "daniels-imac.local" (system-name))
+    (add-hook 'comint-mode-hook
+              (lambda ()               
+                (define-key comint-mode-map (kbd "M-n") 'comint-next-input))))
+~~~~
 
+12 El-get
+---------
 
-</div>
+### 12.1 Installation routine
 
-</div>
+~~~~ {.src .src-emacs-lisp}
+(add-to-list 'load-path "~/.emacs.d/el-get/el-get")
 
-<div id="outline-container-10" class="outline-2">
-<h2 id="sec-10"><span class="section-number-2">10</span> El-get</h2>
-<div class="outline-text-2" id="text-10">
-
-
-
-</div>
-
-<div id="outline-container-10-1" class="outline-3">
-<h3 id="sec-10-1"><span class="section-number-3">10.1</span> Installation routine</h3>
-<div class="outline-text-3" id="text-10-1">
-
-
-
-
-
-<pre class="src src-emacs-lisp">(add-to-list 'load-path <span style="color: #4E9A06;">"~/.emacs.d/el-get/el-get"</span>)
-
-(<span style="color: #A52A2A; font-weight: bold;">unless</span> 
-    (<span style="color: #A52A2A; font-weight: bold;">require</span> '<span style="color: #F5666D;">el-get</span> nil t) 
-  (url-retrieve <span style="color: #4E9A06;">"https://raw.github.com/dimitri/el-get/master/el-get-install.el"</span> 
-  (<span style="color: #A52A2A; font-weight: bold;">lambda</span> (s) 
-    (<span style="color: #A52A2A; font-weight: bold;">let</span> (el-get-master-branch)
+(unless 
+    (require 'el-get nil t) 
+  (url-retrieve "https://raw.github.com/dimitri/el-get/master/el-get-install.el" 
+  (lambda (s) 
+    (let (el-get-master-branch)
       (goto-char (point-max)) 
         (eval-print-last-sexp)))))
-</pre>
+~~~~
 
+### 12.2 Recipe setup
 
-</div>
+Canonical list of packages
 
-</div>
-
-<div id="outline-container-10-2" class="outline-3">
-<h3 id="sec-10-2"><span class="section-number-3">10.2</span> Recipe setup</h3>
-<div class="outline-text-3" id="text-10-2">
-
-<p>Canonical list of packages
-</p>
-
-
-<pre class="src src-emacs-lisp">(setq my-packages (append '(el-get ack yasnippet
+~~~~ {.src .src-emacs-lisp}
+(setq my-packages (append '(el-get smex magit helm dash
                             zenburn-theme solarized-theme 
-                            ruby-mode inf-ruby rspec-mode
-                            auto-complete auto-complete-emacs-lisp auto-complete-yasnippet
-                            anything anything-rcodetools emacs-w3m yaml-mode windcycle
-                            go-mode 
-                            coffee-mode markdown-mode less-css-mode scss-mode mustache-mode
-                            clojure-mode clojurescript-mode midje-mode nrepl htmlize paredit kibit-mode
+                            inf-ruby rspec-mode rbenv
+                            emacs-w3m yaml-mode 
+                            windcycle pbcopy ace-jump-mode
+                            flymake flymake-ruby
+                            coffee-mode markdown-mode scss-mode mustache-mode
+                            clojure-mode midje-mode nrepl htmlize paredit kibit-mode
                             epresent org-html5presentation org-impress-js org-s5
-                            o-blog deft palimpsest-mode) 
+                            o-blog deft palimpsest-mode org-jekyll) 
                           (mapcar 'el-get-source-name el-get-sources)))
 (el-get-cleanup my-packages)
 (el-get 'sync my-packages)
-</pre>
+~~~~
 
+### 12.3 User setup
 
-</div>
+~~~~ {.src .src-emacs-lisp}
+(setq el-get-sources '(
+                       (:name ruby-mode
+                        :after (when (string= system-name "ma.sdf.org") (setq enh-ruby-program "ruby193")))
+                       (:name elisp-format 
+                        :features elisp-format)))
+~~~~
 
-</div>
+13 Text-files hooks
+-------------------
 
-<div id="outline-container-10-3" class="outline-3">
-<h3 id="sec-10-3"><span class="section-number-3">10.3</span> User setup</h3>
-<div class="outline-text-3" id="text-10-3">
+Turn visual mode for text files
 
+~~~~ {.src .src-emacs-lisp}
+(add-hook 'text-mode-hook 'turn-on-visual-line-mode)
+~~~~
 
+14 Deft
+-------
 
-
-<pre class="src src-emacs-lisp">(setq el-get-sources '((<span style="color: #A020F0;">:name</span> magit 
-                        <span style="color: #A020F0;">:after</span> (global-set-key (kbd <span style="color: #4E9A06;">"C-x C-o"</span>) 'magit-status))
-                       (<span style="color: #A020F0;">:name</span> ruby-mode
-                        <span style="color: #A020F0;">:after</span> (<span style="color: #A52A2A; font-weight: bold;">when</span> (string= system-name <span style="color: #4E9A06;">"ma.sdf.org"</span>) (setq enh-ruby-program <span style="color: #4E9A06;">"ruby193"</span>)))
-                       (<span style="color: #A020F0;">:name</span> elisp-format 
-                        <span style="color: #A020F0;">:features</span> elisp-format)))
-</pre>
-
-</div>
-</div>
-
-</div>
-
-<div id="outline-container-11" class="outline-2">
-<h2 id="sec-11"><span class="section-number-2">11</span> Text-files hooks</h2>
-<div class="outline-text-2" id="text-11">
-
-<p>Turn visual mode for text files
-</p>
-
-
-<pre class="src src-emacs-lisp">(add-hook 'text-mode-hook 'turn-on-visual-line-mode)
-</pre>
-
-
-</div>
-
-</div>
-
-<div id="outline-container-12" class="outline-2">
-<h2 id="sec-12"><span class="section-number-2">12</span> Deft</h2>
-<div class="outline-text-2" id="text-12">
-
-
-
-
-<pre class="src src-emacs-lisp">(setq deft-directory <span style="color: #4E9A06;">"~/Dropbox/notes"</span>)
-(setq deft-extension <span style="color: #4E9A06;">"org"</span>)
+~~~~ {.src .src-emacs-lisp}
+(setq deft-directory "~/Dropbox/notes")
+(setq deft-extension "org")
 (setq deft-text-mode 'org-mode)
-</pre>
+~~~~
 
-</div>
+15 Org-mode
+-----------
 
-</div>
+### 15.1 Location of default notes files
 
-<div id="outline-container-13" class="outline-2">
-<h2 id="sec-13"><span class="section-number-2">13</span> Org-mode modules</h2>
-<div class="outline-text-2" id="text-13">
+~~~~ {.src .src-emacs-lisp}
+(let ((destination (if (file-exists-p "~/Dropbox")
+                       "~/Dropbox/notes.org"
+                     "~/notes.org")))
+  (setq org-default-notes-file destination))    
+~~~~
 
+### 15.2 Capture templates
 
+~~~~ {.src .src-emacs-lisp}
+(require 'org-element)
 
-</div>
+(defun pn-get-headline ()
+  (let* ((headlines (org-map-entries '(org-element-property :title (org-element-at-point)) t 'file)) (headline (car headlines)))
+    (org-capture-put :title headline)
+     headline))
 
-<div id="outline-container-13-1" class="outline-3">
-<h3 id="sec-13-1"><span class="section-number-3">13.1</span> Org-babel</h3>
-<div class="outline-text-3" id="text-13-1">
+(defun pn-filename_from_title ()
+  (replace-regexp-in-string " " "-" (pn-get-headline)))
 
+(defun pn-capture-blog-path ()
+  (let ((name (pn-filename_from_title)))
+    (expand-file-name (format "%s-%s.org"
+                              (format-time-string "%Y-%m-%d")
+                              name) "~/Dropbox/notes/blog")))
 
-<p>
+(setq org-capture-templates  
+
+      '(
+        ("n" 
+         "New blog entry" 
+         plain 
+         (file (pn-capture-blog-path)) 
+         "#+BEGIN_HTML\n---\ntitle:\nlayout: post\ntags:\n - blog\n---\n#+END_HTML\n\n"
+         :immediate-finish t
+         )
+
+        ("b" 
+         "Org to Blog entry" 
+         plain 
+         (file (pn-capture-blog-path)) 
+         "#+BEGIN_HTML\n---\ntitle: %(org-capture-get :title)\nlayout: post\ntags: %^{Tags (separated by spaces)}\n---\n#+END_HTML\n\n%F"
+         :immediate-finish t
+         :kill-buffer t
+         )
+
+        ("t" 
+         "Todo" 
+         entry 
+         (file+headline "" "Task")
+         "* TODO %?\n  %i\n  %a")
+
+        ("j" 
+         "Journal" 
+         entry (file+datetree "")             
+     "* %?\nEntered on %U\n  %i\n  %a"))) 
+
+  (setq org-capture-templates-contexts
+        '(("b" ((in-mode . "org-mode")))))
+~~~~
+
+### 15.3 Project configuration
+
+Publishing is configured almost entirely through setting the value of
+one variable, called \`org-publish-project-alist
+
+~~~~ {.src .src-emacs-lisp}
+(setq org-publish-project-alist
+      '(
+        ("org-perfumed-nightmare"
+         :base-directory "~/Dropbox/notes/blog"
+         :publishing-directory "~/Documents/danielsz.github.io/_posts"
+         :publishing-function org-publish-org-to-html
+         :preparation-function (lambda () (mapcar 'pn-expand-blog-file (pn-select-blog-files)))
+         :completion-function pn-delete-blog-files
+         :table-of-contents nil
+         :html-extension "html"
+         :body-only t 
+         :exclude "\\^\\([0-9]\\{4\\}-[0-9]+-[0-9]+\\)"
+         ))
+      )
+~~~~
+
+These are my helper functions for the above project. One-click exporting
+to jekyll.
+
+~~~~ {.src .src-emacs-lisp}
+(defun pn-select-blog-files ()
+  (directory-files "~/Dropbox/notes/blog" t "\\([0-9]\\{4\\}-[0-9]+-[0-9]+\\)"))
+
+(defun pn-delete-blog-files ()
+  (mapcar (lambda (file)
+            (kill-buffer (find-buffer-visiting file))
+            (delete-file file)) (pn-select-blog-files))
+) 
+(defun chomp (str)
+      "Chomp leading and trailing whitespace from STR."
+      (while (string-match "\\`\n+\\|^\\s-+\\|\\s-+$\\|\n+\\'"
+                           str)
+        (setq str (replace-match "" t t str)))
+      str)
+
+(defun pn-delete-line ()
+  (delete-region (point) (progn (forward-line -1) (point))))
+
+(defun pn-expand-blog-file (file)
+  (with-current-buffer (find-file-noselect file)
+    (end-of-buffer)
+    (beginning-of-line)
+    (let ((root-file (chomp (thing-at-point 'line))))
+      (pn-delete-line)
+      (insert-file-contents root-file)
+      (save-buffer))))
+~~~~
+
+Interactive function to enable the 1-click custom export command in
+Emacs:
+
+~~~~ {.src .src-emacs-lisp}
+(require 'org-publish)
+
+  (defun org-export-blog ()
+    "1-click blog publishing"
+    (interactive)
+    (org-capture nil "b")
+    (org-publish "org-perfumed-nightmare"))
+~~~~
+
+### 15.4 Org-babel
+
 org-babel setup
-</p>
 
-
-<pre class="src src-emacs-lisp">(<span style="color: #A52A2A; font-weight: bold;">when</span> (locate-file <span style="color: #4E9A06;">"ob"</span> load-path load-suffixes)
-                                           (<span style="color: #A52A2A; font-weight: bold;">require</span> '<span style="color: #F5666D;">ob</span>)
-                                           (<span style="color: #A52A2A; font-weight: bold;">require</span> '<span style="color: #F5666D;">ob-tangle</span>)
-                                           (add-to-list 'org-babel-tangle-lang-exts '(<span style="color: #4E9A06;">"clojure"</span> . <span style="color: #4E9A06;">"clj"</span>))
+~~~~ {.src .src-emacs-lisp}
+(when (locate-file "ob" load-path load-suffixes)
+                                           (require 'ob)
+                                           (require 'ob-tangle)
+                                           (add-to-list 'org-babel-tangle-lang-exts '("clojure" . "clj"))
 
                                            (org-babel-do-load-languages
                                             'org-babel-load-languages
@@ -480,58 +410,142 @@ org-babel setup
                                               (ruby . t)))
 
 
-                                           (<span style="color: #A52A2A; font-weight: bold;">defun</span> <span style="color: #00578E; font-weight: bold;">org-babel-execute:clojure</span> (body params)
-                                             <span style="color: #4E9A06;">"Evaluate a block of Clojure code with Babel."</span>
-                                             (<span style="color: #A52A2A; font-weight: bold;">let*</span> ((result (nrepl-send-string-sync body (nrepl-current-ns)))
-                                                    (value (plist-get result <span style="color: #A020F0;">:value</span>))
-                                                    (out (plist-get result <span style="color: #A020F0;">:stdout</span>))
-                                                    (out (<span style="color: #A52A2A; font-weight: bold;">when</span> out
-                                                           (<span style="color: #A52A2A; font-weight: bold;">if</span> (string= <span style="color: #4E9A06;">"\n"</span> (substring out -1))
+                                           (defun org-babel-execute:clojure (body params)
+                                             "Evaluate a block of Clojure code with Babel."
+                                             (let* ((result (nrepl-send-string-sync body (nrepl-current-ns)))
+                                                    (value (plist-get result :value))
+                                                    (out (plist-get result :stdout))
+                                                    (out (when out
+                                                           (if (string= "\n" (substring out -1))
                                                                (substring out 0 -1)
                                                              out)))
-                                                    (stdout (<span style="color: #A52A2A; font-weight: bold;">when</span> out
-                                                              (mapconcat (<span style="color: #A52A2A; font-weight: bold;">lambda</span> (line)
-                                                                           (concat <span style="color: #4E9A06;">";; "</span> line))
-                                                                         (split-string out <span style="color: #4E9A06;">"\n"</span>)
-                                                                         <span style="color: #4E9A06;">"\n"</span>))))
+                                                    (stdout (when out
+                                                              (mapconcat (lambda (line)
+                                                                           (concat ";; " line))
+                                                                         (split-string out "\n")
+                                                                         "\n"))))
                                                (concat stdout
-                                                       (<span style="color: #A52A2A; font-weight: bold;">when</span> (and stdout (not (string= <span style="color: #4E9A06;">"\n"</span> (substring stdout -1))))
-                                                         <span style="color: #4E9A06;">"\n"</span>)
-                                                       <span style="color: #4E9A06;">";;=&gt; "</span> value)))
+                                                       (when (and stdout (not (string= "\n" (substring stdout -1))))
+                                                         "\n")
+                                                       ";;=> " value)))
 
-                                           (<span style="color: #A52A2A; font-weight: bold;">provide</span> '<span style="color: #F5666D;">ob-clojure</span>)
+                                           (provide 'ob-clojure)
 
                                            (setq org-src-fontify-natively t)
                                            (setq org-confirm-babel-evaluate nil))
+~~~~
 
-</pre>
+16 Ctags
+--------
 
+Find root (replace eproject-root): cd "\$(git rev-parse –show-toplevel)"
 
-</div>
+~~~~ {.src .src-emacs-lisp}
+(defun build-ctags ()
+  (interactive)
+  (message "building project tags")
+  (let ((root (eproject-root)))
+    (shell-command (concat "ctags -e -R --extra=+fq --exclude=db --exclude=test --exclude=.git --exclude=public -f " root "TAGS " root)))
+  (visit-project-tags)
+  (message "tags built successfully"))
 
-</div>
+(defun visit-project-tags ()
+  (interactive)
+  (let ((tags-file (concat (eproject-root) "TAGS")))
+    (visit-tags-table tags-file)
+    (message (concat "Loaded " tags-file))))
+~~~~
 
-<div id="outline-container-13-2" class="outline-3">
-<h3 id="sec-13-2"><span class="section-number-3">13.2</span> Org-velocity</h3>
-<div class="outline-text-3" id="text-13-2">
+17 Repos
+--------
 
+~~~~ {.src .src-emacs-lisp}
+(setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
+                         ("marmalade" . "http://marmalade-repo.org/packages/")
+                         ("tromey" . "http://tromey.com/elpa/")
+                         ("melpa" . "http://melpa.milkbox.net/packages/")
+                         ("org" . "http://orgmode.org/elpa/")))
+~~~~
 
+18 Paredit
+----------
 
+~~~~ {.src .src-emacs-lisp}
+(autoload 'enable-paredit-mode "paredit" "Turn on pseudo-structural editing of Lisp code." t)
+(add-hook 'emacs-lisp-mode-hook       #'enable-paredit-mode)
+(add-hook 'eval-expression-minibuffer-setup-hook #'enable-paredit-mode)
+(add-hook 'ielm-mode-hook             #'enable-paredit-mode)
+(add-hook 'lisp-mode-hook             #'enable-paredit-mode)
+(add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
+(add-hook 'scheme-mode-hook           #'enable-paredit-mode)
+(add-hook 'clojure-mode-hook          #'enable-paredit-mode)
+~~~~
 
-<pre class="src src-emacs-lisp">(global-set-key (kbd <span style="color: #4E9A06;">"C-c v"</span>) 'org-velocity-read)
-</pre>
+19 Slime
+--------
 
-</div>
-</div>
-</div>
-</div>
+If there is a slime helper in quicklisp directory, assume a clozure
+installation
 
-<div id="postamble">
-<p class="date">Date: 2013-03-13T04:13+0200</p>
-<p class="author">Author: Daniel Szmulewicz</p>
-<p class="creator"><a href="http://orgmode.org">Org</a> version 7.9.4 with <a href="http://www.gnu.org/software/emacs/">Emacs</a> version 24</p>
-<a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a>
+~~~~ {.src .src-emacs-lisp}
+(let 
+     ((slime-helper (expand-file-name "~/quicklisp/slime-helper.el")))
+  (when (file-exists-p slime-helper)
+    (load slime-helper)
+    (setq inferior-lisp-program "ccl")))
+~~~~
 
-</div>
-</body>
-</html>
+20 w3m
+------
+
+~~~~ {.src .src-emacs-lisp}
+(setq w3m-coding-system 'utf-8
+          w3m-file-coding-system 'utf-8
+          w3m-file-name-coding-system 'utf-8
+          w3m-input-coding-system 'utf-8
+          w3m-output-coding-system 'utf-8
+          w3m-terminal-coding-system 'utf-8)
+~~~~
+
+21 Mac OS X customizations
+--------------------------
+
+Clipboard and kill ring
+
+~~~~ {.src .src-emacs-lisp}
+(when (eq system-type 'darwin)
+  (progn
+    (turn-on-pbcopy)))  
+~~~~
+
+22 Global keys
+--------------
+
+~~~~ {.src .src-emacs-lisp}
+;;ace-jump-mode
+(define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
+;;deft
+(global-set-key [f8] 'deft)
+;;org-velocity
+(global-set-key (kbd "C-c v") 'org-velocity-read)
+;;magit
+(global-set-key (kbd "C-x C-o") 'magit-status)
+;;;Smex is a M-x enhancement for Emacs. Built on top of IDO, it provides a convenient interface to your recently and most frequently used commands.
+(global-set-key (kbd "M-x") 'smex)
+(global-set-key (kbd "M-X") 'smex-major-mode-commands)
+;; This is your old M-x.
+(global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
+;;Get rid of `find-file-read-only' and replace it with something more useful.
+(global-set-key (kbd "C-x C-r") 'ido-recentf-open)
+;;hell mini
+(global-set-key (kbd "C-c h") 'helm-mini)
+~~~~
+
+Date: 2013-06-02T09:12+0300
+
+Author: Daniel Szmulewicz
+
+[Org](http://orgmode.org) version 7.9.3f with
+[Emacs](http://www.gnu.org/software/emacs/) version 24
+
+[Validate XHTML 1.0](http://validator.w3.org/check?uri=referer)

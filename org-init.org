@@ -447,6 +447,8 @@ Clipboard and kill ring
 * Global keys
 #+BEGIN_SRC emacs-lisp
 ;;ace-jump-mode
+(eval-after-load "org"
+        '(define-key org-mode-map "\C-c " 'nil)) ; unmap key, was org-table-blank-field
 (define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
 ;;org-capture
 (global-set-key [f6] 'org-capture)

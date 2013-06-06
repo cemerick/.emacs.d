@@ -431,6 +431,8 @@ Clipboard and kill ring
 #+BEGIN_SRC emacs-lisp
 ;;ace-jump-mode
 (define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
+;;org-capture
+(global-set-key [f6] 'org-capture)
 ;;deft
 (global-set-key [f8] 'deft)
 ;;org-velocity

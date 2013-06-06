@@ -202,9 +202,13 @@ Turn visual mode for text files
   (require 'org-element)
         
   (defun pn-get-headline ()
-    (let* ((headlines (org-map-entries '(org-element-property :title (org-element-at-point)) t 'file)) (headline (car headlines)))
-      (org-capture-put :title headline)
-       headline))
+      (let* ((headlines (org-map-entries '(org-element-property :title (org-element-at-point)) t 'file)) 
+             (headline (car headlines)) 
+             (listoftags (org-map-entries '(org-element-property :tags (org-element-at-point)) t 'file))
+             (tags (car listoftags)))
+        (org-capture-put :title headline)
+        (org-capture-put :tags tags)
+         headline))
   
   (defun pn-filename_from_title ()
     (replace-regexp-in-string " " "-" (pn-get-headline)))
@@ -230,7 +234,7 @@ Turn visual mode for text files
            "Org to Blog entry" 
            plain 
            (file (pn-capture-blog-path)) 
-           "#+BEGIN_HTML\n---\ntitle: %(org-capture-get :title)\nlayout: post\ntags: %^{Tags (separated by spaces)}\n---\n#+END_HTML\n\n%F"
+           "#+BEGIN_HTML\n---\ntitle: %(org-capture-get :title)\nlayout: post\ntags: %(mapconcat 'identity (org-capture-get :tags) \" \")\n---\n#+END_HTML\n\n%F"
            :immediate-finish t
            :kill-buffer t
            )
@@ -243,16 +247,16 @@ Turn visual mode for text files
   
           ("i"
            "Idea")
-	   
-	   ("ia"
-	   "app idea"
+           
+           ("ia"
+           "app idea"
            entry
            (file+headline "~/Dropbox/notes/ideas.org" "App ideas")
            "* %^{App idea (title):}\n %? \n%u"
            )
-
-	   ("ib"
-	   "blog idea"
+  
+           ("ib"
+           "blog idea"
            entry
            (file+headline "~/Dropbox/notes/ideas.org" "Blog ideas")
            "* %^{Blog idea (title):}\n %? \n%u"
@@ -294,34 +298,38 @@ Publishing is configured almost entirely through setting the value of one variab
 These are my helper functions for the above project. One-click exporting to jekyll.
 
 #+begin_src emacs-lisp
-(defun pn-select-blog-files ()
-  (directory-files "~/Dropbox/notes/blog" t "\\([0-9]\\{4\\}-[0-9]+-[0-9]+\\)"))
-
-(defun pn-delete-blog-files ()
-  (mapcar (lambda (file)
-	    (kill-buffer (find-buffer-visiting file))
-	    (delete-file file)) (pn-select-blog-files))
-) 
-(defun chomp (str)
-      "Chomp leading and trailing whitespace from STR."
-      (while (string-match "\\`\n+\\|^\\s-+\\|\\s-+$\\|\n+\\'"
-                           str)
-        (setq str (replace-match "" t t str)))
-      str)
-
-(defun pn-delete-line ()
-  (delete-region (point) (progn (forward-line -1) (point))))
-
-(defun pn-expand-blog-file (file)
-  (with-current-buffer (find-file-noselect file)
-    (end-of-buffer)
-    (beginning-of-line)
-    (let ((root-file (chomp (thing-at-point 'line))))
-      (pn-delete-line)
-      (insert-file-contents root-file)
-      (save-buffer))))
-
+    (defun pn-select-blog-files ()
+      (directory-files "~/Dropbox/notes/blog" t "\\([0-9]\\{4\\}-[0-9]+-[0-9]+\\)"))
+    
+    (defun pn-delete-blog-files ()
+      (mapcar (lambda (file)
+                (kill-buffer (find-buffer-visiting file))
+                (delete-file file)) (pn-select-blog-files))
+    ) 
+    (defun chomp (str)
+          "Chomp leading and trailing whitespace from STR."
+          (while (string-match "\\`\n+\\|^\\s-+\\|\\s-+$\\|\n+\\'"
+                               str)
+            (setq str (replace-match "" t t str)))
+          str)
+    
+    (defun pn-delete-line ()
+      (delete-region (point) (progn (forward-line -1) (point))))
+    
+    (defun pn-expand-blog-file (file)
+      (with-current-buffer (find-file-noselect file)
+        (end-of-buffer)
+        (beginning-of-line)
+        (let ((root-file (chomp (thing-at-point 'line))))
+          (pn-delete-line)
+          (insert-file-contents root-file)
+          (delete-region (point) (line-end-position))
+          )))
+    
 #+end_src
+
+#+RESULTS:
+: pn-expand-blog-file
 
 Interactive function to enable the 1-click custom export command in Emacs:
 

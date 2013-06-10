@@ -452,6 +452,12 @@ Clipboard and kill ring
     (progn
       (turn-on-pbcopy)))  
 #+END_SRC
+* ElDOC
+#+BEGIN_SRC emacs-lisp
+  (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
+  (add-hook 'lisp-interaction-mode-hook 'turn-on-eldoc-mode)
+  (add-hook 'ielm-mode-hook 'turn-on-eldoc-mode)
+#+END_SRC
 * Global keys
 #+BEGIN_SRC emacs-lisp
 ;;ace-jump-mode
@@ -473,6 +479,8 @@ Clipboard and kill ring
 (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
 ;;Get rid of `find-file-read-only' and replace it with something more useful.
 (global-set-key (kbd "C-x C-r") 'ido-recentf-open)
-;;hell mini
+;;helm mini
 (global-set-key (kbd "C-c h") 'helm-mini)
+;;magit-status
+(global-set-key (kbd "C-x g") 'magit-status)
 #+END_SRC

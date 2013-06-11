@@ -258,14 +258,21 @@ Turn visual mode for text files
            "app idea"
            entry
            (file+headline "~/Dropbox/notes/ideas.org" "App ideas")
-           "* %^{App idea (title):}\n %? \n%u"
+           "* %^{App idea (title)}\n %? \n%u"
            )
           
           ("ib"
            "blog idea"
            entry
            (file+headline "~/Dropbox/notes/ideas.org" "Blog ideas")
-           "* %^{Blog idea (title):}\n %? \n%u"
+           "* %^{Blog idea (title)}\n %? \n%u"
+           )
+
+          ("it"
+           "T-shirt idea"
+           entry
+           (file+headline "~/Dropbox/notes/ideas.org" "T-shirt ideas")
+           "* %^{T-shirt idea (title)}\n %? \n%u"
            )
           
           ("j" 

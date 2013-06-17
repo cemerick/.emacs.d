@@ -271,8 +271,8 @@ Turn visual mode for text files
           ("it"
            "T-shirt idea"
            entry
-           (file+headline "~/Dropbox/notes/ideas.org" "T-shirt ideas")
-           "* %^{T-shirt idea (title)}\n %? \n%u"
+           (file+headline "~/Dropbox/notes/ideas.org" "T-shirt slogans")
+           "* %^{T-shirt slogan (title)}\n %? \n%u"
            )
           
           ("j" 

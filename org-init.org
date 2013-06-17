@@ -458,33 +458,33 @@ If there is a slime helper in quicklisp directory, assume a clozure installation
 #+END_SRC
 * mu4e
 #+BEGIN_SRC emacs-lisp
-  (when (require 'mu4e nil t)
-    (setq mu4e-maildir (expand-file-name "~/mail"))
-    (setq mu4e-mu-binary "/usr/local/bin/mu")
-    ;; below are the defaults; if they do not exist yet, mu4e offers to
-    ;; create them. they can also functions; see their docstrings.
-    ;; (setq mu4e-sent-folder   "/sent")
-    ;; (setq mu4e-drafts-folder "/drafts")
-    ;; (setq mu4e-trash-folder  "/trash")
-    (setq
-   ;;mu4e-get-mail-command "offlineimap"   ;; or fetchmail, or ...
-     mu4e-get-mail-command "true"
-     mu4e-update-interval 300)             ;; update every 5 minutes
-  )
-  
-  
-  
-  ;; smtp mail setting; these are the same that `gnus' uses.
-  (setq send-mail-function 'smtpmail-send-it
-        message-send-mail-function 'smtpmail-send-it
-        smtpmail-starttls-credentials
-        '(("smtp.gmail.com" 587 nil nil))
-        smtpmail-auth-credentials
-        (expand-file-name "~/.authinfo")
-        smtpmail-default-smtp-server "smtp.gmail.com"
-        smtpmail-smtp-server "smtp.gmail.com"
-        smtpmail-smtp-service 587
-        smtpmail-debug-info t) 
+    (when (require 'mu4e nil t)
+      (setq 
+       mu4e-maildir (expand-file-name "~/mail")
+       mu4e-mu-binary "/usr/local/bin/mu"
+       ;; below are the defaults; if they do not exist yet, mu4e offers to
+       ;; create them. they can also functions; see their docstrings.
+       ;; (setq mu4e-sent-folder   "/sent")
+       ;; (setq mu4e-drafts-folder "/drafts")
+       ;; (setq mu4e-trash-folder  "/trash")
+       ;;mu4e-get-mail-command "offlineimap"   ;; or fetchmail, or ...
+       mu4e-get-mail-command "true"
+       mu4e-update-interval 300)             ;; update every 5 minutes
+    )
+    
+    
+    
+    ;; smtp mail setting; these are the same that `gnus' uses.
+    (setq send-mail-function 'smtpmail-send-it
+          message-send-mail-function 'smtpmail-send-it
+          smtpmail-starttls-credentials
+          '(("smtp.gmail.com" 587 nil nil))
+          smtpmail-auth-credentials
+          (expand-file-name "~/.authinfo")
+          smtpmail-default-smtp-server "smtp.gmail.com"
+          smtpmail-smtp-server "smtp.gmail.com"
+          smtpmail-smtp-service 587
+          smtpmail-debug-info t) 
 #+END_SRC
 
 * Mac OS X customizations

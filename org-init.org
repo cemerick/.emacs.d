@@ -103,6 +103,11 @@ Make recentf use ido
     (message "Aborting")))
 #+END_SRC
 
+* Spelling
+#+BEGIN_SRC emacs-lisp
+(setq ispell-program-name "aspell")
+(setq ispell-list-command "list")
+#+END_SRC
 * Key remappings
 Fix the bug that shift-up doesn't send the right escape sequence in terminal
 
@@ -445,7 +450,7 @@ If there is a slime helper in quicklisp directory, assume a clozure installation
        ((slime-helper (expand-file-name "~/quicklisp/slime-helper.el")))
     (when (file-exists-p slime-helper)
       (load slime-helper)
-      (setq inferior-lisp-program "ccl")))
+      (setq inferior-lisp-program "ccl64")))
 #+END_SRC
 * w3m
 #+BEGIN_SRC emacs-lisp

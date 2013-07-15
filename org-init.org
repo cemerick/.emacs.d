@@ -51,13 +51,11 @@ Two-width tab stops, like I'm used to
 * Graphic display
 Disable menu-bar in terminal, enable in graphic display
 #+BEGIN_SRC emacs-lisp
-
- (if (display-graphic-p)
-      (progn
-        (set-frame-size (selected-frame) 90 34)
-        (menu-bar-mode t))
-     (menu-bar-mode 0))
-
+  
+  (if (display-graphic-p)
+      (menu-bar-mode t)
+    (menu-bar-mode 0))
+  
 #+END_SRC
 
 * Winner mode
@@ -155,7 +153,7 @@ Not sure it is needed.
 Canonical list of packages
 #+BEGIN_SRC emacs-lisp
       
-  (setq my-packages (append '(el-get smex powerline
+  (setq my-packages (append '(el-get smex main-line
                                      magit helm dash
                                      zenburn-theme solarized-theme 
                                      inf-ruby rspec-mode
@@ -179,6 +177,18 @@ Canonical list of packages
                        (:name elisp-format 
 	                :features elisp-format)))
 #+END_SRC
+* Mac OS X customizations
+
+Clipboard and kill ring
+
+#+BEGIN_SRC emacs-lisp
+  (when (eq system-type 'darwin)
+    (progn
+      (turn-on-pbcopy)
+      (add-to-list 'default-frame-alist '(font . "Menlo-12"))
+      (add-to-list 'default-frame-alist '(width . 140))))
+#+END_SRC
+
 * Text-files hooks
 Turn visual mode for text files
 #+BEGIN_SRC emacs-lisp
@@ -457,7 +467,8 @@ If there is a slime helper in quicklisp directory, assume a clozure installation
 Open the hyperspec with w3m. `C-c C-d h`
 
 #+BEGIN_SRC emacs-lisp
-(setq browse-url-browser-function '(("hyperspec" . w3m-browse-url)))
+  (setq browse-url-browser-function '(("hyperspec" . w3m-browse-url)
+                                      ("." . browse-url-default-macosx-browser)))
 #+END_SRC
 * w3m
 #+BEGIN_SRC emacs-lisp
@@ -497,19 +508,6 @@ Open the hyperspec with w3m. `C-c C-d h`
           smtpmail-smtp-server "smtp.gmail.com"
           smtpmail-smtp-service 587
           smtpmail-debug-info t) 
-#+END_SRC
-
-* Mac OS X customizations
-
-Clipboard and kill ring
-
-#+BEGIN_SRC emacs-lisp
-  (when (eq system-type 'darwin)
-    (progn
-      (turn-on-pbcopy)
-      (add-to-list 'default-frame-alist '(font . "Menlo-12"))
-      (add-to-list 'default-frame-alist '(width . 140))
-      (setq browse-url-browser-function 'browse-url-default-macosx-browser)))
 #+END_SRC
 
 * ElDOC

@@ -48,14 +48,10 @@ Two-width tab stops, like I'm used to
 (load-theme 'adwaita t)
 #+END_SRC
 
-* Graphic display
-Disable menu-bar in terminal, enable in graphic display
+* Menu bar
+Disable menu-bar, invoke if necessary with `menu-bar-mode
 #+BEGIN_SRC emacs-lisp
-  
-  (if (display-graphic-p)
-      (menu-bar-mode t)
-    (menu-bar-mode 0))
-  
+  (menu-bar-mode -1)
 #+END_SRC
 
 * Winner mode
@@ -182,11 +178,12 @@ Canonical list of packages
 Clipboard and kill ring
 
 #+BEGIN_SRC emacs-lisp
-  (when (eq system-type 'darwin)
-    (progn
-      (turn-on-pbcopy)
-      (add-to-list 'default-frame-alist '(font . "Menlo-12"))
-      (add-to-list 'default-frame-alist '(width . 140))))
+    (when (eq system-type 'darwin)
+      (progn
+        (turn-on-pbcopy)
+        (add-to-list 'default-frame-alist '(font . "Menlo-12"))
+        (add-to-list 'default-frame-alist '(width . 120))
+        (add-to-list 'default-frame-alist '(height . 44))))
 #+END_SRC
 
 * Text-files hooks

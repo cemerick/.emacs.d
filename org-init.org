@@ -452,6 +452,12 @@ If there is a slime helper in quicklisp directory, assume a clozure installation
       (load slime-helper)
       (setq inferior-lisp-program "ccl64")))
 #+END_SRC
+
+Open the hyperspec with w3m. `C-c C-d h`
+
+#+BEGIN_SRC emacs-lisp
+(setq browse-url-browser-function '(("hyperspec" . w3m-browse-url)))
+#+END_SRC
 * w3m
 #+BEGIN_SRC emacs-lisp
 (setq w3m-coding-system 'utf-8
@@ -532,4 +538,6 @@ Clipboard and kill ring
 (global-set-key (kbd "C-c h") 'helm-mini)
 ;;magit-status
 (global-set-key (kbd "C-x g") 'magit-status)
+;; slime-selector
+(global-set-key [f5] 'slime-selector)
 #+END_SRC

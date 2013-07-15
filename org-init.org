@@ -505,8 +505,12 @@ Clipboard and kill ring
 #+BEGIN_SRC emacs-lisp
   (when (eq system-type 'darwin)
     (progn
-      (turn-on-pbcopy)))  
+      (turn-on-pbcopy)
+      (add-to-list 'default-frame-alist '(font . "Menlo-12"))
+      (add-to-list 'default-frame-alist '(width . 140))
+      (setq browse-url-browser-function 'browse-url-default-macosx-browser)))
 #+END_SRC
+
 * ElDOC
 #+BEGIN_SRC emacs-lisp
   (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)

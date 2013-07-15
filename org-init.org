@@ -149,7 +149,7 @@ Not sure it is needed.
 Canonical list of packages
 #+BEGIN_SRC emacs-lisp
       
-  (setq my-packages (append '(el-get smex main-line
+  (setq my-packages (append '(el-get smex main-line pretty-lambdada
                                      magit helm dash
                                      zenburn-theme solarized-theme 
                                      inf-ruby rspec-mode
@@ -450,6 +450,10 @@ Find root (replace eproject-root): cd "$(git rev-parse --show-toplevel)"
   (add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
   (add-hook 'scheme-mode-hook           #'enable-paredit-mode)
   (add-hook 'clojure-mode-hook          #'enable-paredit-mode)
+#+END_SRC
+* Pretty Lambda
+#+BEGIN_SRC emacs-lisp
+(pretty-lambda-for-modes)
 #+END_SRC
 * Slime
 If there is a slime helper in quicklisp directory, assume a clozure installation

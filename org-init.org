@@ -156,7 +156,7 @@ Canonical list of packages
                                      windcycle pbcopy ace-jump-mode
                                      flymake flymake-ruby
                                      coffee-mode markdown-mode scss-mode mustache-mode
-                                     clojure-mode midje-mode nrepl kibit-mode 
+                                     clojure-mode midje-mode nrepl nrepl-ritz kibit-mode 
                                      rainbow-delimiters htmlize paredit
                                      epresent org-html5presentation org-impress-js org-s5
                                      o-blog deft palimpsest-mode org-jekyll) 

@@ -145,6 +145,19 @@ Not sure it is needed.
         (eval-print-last-sexp)))))
 #+END_SRC
 
+** User setup
+#+BEGIN_SRC emacs-lisp
+  (setq el-get-sources '(
+                         (:name ruby-mode
+                                :after (progn
+                                         (add-to-list 'auto-mode-alist '("Rakefile\\'" . ruby-mode))
+                                         (when (string= system-name "ma.sdf.org") (setq enh-ruby-program "ruby193")))) 
+                         (:name elisp-format 
+                                :features elisp-format)
+                         
+  ))
+  
+#+END_SRC
 ** Recipe setup
 Canonical list of packages
 #+BEGIN_SRC emacs-lisp      
@@ -165,14 +178,6 @@ Canonical list of packages
   (el-get 'sync my-packages)
 #+END_SRC
 
-** User setup
-#+BEGIN_SRC emacs-lisp
-(setq el-get-sources '(
-                       (:name ruby-mode
-                        :after (when (string= system-name "ma.sdf.org") (setq enh-ruby-program "ruby193")))
-                       (:name elisp-format 
-	                :features elisp-format)))
-#+END_SRC
 * Mac OS X customizations
 
 Clipboard and kill ring

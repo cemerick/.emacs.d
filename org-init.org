@@ -147,8 +147,7 @@ Not sure it is needed.
 
 ** Recipe setup
 Canonical list of packages
-#+BEGIN_SRC emacs-lisp
-      
+#+BEGIN_SRC emacs-lisp      
   (setq my-packages (append '(el-get smex main-line pretty-lambdada
                                      magit helm dash
                                      zenburn-theme solarized-theme 
@@ -157,7 +156,8 @@ Canonical list of packages
                                      windcycle pbcopy ace-jump-mode
                                      flymake flymake-ruby
                                      coffee-mode markdown-mode scss-mode mustache-mode
-                                     clojure-mode midje-mode nrepl htmlize paredit kibit-mode
+                                     clojure-mode midje-mode nrepl kibit-mode 
+                                     rainbow-delimiters htmlize paredit
                                      epresent org-html5presentation org-impress-js org-s5
                                      o-blog deft palimpsest-mode org-jekyll) 
                             (mapcar 'el-get-source-name el-get-sources)))
@@ -450,6 +450,7 @@ Find root (replace eproject-root): cd "$(git rev-parse --show-toplevel)"
   (add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
   (add-hook 'scheme-mode-hook           #'enable-paredit-mode)
   (add-hook 'clojure-mode-hook          #'enable-paredit-mode)
+  (add-hook 'nrepl-mode-hook 'paredit-mode)
 #+END_SRC
 * Pretty Lambda
 #+BEGIN_SRC emacs-lisp
@@ -470,6 +471,16 @@ Open the hyperspec with w3m. `C-c C-d h`
 #+BEGIN_SRC emacs-lisp
   (setq browse-url-browser-function '(("hyperspec" . w3m-browse-url)
                                       ("." . browse-url-default-macosx-browser)))
+#+END_SRC
+* Clojure
+** nrepl
+#+BEGIN_SRC emacs-lisp
+(add-hook 'nrepl-interaction-mode-hook
+  'nrepl-turn-on-eldoc-mode)
+(add-hook 'nrepl-mode-hook 'subword-mode)
+(add-hook 'nrepl-mode-hook 'rainbow-delimiters-mode)
+(setq nrepl-hide-special-buffers t)
+(setq nrepl-popup-stacktraces-in-repl t)
 #+END_SRC
 * w3m
 #+BEGIN_SRC emacs-lisp

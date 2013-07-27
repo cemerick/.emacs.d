@@ -486,6 +486,7 @@ Open the hyperspec with w3m. `C-c C-d h`
 (add-hook 'nrepl-mode-hook 'rainbow-delimiters-mode)
 (setq nrepl-hide-special-buffers t)
 (setq nrepl-popup-stacktraces-in-repl t)
+(add-to-list 'same-window-buffer-names "*nrepl*")
 #+END_SRC
 * w3m
 #+BEGIN_SRC emacs-lisp

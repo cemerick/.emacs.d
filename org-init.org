@@ -167,7 +167,7 @@ Canonical list of packages
                                      inf-ruby rspec-mode robe-mode
                                      emacs-w3m yaml-mode 
                                      windcycle pbcopy ace-jump-mode
-                                     flymake flymake-ruby
+                                     flymake flymake-ruby dictionary dictionary-app
                                      coffee-mode markdown-mode scss-mode mustache-mode
                                      clojure-mode midje-mode nrepl nrepl-ritz kibit-mode cljsbuild-mode
                                      rainbow-delimiters htmlize paredit

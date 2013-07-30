@@ -164,7 +164,7 @@ Canonical list of packages
   (setq my-packages (append '(el-get smex main-line pretty-lambdada
                                      magit helm dash
                                      zenburn-theme solarized-theme 
-                                     inf-ruby rspec-mode
+                                     inf-ruby rspec-mode robe-mode
                                      emacs-w3m yaml-mode 
                                      windcycle pbcopy ace-jump-mode
                                      flymake flymake-ruby
@@ -479,16 +479,14 @@ Open the hyperspec with w3m. `C-c C-d h`
 * Clojure
 ** nrepl
 #+BEGIN_SRC emacs-lisp
-(add-hook 'nrepl-interaction-mode-hook
-  'nrepl-turn-on-eldoc-mode)
-(add-hook 'nrepl-interaction-mode-hook 'my-nrepl-mode-setup)
-(defun my-nrepl-mode-setup ()
-  (require 'nrepl-ritz))
-(add-hook 'nrepl-mode-hook 'subword-mode)
-(add-hook 'nrepl-mode-hook 'rainbow-delimiters-mode)
-(setq nrepl-hide-special-buffers t)
-(setq nrepl-popup-stacktraces-in-repl t)
-(add-to-list 'same-window-buffer-names "*nrepl*")
+  (add-hook 'nrepl-interaction-mode-hook
+    'nrepl-turn-on-eldoc-mode)
+  (add-hook 'nrepl-interaction-mode-hook (lambda () (require 'nrepl-ritz)))
+  (add-hook 'nrepl-mode-hook 'subword-mode)
+  (add-hook 'nrepl-mode-hook 'rainbow-delimiters-mode)
+  (setq nrepl-hide-special-buffers t)
+  (setq nrepl-popup-stacktraces-in-repl t)
+  (add-to-list 'same-window-buffer-names "*nrepl*")
 #+END_SRC
 ** rainbow delimiters
 #+BEGIN_SRC emacs-lisp

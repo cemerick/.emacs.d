@@ -183,12 +183,11 @@ Canonical list of packages
 Clipboard and kill ring
 
 #+BEGIN_SRC emacs-lisp
-    (when (eq system-type 'darwin)
-      (progn
-        (turn-on-pbcopy)
-        (add-to-list 'default-frame-alist '(font . "Menlo-12"))
-        (add-to-list 'default-frame-alist '(width . 120))
-        (add-to-list 'default-frame-alist '(height . 44))))
+  (when (eq system-type 'darwin)
+    (progn
+      (turn-on-pbcopy)
+      (setq default-frame-alist '((height . 44) (width . 120) (font . "Menlo-14") (top . 20) (left . 200)))
+      (setq initial-frame-alist '((top . 10) (left . 30)))))
 #+END_SRC
 
 * Text-files hooks

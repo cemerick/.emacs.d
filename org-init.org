@@ -166,7 +166,7 @@ Canonical list of packages
                                        helm helm-project helm-descbinds                                      
                                        zenburn-theme solarized-theme 
                                        inf-ruby rspec-mode robe-mode
-                                       emacs-w3m yaml-mode 
+                                       emacs-w3m yaml-mode emacs-web
                                        windcycle pbcopy ace-jump-mode
                                        flymake flymake-ruby dictionary dictionary-app
                                        coffee-mode markdown-mode scss-mode mustache-mode

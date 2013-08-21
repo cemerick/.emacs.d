@@ -2,6 +2,13 @@
 #+AUTHOR: Daniel Szmulewicz
 #+EMAIL: daniel.szmulewicz@gmail.com
 
+* Repos
+#+BEGIN_SRC emacs-lisp
+(setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
+                         ("marmalade" . "http://marmalade-repo.org/packages/")
+                         ("melpa" . "http://melpa.milkbox.net/packages/")
+                         ("org" . "http://orgmode.org/elpa/")))
+#+END_SRC
 * Saving Customizations
 We want to save our customizations in a dedicated file. We will check
 the existence of such a file so as not to cause errors on a vanilla
@@ -436,13 +443,6 @@ Find root (replace eproject-root): cd "$(git rev-parse --show-toplevel)"
   (let ((tags-file (concat (eproject-root) "TAGS")))
     (visit-tags-table tags-file)
     (message (concat "Loaded " tags-file))))
-#+END_SRC
-* Repos
-#+BEGIN_SRC emacs-lisp
-(setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
-                         ("marmalade" . "http://marmalade-repo.org/packages/")
-                         ("melpa" . "http://melpa.milkbox.net/packages/")
-                         ("org" . "http://orgmode.org/elpa/")))
 #+END_SRC
 * Paredit
 #+BEGIN_SRC emacs-lisp

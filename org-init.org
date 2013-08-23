@@ -517,26 +517,31 @@ Open the hyperspec with w3m. `C-c C-d h`
      mu4e-update-interval 300)             ;; update every 5 minutes
     )
       
-      
-      
-  ;; smtp mail setting; these are the same that `gnus' uses.
+  ;; something about ourselves
+  (setq
+   user-mail-address "daniel.szmulewicz@gmail.com"
+   user-full-name  "Daniel Szmulewicz"
+   message-signature
+   (concat
+    "http://danielsz.github.io\n"))
+  
+  ;;for emacs-24 you can use: 
   (setq send-mail-function 'smtpmail-send-it
-        message-send-mail-function 'smtpmail-send-it
-        smtpmail-starttls-credentials
-        '(("smtp.gmail.com" 587 nil nil))
-        smtpmail-auth-credentials
-        (expand-file-name "~/.authinfo")
+        smtpmail-stream-type 'starttls
         smtpmail-default-smtp-server "smtp.gmail.com"
         smtpmail-smtp-server "smtp.gmail.com"
-        smtpmail-smtp-service 587
-        smtpmail-debug-info t) 
+        smtpmail-smtp-service 587)
   
   ;; To allow for queuing, you need to tell smtpmail where you want to
   ;; store the queued messages. For example:
   
   (setq smtpmail-queue-mail  nil  ;; start in non-queuing mode
-        smtpmail-queue-dir   "~/Maildir/queue/cur")
+        smtpmail-queue-dir (concat mu4e-maildir "/queue/cur"))
   
+  ;; attempt to show images when viewing messages
+  (setq
+   mu4e-view-show-images t
+   mu4e-view-image-max-width 800)
 #+END_SRC
 
 * ElDOC

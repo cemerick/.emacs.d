@@ -503,45 +503,44 @@ Open the hyperspec with w3m. `C-c C-d h`
 #+END_SRC
 * mu4e
 #+BEGIN_SRC emacs-lisp
-  (when (require 'mu4e nil t)
-    (setq 
-     mu4e-maildir (expand-file-name "~/mail")
-     mu4e-mu-binary "/usr/local/bin/mu"
-     ;; below are the defaults; if they do not exist yet, mu4e offers to
-     ;; create them. they can also functions; see their docstrings.
-     ;; (setq mu4e-sent-folder   "/sent")
-     ;; (setq mu4e-drafts-folder "/drafts")
-     ;; (setq mu4e-trash-folder  "/trash")
-     ;;mu4e-get-mail-command "offlineimap"   ;; or fetchmail, or ...
-     mu4e-get-mail-command "true"
-     mu4e-update-interval 300)             ;; update every 5 minutes
-    )
-      
-  ;; something about ourselves
-  (setq
-   user-mail-address "daniel.szmulewicz@gmail.com"
-   user-full-name  "Daniel Szmulewicz"
-   message-signature
-   (concat
-    "http://danielsz.github.io\n"))
-  
-  ;;for emacs-24 you can use: 
-  (setq send-mail-function 'smtpmail-send-it
-        smtpmail-stream-type 'starttls
-        smtpmail-default-smtp-server "smtp.gmail.com"
-        smtpmail-smtp-server "smtp.gmail.com"
-        smtpmail-smtp-service 587)
-  
-  ;; To allow for queuing, you need to tell smtpmail where you want to
-  ;; store the queued messages. For example:
-  
-  (setq smtpmail-queue-mail  nil  ;; start in non-queuing mode
-        smtpmail-queue-dir (concat mu4e-maildir "/queue/cur"))
-  
-  ;; attempt to show images when viewing messages
-  (setq
-   mu4e-view-show-images t
-   mu4e-view-image-max-width 800)
+    (when (require 'mu4e nil t)
+      (setq 
+       mu4e-maildir (expand-file-name "~/mail")
+       mu4e-mu-binary "/usr/local/bin/mu"
+       ;; below are the defaults; if they do not exist yet, mu4e offers to
+       ;; create them. they can also functions; see their docstrings.
+       ;; (setq mu4e-sent-folder   "/sent")
+       ;; (setq mu4e-drafts-folder "/drafts")
+       ;; (setq mu4e-trash-folder  "/trash")
+       ;;mu4e-get-mail-command "offlineimap"   ;; or fetchmail, or ...
+       mu4e-get-mail-command "true"
+       mu4e-update-interval 300)             ;; update every 5 minutes
+      )
+        
+    ;; something about ourselves
+    (setq
+     user-mail-address "daniel.szmulewicz@gmail.com"
+     user-full-name  "Daniel Szmulewicz"
+     message-signature
+     (concat
+      "http://danielsz.github.io\n"))
+    
+    ;;for emacs-24 you can use: 
+    (setq send-mail-function 'smtpmail-send-it
+          smtpmail-stream-type 'starttls
+          smtpmail-default-smtp-server "smtp.gmail.com"
+          smtpmail-smtp-server "smtp.gmail.com"
+          smtpmail-smtp-service 587
+          ;; To allow for queuing, you need to tell smtpmail where you want to
+          ;; store the queued messages. For example:
+          smtpmail-queue-mail nil  ;; start in non-queuing mode
+          smtpmail-queue-dir "~/mail/queue/cur"
+          )
+    
+    ;; attempt to show images when viewing messages
+    (setq
+     mu4e-view-show-images t
+     mu4e-view-image-max-width 800)
 #+END_SRC
 
 * ElDOC

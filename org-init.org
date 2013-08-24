@@ -168,22 +168,23 @@ Not sure it is needed.
 ** Recipe setup
 Canonical list of packages
 #+BEGIN_SRC emacs-lisp      
-    (setq my-packages (append '(el-get smex main-line pretty-lambdada
-                                       magit projectile dash s
-                                       helm helm-project helm-descbinds                                      
-                                       zenburn-theme solarized-theme 
-                                       inf-ruby rspec-mode robe-mode
-                                       emacs-w3m yaml-mode web
-                                       windcycle pbcopy ace-jump-mode
-                                       flymake flymake-ruby dictionary dictionary-app
-                                       coffee-mode markdown-mode scss-mode mustache-mode
-                                       clojure-mode clojurescript-mode midje-mode nrepl nrepl-ritz kibit-mode cljsbuild-mode cljdoc slamhound
-                                       rainbow-delimiters htmlize paredit
-                                       epresent org-html5presentation org-impress-js org-s5
-                                       o-blog deft palimpsest-mode org-jekyll) 
-                              (mapcar 'el-get-source-name el-get-sources)))
-    (el-get-cleanup my-packages)
-    (el-get 'sync my-packages)
+  (setq my-packages (append '(el-get smex main-line pretty-lambdada
+                                     magit projectile dash s
+                                     helm helm-project helm-descbinds                                      
+                                     zenburn-theme solarized-theme 
+                                     inf-ruby rspec-mode robe-mode
+                                     emacs-w3m yaml-mode web
+                                     ack-menu
+                                     windcycle pbcopy ace-jump-mode
+                                     flymake flymake-ruby dictionary dictionary-app
+                                     coffee-mode markdown-mode scss-mode mustache-mode
+                                     clojure-mode clojurescript-mode midje-mode nrepl nrepl-ritz kibit-mode cljsbuild-mode cljdoc slamhound
+                                     rainbow-delimiters htmlize paredit
+                                     epresent org-html5presentation org-impress-js org-s5
+                                     o-blog deft palimpsest-mode org-jekyll) 
+                            (mapcar 'el-get-source-name el-get-sources)))
+  (el-get-cleanup my-packages)
+  (el-get 'sync my-packages)
 #+END_SRC
 
 * Mac OS X customizations

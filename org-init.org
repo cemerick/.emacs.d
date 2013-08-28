@@ -161,6 +161,8 @@ Not sure it is needed.
                                          (when (string= system-name "ma.sdf.org") (setq enh-ruby-program "ruby193")))) 
                          (:name elisp-format 
                                 :features elisp-format)
+                         (:name rainbow-mode
+                                :after  (add-hook 'css-mode-hook 'rainbow-mode))
                          
   ))
   
@@ -178,8 +180,8 @@ Canonical list of packages
                                      windcycle pbcopy ace-jump-mode
                                      flymake flymake-ruby dictionary dictionary-app
                                      coffee-mode markdown-mode scss-mode mustache-mode
-                                     clojure-mode clojurescript-mode midje-mode nrepl nrepl-ritz kibit-mode cljsbuild-mode cljdoc slamhound
-                                     rainbow-delimiters htmlize paredit
+                                     clojure-mode clojure-test-mode clojurescript-mode midje-mode nrepl nrepl-ritz kibit-mode cljsbuild-mode cljdoc slamhound
+                                     rainbow-mode rainbow-delimiters htmlize paredit
                                      epresent org-html5presentation org-impress-js org-s5
                                      o-blog deft palimpsest-mode org-jekyll) 
                             (mapcar 'el-get-source-name el-get-sources)))
@@ -197,6 +199,14 @@ Clipboard and kill ring
       (turn-on-pbcopy)
       (setq default-frame-alist '((height . 44) (width . 120) (font . "Menlo-14") (top . 20) (left . 200)))
       (setq initial-frame-alist '((top . 10) (left . 30)))))
+#+END_SRC
+
+[[http://stackoverflow.com/questions/3376863/unable-to-type-braces-and-square-braces-in-emacs][Braces and squere braces in emacs]]
+
+#+BEGIN_SRC emacs-lisp
+  (setq mac-right-option-modifier nil
+        mac-option-key-is-meta t
+        x-select-enable-clipboard t)
 #+END_SRC
 
 * Text-files hooks
@@ -485,10 +495,19 @@ Open the hyperspec with w3m. `C-c C-d h`
   (add-hook 'nrepl-interaction-mode-hook (lambda () (require 'nrepl-ritz)))
   (add-hook 'nrepl-mode-hook 'subword-mode)
   (add-hook 'nrepl-mode-hook 'rainbow-delimiters-mode)
+  (add-hook 'nrepl-mode-hook 'clojure-test-mode)
   (setq nrepl-hide-special-buffers t)
   (setq nrepl-popup-stacktraces-in-repl t)
   (add-to-list 'same-window-buffer-names "*nrepl*")
 #+END_SRC
+
+I was experimenting with integrated tools.namespace reloading in elisp as well, and I found a slightly nicer way to send commands to nrepl:
+#+BEGIN_SRC emacs-lisp
+(defun nrepl-reset ()
+    (interactive)
+    (nrepl-interactive-eval "(user/reset)"))
+#+END_SRC
+
 ** rainbow delimiters
 #+BEGIN_SRC emacs-lisp
 (add-hook 'clojure-mode-hook 'rainbow-delimiters-mode)

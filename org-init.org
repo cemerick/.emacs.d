@@ -580,7 +580,7 @@ I was experimenting with integrated tools.namespace reloading in elisp as well, 
 ;;deft
 (global-set-key [f8] 'deft)
 ;;org-velocity
-(global-set-key (kbd "C-c v") 'org-velocity-read)
+(global-set-key (kbd "C-c v") 'helm-projectile)
 ;;magit
 (global-set-key (kbd "C-x C-o") 'magit-status)
 ;;;Smex is a M-x enhancement for Emacs. Built on top of IDO, it provides a convenient interface to your recently and most frequently used commands.

@@ -201,7 +201,7 @@ Clipboard and kill ring
       (setq initial-frame-alist '((top . 10) (left . 30)))))
 #+END_SRC
 
-[[http://stackoverflow.com/questions/3376863/unable-to-type-braces-and-square-braces-in-emacs][Braces and squere braces in emacs]]
+[[http://stackoverflow.com/questions/3376863/unable-to-type-braces-and-square-braces-in-emacs][Braces and square braces in emacs]]
 
 #+BEGIN_SRC emacs-lisp
   (setq mac-right-option-modifier nil

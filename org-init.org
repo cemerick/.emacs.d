@@ -180,7 +180,7 @@ Canonical list of packages
                                      windcycle pbcopy ace-jump-mode
                                      flymake flymake-ruby dictionary dictionary-app
                                      coffee-mode markdown-mode scss-mode mustache-mode
-                                     clojure-mode nrepl clojure-test-mode clojure-cheatsheet clojurescript-mode midje-mode nrepl-ritz kibit-mode cljsbuild-mode cljdoc slamhound
+                                     clojure-mode nrepl clojure-test-mode clojure-cheatsheet clojurescript-mode midje-mode nrepl-ritz kibit-mode cljsbuild-mode cljdoc slamhound refheap
                                      rainbow-mode rainbow-delimiters htmlize paredit
                                      epresent org-html5presentation org-impress-js org-s5
                                      o-blog deft palimpsest-mode org-jekyll) 

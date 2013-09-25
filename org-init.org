@@ -170,7 +170,7 @@ Not sure it is needed.
 ** Recipe setup
 Canonical list of packages
 #+BEGIN_SRC emacs-lisp      
-  (setq my-packages (append '(el-get smex main-line pretty-lambdada
+  (setq my-packages (append '(el-get smex pretty-lambdada
                                      magit projectile dash s
                                      helm helm-project helm-descbinds                                      
                                      zenburn-theme solarized-theme 

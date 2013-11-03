@@ -8,6 +8,7 @@
                          ("marmalade" . "http://marmalade-repo.org/packages/")
                          ("melpa" . "http://melpa.milkbox.net/packages/")
                          ("org" . "http://orgmode.org/elpa/")))
+(package-initialize)
 #+END_SRC
 * Saving Customizations
 We want to save our customizations in a dedicated file. We will check
@@ -170,17 +171,18 @@ Not sure it is needed.
 ** Recipe setup
 Canonical list of packages
 #+BEGIN_SRC emacs-lisp      
-  (setq my-packages (append '(el-get smex pretty-lambdada
+  (setq my-packages (append '(el-get smex pretty-lambdada flycheck
                                      magit projectile dash s
                                      helm helm-project helm-descbinds                                      
                                      zenburn-theme solarized-theme 
                                      inf-ruby rspec-mode robe-mode
                                      emacs-w3m yaml-mode web
-                                     ack-menu
+                                     ack-menu undo-tree elisp-slime-nav
                                      windcycle pbcopy ace-jump-mode
-                                     flymake flymake-ruby dictionary dictionary-app
-                                     coffee-mode markdown-mode scss-mode mustache-mode
-                                     clojure-mode nrepl clojure-test-mode clojure-cheatsheet clojurescript-mode midje-mode nrepl-ritz nrepl-inspect  nrepl-eval-sexp-fu kibit-mode cljsbuild-mode cljdoc slamhound refheap
+                                     dictionary dictionary-app
+                                     coffee-mode markdown-mode scss-mode mustache-mode less-css-mode
+                                     clojure-mode clojure-test-mode clojure-cheatsheet clojurescript-mode midje-mode kibit-mode cljsbuild-mode cljdoc slamhound refheap 
+                                     nrepl nrepl-ritz nrepl-eval-sexp-fu ;nrepl-inspect 
                                      rainbow-mode rainbow-delimiters htmlize paredit
                                      epresent org-html5presentation org-impress-js org-s5
                                      o-blog deft palimpsest-mode org-jekyll) 
@@ -465,7 +467,7 @@ Find root (replace eproject-root): cd "$(git rev-parse --show-toplevel)"
   (add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
   (add-hook 'scheme-mode-hook           #'enable-paredit-mode)
   (add-hook 'clojure-mode-hook          #'enable-paredit-mode)
-  (add-hook 'nrepl-mode-hook 'paredit-mode)
+  (add-hook 'nrepl-repl-mode-hook #'enable-paredit-mode)
 #+END_SRC
 * Pretty Lambda
 #+BEGIN_SRC emacs-lisp
@@ -492,12 +494,16 @@ Open the hyperspec with w3m. `C-c C-d h`
 #+BEGIN_SRC emacs-lisp
   (add-hook 'nrepl-interaction-mode-hook
             'nrepl-turn-on-eldoc-mode)
-  (add-hook 'nrepl-interaction-mode-hook (lambda () (require 'nrepl-ritz)))
-  (add-hook 'nrepl-mode-hook 'subword-mode)
-  (add-hook 'nrepl-mode-hook 'rainbow-delimiters-mode)
+;  (add-hook 'nrepl-interaction-mode-hook (lambda () (require 'nrepl-ritz)))
+  (add-hook 'nrepl-repl-mode-hook 'subword-mode)
+  (add-hook 'nrepl-repl-mode-hook 'rainbow-delimiters-mode)
   (setq nrepl-hide-special-buffers t)
   (setq nrepl-popup-stacktraces-in-repl t)
-  (define-key nrepl-mode-map (kbd "C-c C-i") 'nrepl-inspect)
+                                          ;(setq cider-popup-stacktraces nil)
+                                          ;(setq cider-repl-popup-stacktraces t)
+                                          ;(setq cider-auto-select-error-buffer t)
+  (setq nrepl-buffer-name-show-port t)
+                                          ;(define-key nrepl-repl-mode-map (kbd "C-c C-i") 'nrepl-inspect)
   (add-to-list 'same-window-buffer-names "*nrepl*")
 #+END_SRC
 
@@ -569,6 +575,16 @@ I was experimenting with integrated tools.namespace reloading in elisp as well, 
   (add-hook 'lisp-interaction-mode-hook 'turn-on-eldoc-mode)
   (add-hook 'ielm-mode-hook 'turn-on-eldoc-mode)
 #+END_SRC
+* Terminal hotkey
+#+BEGIN_SRC elisp
+  
+  (defun toggle-terminal ()
+    (interactive)
+    (if (string= "eshell-mode" (eval 'major-mode))
+        (winner-undo)
+      (progn (delete-other-windows) (eshell))))
+  
+#+END_SRC
 * Global keys
 #+BEGIN_SRC emacs-lisp
 ;;ace-jump-mode
@@ -596,4 +612,16 @@ I was experimenting with integrated tools.namespace reloading in elisp as well, 
 (global-set-key (kbd "C-x g") 'magit-status)
 ;; slime-selector
 (global-set-key [f5] 'slime-selector)
+;; terminal visor
+(global-set-key (kbd "C-c t") 'toggle-terminal)
+#+END_SRC
+* Flycheck
+#+BEGIN_SRC emacs-lisp
+(add-hook 'after-init-hook #'global-flycheck-mode)
+#+END_SRC
+* elisp
+** elisp-slime-nace
+#+BEGIN_SRC elisp
+(dolist (hook '(emacs-lisp-mode-hook ielm-mode-hook))
+  (add-hook hook 'turn-on-elisp-slime-nav-mode))
 #+END_SRC

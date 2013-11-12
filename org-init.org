@@ -173,7 +173,7 @@ Canonical list of packages
 #+BEGIN_SRC emacs-lisp      
     (setq my-packages (append '(el-get smex pretty-lambdada flycheck
                                        magit 
-                                       projectile perspective persp-mode 
+                                       projectile perspective persp-mode
                                        dash s f
                                        helm helm-project helm-descbinds                                      
                                        zenburn-theme solarized-theme 
@@ -587,6 +587,16 @@ I was experimenting with integrated tools.namespace reloading in elisp as well, 
       (progn (delete-other-windows) (eshell))))
   
 #+END_SRC
+* Flycheck
+#+BEGIN_SRC emacs-lisp
+(add-hook 'after-init-hook #'global-flycheck-mode)
+#+END_SRC
+* elisp
+** elisp-slime-nace
+#+BEGIN_SRC elisp
+(dolist (hook '(emacs-lisp-mode-hook ielm-mode-hook))
+  (add-hook hook 'turn-on-elisp-slime-nav-mode))
+#+END_SRC
 * Global keys
 #+BEGIN_SRC emacs-lisp
 ;;ace-jump-mode
@@ -617,13 +627,6 @@ I was experimenting with integrated tools.namespace reloading in elisp as well, 
 ;; terminal visor
 (global-set-key (kbd "C-c t") 'toggle-terminal)
 #+END_SRC
-* Flycheck
-#+BEGIN_SRC emacs-lisp
-(add-hook 'after-init-hook #'global-flycheck-mode)
-#+END_SRC
-* elisp
-** elisp-slime-nace
-#+BEGIN_SRC elisp
-(dolist (hook '(emacs-lisp-mode-hook ielm-mode-hook))
-  (add-hook hook 'turn-on-elisp-slime-nav-mode))
-#+END_SRC
+
+
+

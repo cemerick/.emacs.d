@@ -173,10 +173,10 @@ Canonical list of packages
 #+BEGIN_SRC emacs-lisp      
     (setq my-packages (append '(el-get smex pretty-lambdada flycheck
                                        magit 
-                                       projectile perspective persp-mode
+                                       projectile workgroups2
                                        dash s f
                                        helm helm-project helm-descbinds                                      
-                                       zenburn-theme solarized-theme 
+                                       zenburn-theme solarized-theme nyan-mode 
                                        inf-ruby rspec-mode robe-mode
                                        emacs-w3m yaml-mode web
                                        ack-menu undo-tree elisp-slime-nav
@@ -213,6 +213,33 @@ Clipboard and kill ring
         x-select-enable-clipboard t)
 #+END_SRC
 
+#+BEGIN_SRC emacs-lisp
+
+  (defun reset-ui (&optional frame)
+    (if frame
+        (select-frame frame))
+    (interactive)
+    (smex-initialize)
+    (load-theme 'solarized-dark t)
+    (delete-other-windows)
+    (set-cursor-color "deeppink")
+    (set-face-background 'modeline-inactive "gray10")
+    (if (window-system)
+        (cond
+         ((= 1050 (display-pixel-height)); 22" display
+          (set-frame-size (selected-frame) 163 71)
+          (set-frame-position (selected-frame) 0 -1050))
+         ((= 1200 (display-pixel-height)); 24" display
+          (set-frame-size (selected-frame) 163 76)
+          (set-frame-position (selected-frame) 0 -1200))
+         (t ; laptop runs 1440x900
+          (set-frame-size (selected-frame) 163 53)
+          (set-frame-position (selected-frame) 0 0))))
+    (split-window-horizontally))
+  
+  ;;(add-hook 'after-make-frame-functions 'reset-ui)
+
+#+END_SRC
 * Text-files hooks
 Turn visual mode for text files
 #+BEGIN_SRC emacs-lisp
@@ -578,7 +605,7 @@ I was experimenting with integrated tools.namespace reloading in elisp as well, 
   (add-hook 'ielm-mode-hook 'turn-on-eldoc-mode)
 #+END_SRC
 * Terminal hotkey
-#+BEGIN_SRC elisp
+#+BEGIN_SRC emacs-lisp
   
   (defun toggle-terminal ()
     (interactive)
@@ -591,9 +618,19 @@ I was experimenting with integrated tools.namespace reloading in elisp as well, 
 #+BEGIN_SRC emacs-lisp
 (add-hook 'after-init-hook #'global-flycheck-mode)
 #+END_SRC
+* nyan-mode
+#+BEGIN_SRC emacs-lisp
+    
+  (add-hook 'after-make-frame-functions
+            (lambda (frame)
+              (if (display-graphic-p frame)
+                  (nyan-mode t)
+                (nyan-mode -1)))) 
+    
+#+END_SRC
 * elisp
 ** elisp-slime-nace
-#+BEGIN_SRC elisp
+#+BEGIN_SRC emacs-lisp
 (dolist (hook '(emacs-lisp-mode-hook ielm-mode-hook))
   (add-hook hook 'turn-on-elisp-slime-nav-mode))
 #+END_SRC

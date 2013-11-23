@@ -501,6 +501,13 @@ Find root (replace eproject-root): cd "$(git rev-parse --show-toplevel)"
 * Pretty Lambda
 #+BEGIN_SRC emacs-lisp
 (pretty-lambda-for-modes)
+
+(eval-after-load 'clojure-mode
+  '(font-lock-add-keywords
+    'clojure-mode `(("(\\(fn\\)[\[[:space:]]"
+                     (0 (progn (compose-region (match-beginning 1)
+                                               (match-end 1) "λ")
+                               nil))))))
 #+END_SRC
 * Slime
 If there is a slime helper in quicklisp directory, assume a clozure installation
@@ -618,6 +625,12 @@ I was experimenting with integrated tools.namespace reloading in elisp as well, 
 #+BEGIN_SRC emacs-lisp
 (add-hook 'after-init-hook #'global-flycheck-mode)
 #+END_SRC
+* workgroups2
+ #+BEGIN_SRC emacs-lisp
+   (require 'workgroups2)
+   ;; Change some settings
+   (workgroups-mode 1)
+ #+END_SRC
 * nyan-mode
 #+BEGIN_SRC emacs-lisp
     

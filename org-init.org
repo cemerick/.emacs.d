@@ -501,13 +501,6 @@ Find root (replace eproject-root): cd "$(git rev-parse --show-toplevel)"
 * Pretty Lambda
 #+BEGIN_SRC emacs-lisp
 (pretty-lambda-for-modes)
-
-(eval-after-load 'clojure-mode
-  '(font-lock-add-keywords
-    'clojure-mode `(("(\\(fn\\)[\[[:space:]]"
-                     (0 (progn (compose-region (match-beginning 1)
-                                               (match-end 1) "λ")
-                               nil))))))
 #+END_SRC
 * Slime
 If there is a slime helper in quicklisp directory, assume a clozure installation
@@ -553,6 +546,29 @@ I was experimenting with integrated tools.namespace reloading in elisp as well, 
 ** rainbow delimiters
 #+BEGIN_SRC emacs-lisp
 (add-hook 'clojure-mode-hook 'rainbow-delimiters-mode)
+#+END_SRC
+** pretty lambda and co
+#+BEGIN_SRC emacs-lisp
+(eval-after-load 'clojure-mode
+  '(font-lock-add-keywords
+    'clojure-mode `(("(\\(fn\\)[\[[:space:]]"
+                     (0 (progn (compose-region (match-beginning 1)
+                                               (match-end 1) "λ")
+                               nil))))))
+
+(eval-after-load 'clojure-mode
+  '(font-lock-add-keywords
+    'clojure-mode `(("\\(#\\)("
+                     (0 (progn (compose-region (match-beginning 1)
+                                               (match-end 1) "ƒ")
+                               nil))))))
+
+(eval-after-load 'clojure-mode
+  '(font-lock-add-keywords
+    'clojure-mode `(("\\(#\\){"
+                     (0 (progn (compose-region (match-beginning 1)
+                                               (match-end 1) "∈")
+                               nil))))))
 #+END_SRC
 * w3m
 #+BEGIN_SRC emacs-lisp

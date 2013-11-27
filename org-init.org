@@ -171,26 +171,27 @@ Not sure it is needed.
 ** Recipe setup
 Canonical list of packages
 #+BEGIN_SRC emacs-lisp      
-    (setq my-packages (append '(el-get smex pretty-lambdada flycheck
-                                       magit 
-                                       projectile workgroups2
-                                       dash s f
-                                       helm helm-project helm-descbinds                                      
-                                       zenburn-theme solarized-theme nyan-mode 
-                                       inf-ruby rspec-mode robe-mode
-                                       emacs-w3m yaml-mode web
-                                       ack-menu undo-tree elisp-slime-nav
-                                       windcycle pbcopy ace-jump-mode
-                                       dictionary dictionary-app
-                                       coffee-mode markdown-mode scss-mode mustache-mode less-css-mode
-                                       clojure-mode clojure-test-mode clojure-cheatsheet clojurescript-mode midje-mode kibit-mode cljsbuild-mode cljdoc slamhound refheap 
-                                       nrepl nrepl-ritz nrepl-eval-sexp-fu ;nrepl-inspect 
-                                       rainbow-mode rainbow-delimiters htmlize paredit
-                                       epresent org-html5presentation org-impress-js org-s5
-                                       o-blog deft palimpsest-mode org-jekyll) 
-                              (mapcar 'el-get-source-name el-get-sources)))
-    (el-get-cleanup my-packages)
-    (el-get 'sync my-packages)
+  (setq my-packages (append '(el-get smex pretty-lambdada flycheck
+                                     magit 
+                                     projectile
+                                     dash s f
+                                     helm helm-project helm-descbinds                                      
+                                     zenburn-theme solarized-theme nyan-mode 
+                                     inf-ruby rspec-mode robe-mode
+                                     emacs-w3m yaml-mode web
+                                     ack-menu undo-tree elisp-slime-nav
+                                     windcycle pbcopy ace-jump-mode
+                                     dictionary dictionary-app
+                                     html5 web-mode
+                                     coffee-mode markdown-mode scss-mode mustache-mode less-css-mode
+                                     clojure-mode clojure-test-mode clojure-cheatsheet clojurescript-mode midje-mode kibit-mode cljsbuild-mode cljdoc slamhound refheap 
+                                     nrepl nrepl-eval-sexp-fu
+                                     rainbow-mode rainbow-delimiters htmlize paredit
+                                     epresent org-html5presentation org-impress-js org-s5
+                                     o-blog deft palimpsest-mode org-jekyll) 
+                            (mapcar 'el-get-source-name el-get-sources)))
+  (el-get-cleanup my-packages)
+  (el-get 'sync my-packages)
 #+END_SRC
 
 * Mac OS X customizations
@@ -641,14 +642,15 @@ I was experimenting with integrated tools.namespace reloading in elisp as well, 
 #+BEGIN_SRC emacs-lisp
 (add-hook 'after-init-hook #'global-flycheck-mode)
 #+END_SRC
-* workgroups2
- #+BEGIN_SRC emacs-lisp
-   (require 'workgroups2)
-   ;; Change some settings
-   (workgroups-mode 1)
- #+END_SRC
 * nyan-mode
 #+BEGIN_SRC emacs-lisp
+
+  (add-hook 'after-init-hook
+            (lambda ()
+              (if (display-graphic-p)
+                  (nyan-mode t)
+                (nyan-mode -1)))) 
+
     
   (add-hook 'after-make-frame-functions
             (lambda (frame)
@@ -657,6 +659,27 @@ I was experimenting with integrated tools.namespace reloading in elisp as well, 
                 (nyan-mode -1)))) 
     
 #+END_SRC
+* web-mode
+#+BEGIN_SRC emacs-lisp
+(add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+
+
+(defun web-mode-hook ()
+  "Hooks for Web mode."
+  (setq web-mode-markup-indent-offset 2)
+  (setq web-mode-css-indent-offset 2)
+  (setq web-mode-code-indent-offset 2)
+)
+(add-hook 'web-mode-hook  'web-mode-hook)
+
+
+#+END_SRC
+
+#+RESULTS:
+| web-mode-hook |
+
 * elisp
 ** elisp-slime-nace
 #+BEGIN_SRC emacs-lisp

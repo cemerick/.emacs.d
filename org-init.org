@@ -105,6 +105,11 @@ Make recentf use ido
     (message "Aborting")))
 #+END_SRC
 
+* Uniquify
+ #+BEGIN_SRC emacs-lisp
+   (require 'uniquify)
+   (setq uniquify-buffer-name-style 'post-forward-angle-brackets)
+ #+END_SRC
 * Spelling
 #+BEGIN_SRC emacs-lisp
 (setq ispell-program-name "aspell")
@@ -182,7 +187,7 @@ Canonical list of packages
                                      ack-menu undo-tree elisp-slime-nav
                                      windcycle pbcopy ace-jump-mode
                                      dictionary dictionary-app
-                                     html5 web-mode
+                                     html5 web-mode skewer-mode impatient-mode
                                      coffee-mode markdown-mode scss-mode mustache-mode less-css-mode
                                      clojure-mode clojure-test-mode clojure-cheatsheet clojurescript-mode midje-mode kibit-mode cljsbuild-mode cljdoc slamhound refheap 
                                      nrepl nrepl-eval-sexp-fu

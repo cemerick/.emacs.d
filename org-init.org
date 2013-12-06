@@ -51,11 +51,6 @@ Two-width tab stops, like I'm used to
 (setq indent-tabs-mode nil)
 #+END_SRC
 
-* Color theme
-#+BEGIN_SRC emacs-lisp
-(load-theme 'adwaita t)
-#+END_SRC
-
 * Menu bar
 Disable menu-bar, invoke if necessary with `menu-bar-mode
 #+BEGIN_SRC emacs-lisp
@@ -199,6 +194,15 @@ Canonical list of packages
   (el-get 'sync my-packages)
 #+END_SRC
 
+* Color theme
+#+BEGIN_SRC emacs-lisp
+(load-theme 'zenburn t)
+#+END_SRC
+  
+* Splash screen
+ #+BEGIN_SRC emacs-lisp
+ (setq inhibit-splash-screen t)
+ #+END_SRC
 * Mac OS X customizations
 
 Clipboard and kill ring

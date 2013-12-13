@@ -4,11 +4,15 @@
 
 * Repos
 #+BEGIN_SRC emacs-lisp
-(setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
-                         ("marmalade" . "http://marmalade-repo.org/packages/")
-                         ("melpa" . "http://melpa.milkbox.net/packages/")
-                         ("org" . "http://orgmode.org/elpa/")))
-(package-initialize)
+;(setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
+;                         ("marmalade" . "http://marmalade-repo.org/packages/")
+;                         ("melpa" . "http://melpa.milkbox.net/packages/")
+;                         ("org" . "http://orgmode.org/elpa/")))
+;(package-initialize)
+#+END_SRC
+* Cask
+#+BEGIN_SRC emacs-lisp
+
 #+END_SRC
 * Saving Customizations
 We want to save our customizations in a dedicated file. We will check
@@ -142,15 +146,15 @@ Not sure it is needed.
 ** Installation routine
 
 #+BEGIN_SRC emacs-lisp
-(add-to-list 'load-path "~/.emacs.d/el-get/el-get")
-
-(unless 
-    (require 'el-get nil t) 
-  (url-retrieve "https://raw.github.com/dimitri/el-get/master/el-get-install.el" 
-  (lambda (s) 
-    (let (el-get-master-branch)
-      (goto-char (point-max)) 
-        (eval-print-last-sexp)))))
+  ;; (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
+  
+  ;; (unless 
+  ;;     (require 'el-get nil t) 
+  ;;   (url-retrieve "https://raw.github.com/dimitri/el-get/master/el-get-install.el" 
+  ;;   (lambda (s) 
+  ;;     (let (el-get-master-branch)
+  ;;       (goto-char (point-max)) 
+  ;;         (eval-print-last-sexp)))))
 #+END_SRC
 
 ** User setup
@@ -171,27 +175,30 @@ Not sure it is needed.
 ** Recipe setup
 Canonical list of packages
 #+BEGIN_SRC emacs-lisp      
-  (setq my-packages (append '(el-get smex pretty-lambdada flycheck
-                                     magit 
-                                     projectile
-                                     dash s f
-                                     helm helm-project helm-descbinds                                      
-                                     zenburn-theme solarized-theme nyan-mode 
-                                     inf-ruby rspec-mode robe-mode
-                                     emacs-w3m yaml-mode web
-                                     ack-menu undo-tree elisp-slime-nav
-                                     windcycle pbcopy ace-jump-mode
-                                     dictionary dictionary-app
-                                     html5 web-mode skewer-mode impatient-mode
-                                     coffee-mode markdown-mode scss-mode mustache-mode less-css-mode
-                                     clojure-mode clojure-test-mode clojure-cheatsheet clojurescript-mode midje-mode kibit-mode cljsbuild-mode cljdoc slamhound refheap 
-                                     nrepl nrepl-eval-sexp-fu
-                                     rainbow-mode rainbow-delimiters htmlize paredit
-                                     epresent org-html5presentation org-s5
-                                     o-blog deft palimpsest-mode org-jekyll) 
-                            (mapcar 'el-get-source-name el-get-sources)))
-  (el-get-cleanup my-packages)
-  (el-get 'sync my-packages)
+    ;; (setq my-packages (append '(el-get smex pretty-lambdada flycheck
+    ;;                                    magit 
+    ;;                                    projectile
+    ;;                                    dash s f
+    ;;                                    pkg-info
+    ;;                                    helm helm-project helm-descbinds                                      
+    ;;                                    zenburn-theme solarized-theme nyan-mode 
+    ;;                                    inf-ruby rspec-mode robe-mode
+    ;;                                    emacs-w3m yaml-mode web
+    ;;                                    ack-menu undo-tree elisp-slime-nav
+    ;;                                    windcycle pbcopy ace-jump-mode
+    ;;                                    dictionary dictionary-app
+    ;;                                    html5 web-mode skewer-mode impatient-mode
+    ;;                                    coffee-mode markdown-mode scss-mode mustache-mode less-css-mode
+    ;;                                    clojure-mode clojurescript-mode kibit-mode cljsbuild-mode cljdoc refheap
+    ;;                                    cider
+    ;;                                    rainbow-mode rainbow-delimiters htmlize paredit
+    ;;                                    epresent org-html5presentation org-s5
+    ;;                                    o-blog deft palimpsest-mode org-jekyll) 
+    ;;                           (mapcar 'el-get-source-name el-get-sources)))
+    ;; (el-get-cleanup my-packages)
+    ;; (el-get 'sync my-packages)
+  
+  ;;; clojure-cheatsheet clojure-test-mode slamhound 
 #+END_SRC
 
 * Color theme
@@ -506,7 +513,7 @@ Find root (replace eproject-root): cd "$(git rev-parse --show-toplevel)"
   (add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
   (add-hook 'scheme-mode-hook           #'enable-paredit-mode)
   (add-hook 'clojure-mode-hook          #'enable-paredit-mode)
-  (add-hook 'nrepl-repl-mode-hook #'enable-paredit-mode)
+  (add-hook 'cider-repl-mode-hook #'enable-paredit-mode)
 #+END_SRC
 * Pretty Lambda
 #+BEGIN_SRC emacs-lisp
@@ -531,19 +538,20 @@ Open the hyperspec with w3m. `C-c C-d h`
 * Clojure
 ** nrepl
 #+BEGIN_SRC emacs-lisp
-  (add-hook 'nrepl-interaction-mode-hook
-            'nrepl-turn-on-eldoc-mode)
-;  (add-hook 'nrepl-interaction-mode-hook (lambda () (require 'nrepl-ritz)))
-  (add-hook 'nrepl-repl-mode-hook 'subword-mode)
-  (add-hook 'nrepl-repl-mode-hook 'rainbow-delimiters-mode)
-  (setq nrepl-hide-special-buffers t)
-  (setq nrepl-popup-stacktraces-in-repl t)
-                                          ;(setq cider-popup-stacktraces nil)
-                                          ;(setq cider-repl-popup-stacktraces t)
-                                          ;(setq cider-auto-select-error-buffer t)
-  (setq nrepl-buffer-name-show-port t)
-                                          ;(define-key nrepl-repl-mode-map (kbd "C-c C-i") 'nrepl-inspect)
-  (add-to-list 'same-window-buffer-names "*nrepl*")
+  ;  (add-hook 'nrepl-interaction-mode-hook 'nrepl-turn-on-eldoc-mode)
+(add-hook 'cider-mode-hook 'cider-turn-on-eldoc-mode)
+  ;  (add-hook 'nrepl-interaction-mode-hook (lambda () (require 'nrepl-ritz)))
+  ;  (add-hook 'nrepl-repl-mode-hook 'subword-mode)
+(add-hook 'cider-repl-mode-hook 'subword-mode)
+  ;  (add-hook 'nrepl-repl-mode-hook 'rainbow-delimiters-mode)
+(add-hook 'cider-repl-mode-hook 'rainbow-delimiters-mode)
+(setq nrepl-hide-special-buffers t)
+;(setq nrepl-popup-stacktraces-in-repl t)
+(setq cider-popup-stacktraces nil)                                        
+(setq cider-auto-select-error-buffer t)
+(setq nrepl-buffer-name-show-port t)
+;(define-key nrepl-repl-mode-map (kbd "C-c C-i") 'nrepl-inspect)
+;(add-to-list 'same-window-buffer-names "*nrepl*")
 #+END_SRC
 
 I was experimenting with integrated tools.namespace reloading in elisp as well, and I found a slightly nicer way to send commands to nrepl:

@@ -6,6 +6,7 @@
 (depends-on "ac-nrepl")
 (depends-on "ace-jump-mode")
 (depends-on "ack")
+(depends-on "ack-and-a-half")
 (depends-on "auto-complete")
 (depends-on "cider")
 (depends-on "cljdoc")

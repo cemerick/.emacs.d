@@ -92,6 +92,10 @@ Make recentf use ido
     (message "Aborting")))
 #+END_SRC
 
+* Undo
+ #+BEGIN_SRC emacs-lisp
+ (global-undo-tree-mode)
+ #+END_SRC
 * Uniquify
  #+BEGIN_SRC emacs-lisp
    (require 'uniquify)

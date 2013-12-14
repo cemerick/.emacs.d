@@ -503,6 +503,25 @@ I was experimenting with integrated tools.namespace reloading in elisp as well, 
                                                (match-end 1) "∈")
                                nil))))))
 #+END_SRC
+** auto-complete
+
+In Clojure buffers.
+
+#+BEGIN_SRC emacs-lisp
+(require 'auto-complete-config)
+(ac-config-default)
+(define-key ac-completing-map "\M-/" 'ac-stop) ; use M-/ to stop completion
+#+END_SRC
+
+In Cider.
+
+#+BEGIN_SRC emacs-lisp
+(require 'ac-nrepl)
+(add-hook 'cider-repl-mode-hook 'ac-nrepl-setup)
+(add-hook 'cider-mode-hook 'ac-nrepl-setup)
+(eval-after-load "auto-complete"
+  '(add-to-list 'ac-modes 'cider-repl-mode))
+#+END_SRC
 * w3m
 #+BEGIN_SRC emacs-lisp
 (setq w3m-coding-system 'utf-8

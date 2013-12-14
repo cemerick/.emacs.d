@@ -3,6 +3,7 @@
 (source gnu)
 (source marmalade)
 
+(depends-on "ac-nrepl")
 (depends-on "ace-jump-mode")
 (depends-on "ack")
 (depends-on "auto-complete")

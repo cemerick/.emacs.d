@@ -2,19 +2,7 @@
 #+AUTHOR: Daniel Szmulewicz
 #+EMAIL: daniel.szmulewicz@gmail.com
 
-* Repos
-#+BEGIN_SRC emacs-lisp
-;(setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
-;                         ("marmalade" . "http://marmalade-repo.org/packages/")
-;                         ("melpa" . "http://melpa.milkbox.net/packages/")
-;                         ("org" . "http://orgmode.org/elpa/")))
-;(package-initialize)
-#+END_SRC
-* Cask
-#+BEGIN_SRC emacs-lisp
-
-#+END_SRC
-* Saving Customizations
+* Customizations
 We want to save our customizations in a dedicated file. We will check
 the existence of such a file so as not to cause errors on a vanilla
 emacs installation. Please create it yourself if you don't want your
@@ -142,63 +130,22 @@ Not sure it is needed.
                   (define-key comint-mode-map (kbd "M-n") 'comint-next-input))))
 #+END_SRC
 
-* El-get
-** Installation routine
-
+* Misc.
 #+BEGIN_SRC emacs-lisp
-  ;; (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
-  
-  ;; (unless 
-  ;;     (require 'el-get nil t) 
-  ;;   (url-retrieve "https://raw.github.com/dimitri/el-get/master/el-get-install.el" 
-  ;;   (lambda (s) 
-  ;;     (let (el-get-master-branch)
-  ;;       (goto-char (point-max)) 
-  ;;         (eval-print-last-sexp)))))
+  (add-to-list 'auto-mode-alist '("Rakefile\\'" . ruby-mode))
+  (when (string= system-name "ma.sdf.org") (setq enh-ruby-program "ruby193"))
 #+END_SRC
-
-** User setup
-#+BEGIN_SRC emacs-lisp
-  (setq el-get-sources '(
-                         (:name ruby-mode
-                                :after (progn
-                                         (add-to-list 'auto-mode-alist '("Rakefile\\'" . ruby-mode))
-                                         (when (string= system-name "ma.sdf.org") (setq enh-ruby-program "ruby193")))) 
-                         (:name elisp-format 
-                                :features elisp-format)
-                         (:name rainbow-mode
-                                :after  (add-hook 'css-mode-hook 'rainbow-mode))
                          
-  ))
-  
+#+BEGIN_SRC emacs-lisp
+(add-hook 'css-mode-hook 'rainbow-mode)
 #+END_SRC
-** Recipe setup
-Canonical list of packages
-#+BEGIN_SRC emacs-lisp      
-    ;; (setq my-packages (append '(el-get smex pretty-lambdada flycheck
-    ;;                                    magit 
-    ;;                                    projectile
-    ;;                                    dash s f
-    ;;                                    pkg-info
-    ;;                                    helm helm-project helm-descbinds                                      
-    ;;                                    zenburn-theme solarized-theme nyan-mode 
-    ;;                                    inf-ruby rspec-mode robe-mode
-    ;;                                    emacs-w3m yaml-mode web
-    ;;                                    ack-menu undo-tree elisp-slime-nav
-    ;;                                    windcycle pbcopy ace-jump-mode
-    ;;                                    dictionary dictionary-app
-    ;;                                    html5 web-mode skewer-mode impatient-mode
-    ;;                                    coffee-mode markdown-mode scss-mode mustache-mode less-css-mode
-    ;;                                    clojure-mode clojurescript-mode kibit-mode cljsbuild-mode cljdoc refheap
-    ;;                                    cider
-    ;;                                    rainbow-mode rainbow-delimiters htmlize paredit
-    ;;                                    epresent org-html5presentation org-s5
-    ;;                                    o-blog deft palimpsest-mode org-jekyll) 
-    ;;                           (mapcar 'el-get-source-name el-get-sources)))
-    ;; (el-get-cleanup my-packages)
-    ;; (el-get 'sync my-packages)
-  
-  ;;; clojure-cheatsheet clojure-test-mode slamhound 
+
+
+elisp-format is a handy mode enabling source code formating of elisp code.
+It's unavailable on the repos, so here is how to install it manually (commented out for now) 
+#+BEGIN_SRC emacs-lisp
+;;(add-to-list 'load-path (expand-file-name "~/elisp"))
+;;(require 'elisp-format)
 #+END_SRC
 
 * Color theme
@@ -447,41 +394,18 @@ org-babel setup
 #+BEGIN_SRC emacs-lisp
   
   (when (locate-file "ob" load-path load-suffixes)
-                                             (require 'ob)
-                                             (require 'ob-tangle)
-                                             (add-to-list 'org-babel-tangle-lang-exts '("clojure" . "clj"))
-  
-                                             (org-babel-do-load-languages
-                                              'org-babel-load-languages
-                                              '((emacs-lisp . t)
-                                                (clojure . t)
-                                                (js . t)
-                                                (ruby . t)))
-  
-  
-                                             ;; (defun org-babel-execute:clojure (body params)
-                                             ;;   "Evaluate a block of Clojure code with Babel."
-                                             ;;   (let* ((result (nrepl-send-string-sync body (nrepl-current-ns)))
-                                             ;;          (value (plist-get result :value))
-                                             ;;          (out (plist-get result :stdout))
-                                             ;;          (out (when out
-                                             ;;                 (if (string= "\n" (substring out -1))
-                                             ;;                     (substring out 0 -1)
-                                             ;;                   out)))
-                                             ;;          (stdout (when out
-                                             ;;                    (mapconcat (lambda (line)
-                                             ;;                                 (concat ";; " line))
-                                             ;;                               (split-string out "\n")
-                                             ;;                               "\n"))))
-                                             ;;     (concat stdout
-                                             ;;             (when (and stdout (not (string= "\n" (substring stdout -1))))
-                                             ;;               "\n")
-                                             ;;             ";;=> " value)))
-  
-                                             ;; (provide 'ob-clojure)
-  
-                                             (setq org-src-fontify-natively t)
-                                             (setq org-confirm-babel-evaluate nil))
+    (require 'ob)
+    (require 'ob-tangle)
+    
+    (org-babel-do-load-languages
+     'org-babel-load-languages
+     '((emacs-lisp . t)
+       (clojure . t)
+       (js . t)
+       (ruby . t)))
+    
+    (setq org-src-fontify-natively t)
+    (setq org-confirm-babel-evaluate nil))
   
 #+END_SRC
 

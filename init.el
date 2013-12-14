@@ -1,7 +1,7 @@
 ;;; init.el --- Where all the magic begins
 
-;; Cask initialization
-
+;; Cask initialization (if required files are found)
+;; Pallet's main job, though, is to add and delete package references from your Cask file as you install and delete them using the built-in Emacs package management system. It does this automatically and silently.
   (let 
       ((cask-file "~/.cask/cask.el")
        (cask-spec "~/.emacs.d/Cask"))

@@ -1,551 +1,674 @@
-Table of Contents
------------------
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. Customizations</a></li>
+<li><a href="#sec-2">2. Backup and autosave</a></li>
+<li><a href="#sec-3">3. UTF-8</a></li>
+<li><a href="#sec-4">4. Tabs</a></li>
+<li><a href="#sec-5">5. Menu bar</a></li>
+<li><a href="#sec-6">6. Winner mode</a></li>
+<li><a href="#sec-7">7. Windmove</a></li>
+<li><a href="#sec-8">8. Recent file list</a></li>
+<li><a href="#sec-9">9. Ido</a>
+<ul>
+<li><a href="#sec-9-1">9.1. recentf</a></li>
+</ul>
+</li>
+<li><a href="#sec-10">10. Uniquify</a></li>
+<li><a href="#sec-11">11. Spelling</a></li>
+<li><a href="#sec-12">12. Key remappings</a></li>
+<li><a href="#sec-13">13. Misc.</a></li>
+<li><a href="#sec-14">14. Color theme</a></li>
+<li><a href="#sec-15">15. Splash screen</a></li>
+<li><a href="#sec-16">16. Mac OS X customizations</a></li>
+<li><a href="#sec-17">17. Text-files hooks</a></li>
+<li><a href="#sec-18">18. Deft</a></li>
+<li><a href="#sec-19">19. Org-mode</a>
+<ul>
+<li><a href="#sec-19-1">19.1. Location of default notes files</a></li>
+<li><a href="#sec-19-2">19.2. Capture templates</a></li>
+<li><a href="#sec-19-3">19.3. Project configuration</a></li>
+<li><a href="#sec-19-4">19.4. Org-babel</a></li>
+</ul>
+</li>
+<li><a href="#sec-20">20. Ctags</a></li>
+<li><a href="#sec-21">21. Paredit</a></li>
+<li><a href="#sec-22">22. Pretty Lambda</a></li>
+<li><a href="#sec-23">23. Slime</a></li>
+<li><a href="#sec-24">24. Clojure</a>
+<ul>
+<li><a href="#sec-24-1">24.1. nrepl</a></li>
+<li><a href="#sec-24-2">24.2. rainbow delimiters</a></li>
+<li><a href="#sec-24-3">24.3. pretty lambda and co</a></li>
+</ul>
+</li>
+<li><a href="#sec-25">25. w3m</a></li>
+<li><a href="#sec-26">26. mu4e</a></li>
+<li><a href="#sec-27">27. ElDOC</a></li>
+<li><a href="#sec-28">28. Terminal hotkey</a></li>
+<li><a href="#sec-29">29. Flycheck</a></li>
+<li><a href="#sec-30">30. nyan-mode</a></li>
+<li><a href="#sec-31">31. web-mode</a></li>
+<li><a href="#sec-32">32. elisp</a>
+<ul>
+<li><a href="#sec-32-1">32.1. elisp-slime-nav</a></li>
+<li><a href="#sec-32-2">32.2. elisp-format</a></li>
+</ul>
+</li>
+<li><a href="#sec-33">33. Global keys</a></li>
+</ul>
+</div>
+</div>
 
--   [1 Saving Customizations](#sec-1)
--   [2 Backup and autosave](#sec-2)
--   [3 UTF-8](#sec-3)
--   [4 Tabs](#sec-4)
--   [5 Color theme](#sec-5)
--   [6 Graphic display](#sec-6)
--   [7 Winner mode](#sec-7)
--   [8 Windmove](#sec-8)
--   [9 Recent file list](#sec-9)
--   [10 Ido](#sec-10)
-    -   [10.1 recentf](#sec-10-1)
-
--   [11 Key remappings](#sec-11)
--   [12 El-get](#sec-12)
-    -   [12.1 Installation routine](#sec-12-1)
-    -   [12.2 Recipe setup](#sec-12-2)
-    -   [12.3 User setup](#sec-12-3)
-
--   [13 Text-files hooks](#sec-13)
--   [14 Deft](#sec-14)
--   [15 Org-mode](#sec-15)
-    -   [15.1 Location of default notes files](#sec-15-1)
-    -   [15.2 Capture templates](#sec-15-2)
-    -   [15.3 Project configuration](#sec-15-3)
-    -   [15.4 Org-babel](#sec-15-4)
-
--   [16 Ctags](#sec-16)
--   [17 Repos](#sec-17)
--   [18 Paredit](#sec-18)
--   [19 Slime](#sec-19)
--   [20 w3m](#sec-20)
--   [21 Mac OS X customizations](#sec-21)
--   [22 Global keys](#sec-22)
-
-1 Saving Customizations
------------------------
+# Customizations
 
 We want to save our customizations in a dedicated file. We will check
 the existence of such a file so as not to cause errors on a vanilla
 emacs installation. Please create it yourself if you don't want your
 customizations to be saved in the init file. (default behavior)
 
-~~~~ {.src .src-emacs-lisp}
-(let 
-    ((customization-file "~/.emacs.d/emacs-custom.el"))
-  (when (file-exists-p customization-file)
-    (setq custom-file customization-file)
-    (load custom-file)))
-~~~~
+    (let 
+        ((customization-file "~/.emacs.d/emacs-custom.el"))
+      (when (file-exists-p customization-file)
+        (setq custom-file customization-file)
+        (load custom-file)))
 
-2 Backup and autosave
----------------------
+# Backup and autosave
 
 Keep Backup and Auto-save Files Out of the Way
-[http://emacsredux.com/blog/2013/05/09/keep-backup-and-auto-save-files-out-of-the-way/](http://emacsredux.com/blog/2013/05/09/keep-backup-and-auto-save-files-out-of-the-way/)
+<http://emacsredux.com/blog/2013/05/09/keep-backup-and-auto-save-files-out-of-the-way/>
 
-~~~~ {.src .src-emacs-lisp}
-;; store all backup and autosave files in the tmp dir
-(setq backup-directory-alist
-      `((".*" . ,temporary-file-directory)))
-(setq auto-save-file-name-transforms
-      `((".*" ,temporary-file-directory t)))
-~~~~
+    ;; store all backup and autosave files in the tmp dir
+    (setq backup-directory-alist
+          `((".*" . ,temporary-file-directory)))
+    (setq auto-save-file-name-transforms
+          `((".*" ,temporary-file-directory t)))
 
-3 UTF-8
--------
+# UTF-8
 
 We want to have default utf-8 everything.
 
-~~~~ {.src .src-emacs-lisp}
-(prefer-coding-system 'utf-8)
-(set-default-coding-systems 'utf-8)
-(set-terminal-coding-system 'utf-8)
-(set-keyboard-coding-system 'utf-8)
-~~~~
+    (prefer-coding-system 'utf-8)
+    (set-default-coding-systems 'utf-8)
+    (set-terminal-coding-system 'utf-8)
+    (set-keyboard-coding-system 'utf-8)
 
-4 Tabs
-------
+# Tabs
 
 Two-width tab stops, like I'm used to
 
-~~~~ {.src .src-emacs-lisp}
-(setq tab-width 2)
-(setq tab-stop-list (number-sequence 2 200 2))
-(setq indent-tabs-mode nil)
-~~~~
+    (setq tab-width 2)
+    (setq tab-stop-list (number-sequence 2 200 2))
+    (setq indent-tabs-mode nil)
 
-5 Color theme
--------------
+# Menu bar
 
-~~~~ {.src .src-emacs-lisp}
-(load-theme 'adwaita t)
-~~~~
+Disable menu-bar, invoke if necessary with \`menu-bar-mode
 
-6 Graphic display
------------------
+    (menu-bar-mode -1)
 
-Disable menu-bar in terminal, enable in graphic display
+# Winner mode
 
-~~~~ {.src .src-emacs-lisp}
-(if (display-graphic-p)
-     (progn
-       (set-frame-size (selected-frame) 90 34)
-       (menu-bar-mode t))
-    (menu-bar-mode 0))
-~~~~
+    (winner-mode 1)
 
-7 Winner mode
--------------
+# Windmove
 
-~~~~ {.src .src-emacs-lisp}
-(winner-mode 1)
-~~~~
-
-8 Windmove
-----------
-
-~~~~ {.src .src-emacs-lisp}
-(when (fboundp 'windmove-default-keybindings)
-     (windmove-default-keybindings))
-~~~~
+    (when (fboundp 'windmove-default-keybindings)
+         (windmove-default-keybindings))
 
 Make windmove work in org-mode:
 
-~~~~ {.src .src-emacs-lisp}
-(add-hook 'org-shiftup-final-hook 'windmove-up)
-(add-hook 'org-shiftleft-final-hook 'windmove-left)
-(add-hook 'org-shiftdown-final-hook 'windmove-down)
-(add-hook 'org-shiftright-final-hook 'windmove-right)
-~~~~
+    (add-hook 'org-shiftup-final-hook 'windmove-up)
+    (add-hook 'org-shiftleft-final-hook 'windmove-left)
+    (add-hook 'org-shiftdown-final-hook 'windmove-down)
+    (add-hook 'org-shiftright-final-hook 'windmove-right)
 
-9 Recent file list
-------------------
+# Recent file list
 
-~~~~ {.src .src-emacs-lisp}
-(require 'recentf)
-(recentf-mode 1)
-~~~~
+    (require 'recentf)
+    (recentf-mode 1)
 
-10 Ido
-------
+# Ido
 
-~~~~ {.src .src-emacs-lisp}
-(setq ido-enable-flex-matching t)
-(setq ido-everywhere t)
-(ido-mode 1)
-~~~~
+    (setq ido-enable-flex-matching t)
+    (setq ido-everywhere t)
+    (ido-mode 1)
 
-### 10.1 recentf
+## recentf
 
 Make recentf use ido
 
-~~~~ {.src .src-emacs-lisp}
-(defun ido-recentf-open () 
-  "Use `ido-completing-read' to \\[find-file] a recent file" 
-  (interactive) 
-  (if (find-file (ido-completing-read "Find recent file: " recentf-list)) 
-      (message "Opening file...") 
-    (message "Aborting")))
-~~~~
+    
+    (defun ido-recentf-open () 
+      "Use `ido-completing-read' to \\[find-file] a recent file" 
+      (interactive) 
+      (if (find-file (ido-completing-read "Find recent file: " recentf-list)) 
+          (message "Opening file...") 
+        (message "Aborting")))
 
-11 Key remappings
------------------
+# Uniquify
 
-Fix the bug that shift-up doesn't send the right escape sequence in
-terminal
+    (require 'uniquify)
+    (setq uniquify-buffer-name-style 'post-forward-angle-brackets)
 
-~~~~ {.src .src-emacs-lisp}
-(if (equal "xterm-256color" (tty-type)) (define-key input-decode-map "\e[1;2A" [S-up]))
-~~~~
+# Spelling
+
+    (setq ispell-program-name "aspell")
+    (setq ispell-list-command "list")
+
+# Key remappings
+
+Fix the bug that shift-up doesn't send the right escape sequence in terminal
+
+    (if (equal "xterm-256color" (tty-type)) (define-key input-decode-map "\e[1;2A" [S-up]))
 
 To make windmove work in tmux
 
-~~~~ {.src .src-emacs-lisp}
-(if (equal "screen-256color" (tty-type)) 
-    (progn
-    (define-key input-decode-map "\e[1;2D" [S-left])  
-    (define-key input-decode-map (kbd "M-[ 1 ; 2 C") [S-right])  
-    (define-key input-decode-map (kbd "M-[ 1 ; 2 B")[S-down])  
-    (define-key input-decode-map "\e[1;2A" [S-up])  
-    (define-key input-decode-map "\e[1;6A" [S-C-up])
-    (define-key input-decode-map "\e[1;6B" [S-C-down])))
-~~~~
+    
+    (if (equal "screen-256color" (tty-type)) 
+        (progn
+        (define-key input-decode-map "\e[1;2D" [S-left])  
+        (define-key input-decode-map (kbd "M-[ 1 ; 2 C") [S-right])  
+        (define-key input-decode-map (kbd "M-[ 1 ; 2 B")[S-down])  
+        (define-key input-decode-map "\e[1;2A" [S-up])  
+        (define-key input-decode-map "\e[1;6A" [S-C-up])
+        (define-key input-decode-map "\e[1;6B" [S-C-down])))
 
 Not sure it is needed.
 
-~~~~ {.src .src-emacs-lisp}
-(if (equal "daniels-imac.local" (system-name))
-    (add-hook 'comint-mode-hook
-              (lambda ()               
-                (define-key comint-mode-map (kbd "M-n") 'comint-next-input))))
-~~~~
+    (if (equal "daniels-imac.local" (system-name))
+        (add-hook 'comint-mode-hook
+                  (lambda ()               
+                    (define-key comint-mode-map (kbd "M-n") 'comint-next-input))))
 
-12 El-get
----------
+# Misc.
 
-### 12.1 Installation routine
+    (add-to-list 'auto-mode-alist '("Rakefile\\'" . ruby-mode))
+    (when (string= system-name "ma.sdf.org") (setq enh-ruby-program "ruby193"))
 
-~~~~ {.src .src-emacs-lisp}
-(add-to-list 'load-path "~/.emacs.d/el-get/el-get")
+    (add-hook 'css-mode-hook 'rainbow-mode)
 
-(unless 
-    (require 'el-get nil t) 
-  (url-retrieve "https://raw.github.com/dimitri/el-get/master/el-get-install.el" 
-  (lambda (s) 
-    (let (el-get-master-branch)
-      (goto-char (point-max)) 
-        (eval-print-last-sexp)))))
-~~~~
+# Color theme
 
-### 12.2 Recipe setup
+    (load-theme 'zenburn t)
 
-Canonical list of packages
+# Splash screen
 
-~~~~ {.src .src-emacs-lisp}
-(setq my-packages (append '(el-get smex magit helm dash
-                            zenburn-theme solarized-theme 
-                            inf-ruby rspec-mode rbenv
-                            emacs-w3m yaml-mode 
-                            windcycle pbcopy ace-jump-mode
-                            flymake flymake-ruby
-                            coffee-mode markdown-mode scss-mode mustache-mode
-                            clojure-mode midje-mode nrepl htmlize paredit kibit-mode
-                            epresent org-html5presentation org-impress-js org-s5
-                            o-blog deft palimpsest-mode org-jekyll) 
-                          (mapcar 'el-get-source-name el-get-sources)))
-(el-get-cleanup my-packages)
-(el-get 'sync my-packages)
-~~~~
+    (setq inhibit-splash-screen t)
 
-### 12.3 User setup
+# Mac OS X customizations
 
-~~~~ {.src .src-emacs-lisp}
-(setq el-get-sources '(
-                       (:name ruby-mode
-                        :after (when (string= system-name "ma.sdf.org") (setq enh-ruby-program "ruby193")))
-                       (:name elisp-format 
-                        :features elisp-format)))
-~~~~
+Clipboard and kill ring
 
-13 Text-files hooks
--------------------
+    (when (eq system-type 'darwin)
+      (progn
+        (turn-on-pbcopy)
+        (setq default-frame-alist '((height . 44) (width . 120) (font . "Menlo-14") (top . 20) (left . 200)))
+        (setq initial-frame-alist '((top . 10) (left . 30)))))
+
+[Braces and square braces in emacs](http://stackoverflow.com/questions/3376863/unable-to-type-braces-and-square-braces-in-emacs)
+
+    (setq mac-right-option-modifier nil
+          mac-option-key-is-meta t
+          x-select-enable-clipboard t)
+
+    
+    (defun reset-ui (&optional frame)
+      (if frame
+          (select-frame frame))
+      (interactive)
+      (smex-initialize)
+      (load-theme 'solarized-dark t)
+      (delete-other-windows)
+      (set-cursor-color "deeppink")
+      (set-face-background 'modeline-inactive "gray10")
+      (if (window-system)
+          (cond
+           ((= 1050 (display-pixel-height)); 22" display
+            (set-frame-size (selected-frame) 163 71)
+            (set-frame-position (selected-frame) 0 -1050))
+           ((= 1200 (display-pixel-height)); 24" display
+            (set-frame-size (selected-frame) 163 76)
+            (set-frame-position (selected-frame) 0 -1200))
+           (t ; laptop runs 1440x900
+            (set-frame-size (selected-frame) 163 53)
+            (set-frame-position (selected-frame) 0 0))))
+      (split-window-horizontally))
+    
+    ;;(add-hook 'after-make-frame-functions 'reset-ui)
+
+# Text-files hooks
 
 Turn visual mode for text files
 
-~~~~ {.src .src-emacs-lisp}
-(add-hook 'text-mode-hook 'turn-on-visual-line-mode)
-~~~~
+    (add-hook 'text-mode-hook 'turn-on-visual-line-mode)
 
-14 Deft
--------
+# Deft
 
-~~~~ {.src .src-emacs-lisp}
-(setq deft-directory "~/Dropbox/notes")
-(setq deft-extension "org")
-(setq deft-text-mode 'org-mode)
-~~~~
+    (setq deft-directory "~/Dropbox/notes")
+    (setq deft-extension "org")
+    (setq deft-text-mode 'org-mode)
 
-15 Org-mode
------------
+# Org-mode
 
-### 15.1 Location of default notes files
+## Location of default notes files
 
-~~~~ {.src .src-emacs-lisp}
-(let ((destination (if (file-exists-p "~/Dropbox")
-                       "~/Dropbox/notes.org"
-                     "~/notes.org")))
-  (setq org-default-notes-file destination))    
-~~~~
+    (let ((destination (if (file-exists-p "~/Dropbox")
+                           "~/Dropbox/notes.org"
+                         "~/notes.org")))
+      (setq org-default-notes-file destination))    
 
-### 15.2 Capture templates
+## Capture templates
 
-~~~~ {.src .src-emacs-lisp}
-(require 'org-element)
+    
+    (require 'org-element)
+    
+    (defun pn-get-headline ()
+      (let* ((headlines (org-map-entries '(org-element-property :title (org-element-at-point)) t 'file)) 
+             (headline (car headlines)) 
+             (listoftags (org-map-entries '(org-element-property :tags (org-element-at-point)) t 'file))
+             (tags (car listoftags)))
+        (org-capture-put :title headline)
+        (org-capture-put :tags tags)
+        headline))
+    
+    (defun pn-filename_from_title ()
+      (replace-regexp-in-string " " "-" (pn-get-headline)))
+    
+    (defun matching-post (title)
+      (directory-files (pn-get-property :publishing-directory) nil (concat "[0-9]\\{4\\}-[0-9]+-[0-9]+-" title ".html")))
+    
+    (defun pn-postp (title)
+      (matching-post title))
+    
+    (defun pn-date-from-file (title)
+      (substring (car (matching-post title)) 0 10))
+    
+    (defun get-date (title)
+      (if (pn-postp title)
+          (pn-date-from-file title)
+        (format-time-string "%Y-%m-%d")))
+    
+    (defun pn-capture-blog-path ()
+      (let ((name (pn-filename_from_title)))
+        (expand-file-name (format "%s-%s.org"
+                                  (get-date name)
+                                  name) "~/Dropbox/notes/blog")))
+    
+    (setq org-capture-templates  
+    
+          '(         
+            ("b" 
+             "Org to Blog entry" 
+             plain 
+             (file (pn-capture-blog-path)) 
+             "#+BEGIN_HTML\n---\ntitle: %(org-capture-get :title)\nlayout: post\ntags: %(mapconcat 'identity (org-capture-get :tags) \" \")\n---\n#+END_HTML\n\n%F"
+             :immediate-finish t
+             :kill-buffer t
+             )
+    
+            ("t" 
+             "Todo" 
+             entry 
+             (file+headline "" "Task")
+             "* TODO %?\n  %i\n  %a")
+    
+            ("i"
+             "Idea")
+    
+            ("ia"
+             "app idea"
+             entry
+             (file+headline "~/Dropbox/notes/ideas.org" "App ideas")
+             "* %^{App idea (title)}\n %? \n%u"
+             )
+    
+            ("ib"
+             "blog idea"
+             entry
+             (file+headline "~/Dropbox/notes/ideas.org" "Blog ideas")
+             "* %^{Blog idea (title)}\n %? \n%u"
+             )
+    
+            ("it"
+             "T-shirt idea"
+             entry
+             (file+headline "~/Dropbox/notes/ideas.org" "T-shirt slogans")
+             "* %^{T-shirt slogan (title)}\n %? \n%u"
+             )
+    
+            ("j" 
+             "Journal" 
+             entry (file+datetree "")             
+             "* %?\nEntered on %U\n  %i\n  %a"))) 
+    
+    (setq org-capture-templates-contexts
+          '(("b" ((in-mode . "org-mode")))))
 
-(defun pn-get-headline ()
-  (let* ((headlines (org-map-entries '(org-element-property :title (org-element-at-point)) t 'file)) (headline (car headlines)))
-    (org-capture-put :title headline)
-     headline))
+## Project configuration
 
-(defun pn-filename_from_title ()
-  (replace-regexp-in-string " " "-" (pn-get-headline)))
+Publishing is configured almost entirely through setting the value of one variable, called \`org-publish-project-alist
 
-(defun pn-capture-blog-path ()
-  (let ((name (pn-filename_from_title)))
-    (expand-file-name (format "%s-%s.org"
-                              (format-time-string "%Y-%m-%d")
-                              name) "~/Dropbox/notes/blog")))
+    
+    (setq org-publish-project-alist
+          '(
+            ("org-perfumed-nightmare"
+             :base-directory "~/Dropbox/notes/blog"
+             :publishing-directory "~/Documents/danielsz.github.io/_posts"
+             :publishing-function org-html-publish-to-html
+             :preparation-function (lambda () (mapcar 'pn-expand-blog-file (pn-select-blog-files)))
+             :completion-function pn-delete-blog-files
+             :table-of-contents nil
+             :html-extension "html"
+             :body-only t 
+             :exclude "\\^\\([0-9]\\{4\\}-[0-9]+-[0-9]+\\)"
+             ))
+          )
 
-(setq org-capture-templates  
+These are my helper functions for the above project. One-click exporting to jekyll.
 
-      '(
-        ("n" 
-         "New blog entry" 
-         plain 
-         (file (pn-capture-blog-path)) 
-         "#+BEGIN_HTML\n---\ntitle:\nlayout: post\ntags:\n - blog\n---\n#+END_HTML\n\n"
-         :immediate-finish t
-         )
-
-        ("b" 
-         "Org to Blog entry" 
-         plain 
-         (file (pn-capture-blog-path)) 
-         "#+BEGIN_HTML\n---\ntitle: %(org-capture-get :title)\nlayout: post\ntags: %^{Tags (separated by spaces)}\n---\n#+END_HTML\n\n%F"
-         :immediate-finish t
-         :kill-buffer t
-         )
-
-        ("t" 
-         "Todo" 
-         entry 
-         (file+headline "" "Task")
-         "* TODO %?\n  %i\n  %a")
-
-        ("j" 
-         "Journal" 
-         entry (file+datetree "")             
-     "* %?\nEntered on %U\n  %i\n  %a"))) 
-
-  (setq org-capture-templates-contexts
-        '(("b" ((in-mode . "org-mode")))))
-~~~~
-
-### 15.3 Project configuration
-
-Publishing is configured almost entirely through setting the value of
-one variable, called \`org-publish-project-alist
-
-~~~~ {.src .src-emacs-lisp}
-(setq org-publish-project-alist
-      '(
-        ("org-perfumed-nightmare"
-         :base-directory "~/Dropbox/notes/blog"
-         :publishing-directory "~/Documents/danielsz.github.io/_posts"
-         :publishing-function org-publish-org-to-html
-         :preparation-function (lambda () (mapcar 'pn-expand-blog-file (pn-select-blog-files)))
-         :completion-function pn-delete-blog-files
-         :table-of-contents nil
-         :html-extension "html"
-         :body-only t 
-         :exclude "\\^\\([0-9]\\{4\\}-[0-9]+-[0-9]+\\)"
-         ))
-      )
-~~~~
-
-These are my helper functions for the above project. One-click exporting
-to jekyll.
-
-~~~~ {.src .src-emacs-lisp}
-(defun pn-select-blog-files ()
-  (directory-files "~/Dropbox/notes/blog" t "\\([0-9]\\{4\\}-[0-9]+-[0-9]+\\)"))
-
-(defun pn-delete-blog-files ()
-  (mapcar (lambda (file)
-            (kill-buffer (find-buffer-visiting file))
-            (delete-file file)) (pn-select-blog-files))
-) 
-(defun chomp (str)
+    
+    (defun pn-get-property (prop)
+      (plist-get (cdr (assoc "org-perfumed-nightmare" org-publish-project-alist)) prop))
+    
+    (defun pn-select-blog-files ()
+      (directory-files (pn-get-property :base-directory) t "\\([0-9]\\{4\\}-[0-9]+-[0-9]+\\)"))
+    
+    (defun pn-delete-blog-files ()
+      (mapcar (lambda (file)
+                (kill-buffer (find-buffer-visiting file))
+                (delete-file file)) (pn-select-blog-files))
+      ) 
+    (defun chomp (str)
       "Chomp leading and trailing whitespace from STR."
       (while (string-match "\\`\n+\\|^\\s-+\\|\\s-+$\\|\n+\\'"
                            str)
         (setq str (replace-match "" t t str)))
       str)
+    
+    (defun pn-delete-line ()
+      (delete-region (point) (progn (forward-line -1) (point))))
+    
+    (defun pn-expand-blog-file (file)
+      (with-current-buffer (find-file-noselect file)
+        (end-of-buffer)
+        (beginning-of-line)
+        (let ((root-file (chomp (thing-at-point 'line))))
+          (pn-delete-line)
+          (insert-file-contents root-file)
+          (delete-region (point) (line-end-position)))))
 
-(defun pn-delete-line ()
-  (delete-region (point) (progn (forward-line -1) (point))))
+Interactive function to enable the 1-click custom export command in Emacs:
 
-(defun pn-expand-blog-file (file)
-  (with-current-buffer (find-file-noselect file)
-    (end-of-buffer)
-    (beginning-of-line)
-    (let ((root-file (chomp (thing-at-point 'line))))
-      (pn-delete-line)
-      (insert-file-contents root-file)
-      (save-buffer))))
-~~~~
+    
+    (defun org-export-blog ()
+      "1-click blog publishing"
+      (interactive)
+      (org-capture nil "b")
+      (org-publish "org-perfumed-nightmare"))
 
-Interactive function to enable the 1-click custom export command in
-Emacs:
-
-~~~~ {.src .src-emacs-lisp}
-(require 'org-publish)
-
-  (defun org-export-blog ()
-    "1-click blog publishing"
-    (interactive)
-    (org-capture nil "b")
-    (org-publish "org-perfumed-nightmare"))
-~~~~
-
-### 15.4 Org-babel
+## Org-babel
 
 org-babel setup
 
-~~~~ {.src .src-emacs-lisp}
-(when (locate-file "ob" load-path load-suffixes)
-                                           (require 'ob)
-                                           (require 'ob-tangle)
-                                           (add-to-list 'org-babel-tangle-lang-exts '("clojure" . "clj"))
+    
+    (when (locate-file "ob" load-path load-suffixes)
+      (require 'ob)
+      (require 'ob-tangle)
+    
+      (org-babel-do-load-languages
+       'org-babel-load-languages
+       '((emacs-lisp . t)
+         (clojure . t)
+         (js . t)
+         (ruby . t)))
+    
+      (setq org-src-fontify-natively t)
+      (setq org-confirm-babel-evaluate nil))
 
-                                           (org-babel-do-load-languages
-                                            'org-babel-load-languages
-                                            '((emacs-lisp . t)
-                                              (clojure . t)
-                                              (js . t)
-                                              (ruby . t)))
+# Ctags
 
+Find root (replace eproject-root): cd "$(git rev-parse &#x2013;show-toplevel)"
 
-                                           (defun org-babel-execute:clojure (body params)
-                                             "Evaluate a block of Clojure code with Babel."
-                                             (let* ((result (nrepl-send-string-sync body (nrepl-current-ns)))
-                                                    (value (plist-get result :value))
-                                                    (out (plist-get result :stdout))
-                                                    (out (when out
-                                                           (if (string= "\n" (substring out -1))
-                                                               (substring out 0 -1)
-                                                             out)))
-                                                    (stdout (when out
-                                                              (mapconcat (lambda (line)
-                                                                           (concat ";; " line))
-                                                                         (split-string out "\n")
-                                                                         "\n"))))
-                                               (concat stdout
-                                                       (when (and stdout (not (string= "\n" (substring stdout -1))))
-                                                         "\n")
-                                                       ";;=> " value)))
+    (defun build-ctags ()
+      (interactive)
+      (message "building project tags")
+      (let ((root (eproject-root)))
+        (shell-command (concat "ctags -e -R --extra=+fq --exclude=db --exclude=test --exclude=.git --exclude=public -f " root "TAGS " root)))
+      (visit-project-tags)
+      (message "tags built successfully"))
+    
+    (defun visit-project-tags ()
+      (interactive)
+      (let ((tags-file (concat (eproject-root) "TAGS")))
+        (visit-tags-table tags-file)
+        (message (concat "Loaded " tags-file))))
 
-                                           (provide 'ob-clojure)
+# Paredit
 
-                                           (setq org-src-fontify-natively t)
-                                           (setq org-confirm-babel-evaluate nil))
-~~~~
+    (autoload 'enable-paredit-mode "paredit" "Turn on pseudo-structural editing of Lisp code." t)
+    (add-hook 'emacs-lisp-mode-hook       #'enable-paredit-mode)
+    (add-hook 'eval-expression-minibuffer-setup-hook #'enable-paredit-mode)
+    (add-hook 'ielm-mode-hook             #'enable-paredit-mode)
+    (add-hook 'lisp-mode-hook             #'enable-paredit-mode)
+    (add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
+    (add-hook 'scheme-mode-hook           #'enable-paredit-mode)
+    (add-hook 'clojure-mode-hook          #'enable-paredit-mode)
+    (add-hook 'cider-repl-mode-hook #'enable-paredit-mode)
 
-16 Ctags
---------
+# Pretty Lambda
 
-Find root (replace eproject-root): cd "\$(git rev-parse –show-toplevel)"
+    (pretty-lambda-for-modes)
 
-~~~~ {.src .src-emacs-lisp}
-(defun build-ctags ()
-  (interactive)
-  (message "building project tags")
-  (let ((root (eproject-root)))
-    (shell-command (concat "ctags -e -R --extra=+fq --exclude=db --exclude=test --exclude=.git --exclude=public -f " root "TAGS " root)))
-  (visit-project-tags)
-  (message "tags built successfully"))
+# Slime
 
-(defun visit-project-tags ()
-  (interactive)
-  (let ((tags-file (concat (eproject-root) "TAGS")))
-    (visit-tags-table tags-file)
-    (message (concat "Loaded " tags-file))))
-~~~~
+If there is a slime helper in quicklisp directory, assume a clozure installation
 
-17 Repos
---------
+    (let 
+         ((slime-helper (expand-file-name "~/quicklisp/slime-helper.el")))
+      (when (file-exists-p slime-helper)
+        (load slime-helper)
+        (setq inferior-lisp-program "ccl64")))
 
-~~~~ {.src .src-emacs-lisp}
-(setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
-                         ("marmalade" . "http://marmalade-repo.org/packages/")
-                         ("tromey" . "http://tromey.com/elpa/")
-                         ("melpa" . "http://melpa.milkbox.net/packages/")
-                         ("org" . "http://orgmode.org/elpa/")))
-~~~~
+Open the hyperspec with w3m. \`C-c C-d h\`
 
-18 Paredit
-----------
+    (setq browse-url-browser-function '(("hyperspec" . w3m-browse-url)
+                                        ("." . browse-url-default-macosx-browser)))
 
-~~~~ {.src .src-emacs-lisp}
-(autoload 'enable-paredit-mode "paredit" "Turn on pseudo-structural editing of Lisp code." t)
-(add-hook 'emacs-lisp-mode-hook       #'enable-paredit-mode)
-(add-hook 'eval-expression-minibuffer-setup-hook #'enable-paredit-mode)
-(add-hook 'ielm-mode-hook             #'enable-paredit-mode)
-(add-hook 'lisp-mode-hook             #'enable-paredit-mode)
-(add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
-(add-hook 'scheme-mode-hook           #'enable-paredit-mode)
-(add-hook 'clojure-mode-hook          #'enable-paredit-mode)
-~~~~
+# Clojure
 
-19 Slime
---------
+## nrepl
 
-If there is a slime helper in quicklisp directory, assume a clozure
-installation
+      ;  (add-hook 'nrepl-interaction-mode-hook 'nrepl-turn-on-eldoc-mode)
+    (add-hook 'cider-mode-hook 'cider-turn-on-eldoc-mode)
+      ;  (add-hook 'nrepl-interaction-mode-hook (lambda () (require 'nrepl-ritz)))
+      ;  (add-hook 'nrepl-repl-mode-hook 'subword-mode)
+    (add-hook 'cider-repl-mode-hook 'subword-mode)
+      ;  (add-hook 'nrepl-repl-mode-hook 'rainbow-delimiters-mode)
+    (add-hook 'cider-repl-mode-hook 'rainbow-delimiters-mode)
+    (setq nrepl-hide-special-buffers t)
+    ;(setq nrepl-popup-stacktraces-in-repl t)
+    (setq cider-popup-stacktraces nil)                                        
+    (setq cider-auto-select-error-buffer t)
+    (setq nrepl-buffer-name-show-port t)
+    ;(define-key nrepl-repl-mode-map (kbd "C-c C-i") 'nrepl-inspect)
+    ;(add-to-list 'same-window-buffer-names "*nrepl*")
 
-~~~~ {.src .src-emacs-lisp}
-(let 
-     ((slime-helper (expand-file-name "~/quicklisp/slime-helper.el")))
-  (when (file-exists-p slime-helper)
-    (load slime-helper)
-    (setq inferior-lisp-program "ccl")))
-~~~~
+I was experimenting with integrated tools.namespace reloading in elisp as well, and I found a slightly nicer way to send commands to nrepl:
 
-20 w3m
-------
+    (defun nrepl-reset ()
+        (interactive)
+        (nrepl-interactive-eval "(user/reset)"))
 
-~~~~ {.src .src-emacs-lisp}
-(setq w3m-coding-system 'utf-8
-          w3m-file-coding-system 'utf-8
-          w3m-file-name-coding-system 'utf-8
-          w3m-input-coding-system 'utf-8
-          w3m-output-coding-system 'utf-8
-          w3m-terminal-coding-system 'utf-8)
-~~~~
+## rainbow delimiters
 
-21 Mac OS X customizations
---------------------------
+    (add-hook 'clojure-mode-hook 'rainbow-delimiters-mode)
 
-Clipboard and kill ring
+## pretty lambda and co
 
-~~~~ {.src .src-emacs-lisp}
-(when (eq system-type 'darwin)
-  (progn
-    (turn-on-pbcopy)))  
-~~~~
+    (eval-after-load 'clojure-mode
+      '(font-lock-add-keywords
+        'clojure-mode `(("(\\(fn\\)[\[[:space:]]"
+                         (0 (progn (compose-region (match-beginning 1)
+                                                   (match-end 1) "λ")
+                                   nil))))))
+    
+    (eval-after-load 'clojure-mode
+      '(font-lock-add-keywords
+        'clojure-mode `(("\\(#\\)("
+                         (0 (progn (compose-region (match-beginning 1)
+                                                   (match-end 1) "ƒ")
+                                   nil))))))
+    
+    (eval-after-load 'clojure-mode
+      '(font-lock-add-keywords
+        'clojure-mode `(("\\(#\\){"
+                         (0 (progn (compose-region (match-beginning 1)
+                                                   (match-end 1) "∈")
+                                   nil))))))
 
-22 Global keys
---------------
+# w3m
 
-~~~~ {.src .src-emacs-lisp}
-;;ace-jump-mode
-(define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
-;;deft
-(global-set-key [f8] 'deft)
-;;org-velocity
-(global-set-key (kbd "C-c v") 'org-velocity-read)
-;;magit
-(global-set-key (kbd "C-x C-o") 'magit-status)
-;;;Smex is a M-x enhancement for Emacs. Built on top of IDO, it provides a convenient interface to your recently and most frequently used commands.
-(global-set-key (kbd "M-x") 'smex)
-(global-set-key (kbd "M-X") 'smex-major-mode-commands)
-;; This is your old M-x.
-(global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
-;;Get rid of `find-file-read-only' and replace it with something more useful.
-(global-set-key (kbd "C-x C-r") 'ido-recentf-open)
-;;hell mini
-(global-set-key (kbd "C-c h") 'helm-mini)
-~~~~
+    (setq w3m-coding-system 'utf-8
+              w3m-file-coding-system 'utf-8
+              w3m-file-name-coding-system 'utf-8
+              w3m-input-coding-system 'utf-8
+              w3m-output-coding-system 'utf-8
+              w3m-terminal-coding-system 'utf-8)
 
-Date: 2013-06-02T09:12+0300
+# mu4e
 
-Author: Daniel Szmulewicz
+    (when (require 'mu4e nil t)
+      (setq 
+       mu4e-maildir (expand-file-name "~/mail")
+       mu4e-mu-binary "/usr/local/bin/mu"
+       ;; below are the defaults; if they do not exist yet, mu4e offers to
+       ;; create them. they can also functions; see their docstrings.
+       ;; (setq mu4e-sent-folder   "/sent")
+       ;; (setq mu4e-drafts-folder "/drafts")
+       ;; (setq mu4e-trash-folder  "/trash")
+       ;;mu4e-get-mail-command "offlineimap"   ;; or fetchmail, or ...
+       mu4e-get-mail-command "true"
+       mu4e-update-interval 300)             ;; update every 5 minutes
+      )
+    
+    ;; something about ourselves
+    (setq
+     user-mail-address "daniel.szmulewicz@gmail.com"
+     user-full-name  "Daniel Szmulewicz"
+     message-signature
+     (concat
+      "http://danielsz.github.io\n"))
+    
+    ;;for emacs-24 you can use: 
+    (setq send-mail-function 'smtpmail-send-it
+          smtpmail-stream-type 'starttls
+          smtpmail-default-smtp-server "smtp.gmail.com"
+          smtpmail-smtp-server "smtp.gmail.com"
+          smtpmail-smtp-service 587
+          ;; To allow for queuing, you need to tell smtpmail where you want to
+          ;; store the queued messages. For example:
+          smtpmail-queue-mail nil  ;; start in non-queuing mode
+          smtpmail-queue-dir "~/mail/queue/cur"
+          )
+    
+    ;; attempt to show images when viewing messages
+    (setq
+     mu4e-view-show-images t
+     mu4e-view-image-max-width 800)
 
-[Org](http://orgmode.org) version 7.9.3f with
-[Emacs](http://www.gnu.org/software/emacs/) version 24
+# ElDOC
 
-[Validate XHTML 1.0](http://validator.w3.org/check?uri=referer)
+    (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
+    (add-hook 'lisp-interaction-mode-hook 'turn-on-eldoc-mode)
+    (add-hook 'ielm-mode-hook 'turn-on-eldoc-mode)
+
+# Terminal hotkey
+
+    
+    (defun toggle-terminal ()
+      (interactive)
+      (if (string= "eshell-mode" (eval 'major-mode))
+          (winner-undo)
+        (progn (delete-other-windows) (eshell))))
+
+# Flycheck
+
+    (add-hook 'after-init-hook #'global-flycheck-mode)
+
+# nyan-mode
+
+    
+    (add-hook 'after-init-hook
+              (lambda ()
+                (if (display-graphic-p)
+                    (nyan-mode t)
+                  (nyan-mode -1)))) 
+    
+    
+    (add-hook 'after-make-frame-functions
+              (lambda (frame)
+                (if (display-graphic-p frame)
+                    (nyan-mode t)
+                  (nyan-mode -1)))) 
+
+# web-mode
+
+    (add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
+    (add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
+    (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+    
+    
+    (defun web-mode-hook ()
+      "Hooks for Web mode."
+      (setq web-mode-markup-indent-offset 2)
+      (setq web-mode-css-indent-offset 2)
+      (setq web-mode-code-indent-offset 2)
+    )
+    (add-hook 'web-mode-hook  'web-mode-hook)
+
+# elisp
+
+## elisp-slime-nav
+
+    (dolist (hook '(emacs-lisp-mode-hook ielm-mode-hook))
+      (add-hook hook 'turn-on-elisp-slime-nav-mode))
+
+## elisp-format
+
+elisp-format is a handy mode enabling source code formating of elisp code.
+It's unavailable on the repos, so here is how to install it manually (commented out for now) 
+
+    ;;(add-to-list 'load-path (expand-file-name "~/elisp"))
+    ;;(require 'elisp-format)
+
+# Global keys
+
+    ;;ace-jump-mode
+    (eval-after-load "org"
+            '(define-key org-mode-map "\C-c " 'nil)) ; unmap key, was org-table-blank-field
+    (define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
+    ;;org-capture
+    (global-set-key [f6] 'org-capture)
+    ;;deft
+    (global-set-key [f8] 'deft)
+    ;;org-velocity
+    (global-set-key (kbd "C-c v") 'helm-projectile)
+    ;;magit
+    (global-set-key (kbd "C-x C-o") 'magit-status)
+    ;;;Smex is a M-x enhancement for Emacs. Built on top of IDO, it provides a convenient interface to your recently and most frequently used commands.
+    (global-set-key (kbd "M-x") 'smex)
+    (global-set-key (kbd "M-X") 'smex-major-mode-commands)
+    ;; This is your old M-x.
+    (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
+    ;;Get rid of `find-file-read-only' and replace it with something more useful.
+    (global-set-key (kbd "C-x C-r") 'ido-recentf-open)
+    ;;helm mini
+    (global-set-key (kbd "C-c h") 'helm-mini)
+    ;;magit-status
+    (global-set-key (kbd "C-x g") 'magit-status)
+    ;; slime-selector
+    (global-set-key [f5] 'slime-selector)
+    ;; terminal visor
+    (global-set-key (kbd "C-c t") 'toggle-terminal)

@@ -140,14 +140,6 @@ Not sure it is needed.
 (add-hook 'css-mode-hook 'rainbow-mode)
 #+END_SRC
 
-
-elisp-format is a handy mode enabling source code formating of elisp code.
-It's unavailable on the repos, so here is how to install it manually (commented out for now) 
-#+BEGIN_SRC emacs-lisp
-;;(add-to-list 'load-path (expand-file-name "~/elisp"))
-;;(require 'elisp-format)
-#+END_SRC
-
 * Color theme
 #+BEGIN_SRC emacs-lisp
 (load-theme 'zenburn t)
@@ -327,7 +319,7 @@ Publishing is configured almost entirely through setting the value of one variab
           ("org-perfumed-nightmare"
            :base-directory "~/Dropbox/notes/blog"
            :publishing-directory "~/Documents/danielsz.github.io/_posts"
-           :publishing-function org-publish-org-to-html
+           :publishing-function org-html-publish-to-html
            :preparation-function (lambda () (mapcar 'pn-expand-blog-file (pn-select-blog-files)))
            :completion-function pn-delete-blog-files
            :table-of-contents nil
@@ -378,7 +370,6 @@ These are my helper functions for the above project. One-click exporting to jeky
 Interactive function to enable the 1-click custom export command in Emacs:
 
 #+BEGIN_SRC emacs-lisp
-(require 'org-publish)
 
   (defun org-export-blog ()
     "1-click blog publishing"
@@ -622,11 +613,19 @@ I was experimenting with integrated tools.namespace reloading in elisp as well, 
 | web-mode-hook |
 
 * elisp
-** elisp-slime-nace
+** elisp-slime-nav
 #+BEGIN_SRC emacs-lisp
 (dolist (hook '(emacs-lisp-mode-hook ielm-mode-hook))
   (add-hook hook 'turn-on-elisp-slime-nav-mode))
 #+END_SRC
+** elisp-format
+elisp-format is a handy mode enabling source code formating of elisp code.
+It's unavailable on the repos, so here is how to install it manually (commented out for now) 
+#+BEGIN_SRC emacs-lisp
+;;(add-to-list 'load-path (expand-file-name "~/elisp"))
+;;(require 'elisp-format)
+#+END_SRC
+
 * Global keys
 #+BEGIN_SRC emacs-lisp
 ;;ace-jump-mode

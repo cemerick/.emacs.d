@@ -475,9 +475,13 @@ Open the hyperspec with w3m. `C-c C-d h`
 
 I was experimenting with integrated tools.namespace reloading in elisp as well, and I found a slightly nicer way to send commands to nrepl:
 #+BEGIN_SRC emacs-lisp
-(defun nrepl-reset ()
+(defun cider-reset ()
     (interactive)
-    (nrepl-interactive-eval "(user/reset)"))
+    (cider-interactive-eval "(user/reset)"))
+
+(defun cider-refresh ()
+    (interactive)
+    (cider-interactive-eval "(clojure.tools.namespace.repl/refresh)"))
 #+END_SRC
 
 ** rainbow delimiters
@@ -528,6 +532,12 @@ In Cider.
 (eval-after-load "cider"
   '(define-key cider-mode-map (kbd "C-c C-d") 'ac-nrepl-popup-doc))
 #+END_SRC
+* Ruby
+ #+BEGIN_SRC emacs-lisp
+(autoload 'inf-ruby "inf-ruby" "Run an inferior Ruby process" t)
+(add-hook 'ruby-mode-hook 'inf-ruby-minor-mode)
+(add-hook 'after-init-hook 'inf-ruby-switch-setup)
+ #+END_SRC
 * w3m
 #+BEGIN_SRC emacs-lisp
 (setq w3m-coding-system 'utf-8
@@ -651,6 +661,12 @@ It's unavailable on the repos, so here is how to install it manually (commented 
 ;;(require 'elisp-format)
 #+END_SRC
 
+** package development
+#+BEGIN_SRC emacs-lisp
+    (when (string= system-name "Daniels-MacBook-Air-2.local")
+      (add-to-list 'load-path "~/Documents/elisp/imp.el")
+      (require 'impatient-mode))
+#+END_SRC
 * Global keys
 #+BEGIN_SRC emacs-lisp
 ;;ace-jump-mode

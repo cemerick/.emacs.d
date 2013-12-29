@@ -549,9 +549,10 @@ In Cider.
 #+END_SRC
 * ERC
 #+BEGIN_SRC emacs-lisp
-(setq erc-autojoin-channels-alist
-          '(("freenode.net" "#emacs" "#clojure")))
- (erc :server "irc.freenode.net" :port 6667 :nick "danielszmulewicz")
+  (setq erc-autojoin-channels-alist
+        '(("freenode.net" "#emacs" "#clojure")))
+  (defun myerc ()
+    (erc :server "irc.freenode.net" :port 6667 :nick "danielszmulewicz"))
 #+END_SRC
 * mu4e
 #+BEGIN_SRC emacs-lisp

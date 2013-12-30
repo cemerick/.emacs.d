@@ -20,6 +20,7 @@
 (depends-on "dictionary")
 (depends-on "dictionary-app")
 (depends-on "elisp-slime-nav")
+(depends-on "emms")
 (depends-on "epl")
 (depends-on "f")
 (depends-on "flycheck")

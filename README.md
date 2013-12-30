@@ -6,22 +6,31 @@
 <li><a href="#sec-2">2. Backup and autosave</a></li>
 <li><a href="#sec-3">3. UTF-8</a></li>
 <li><a href="#sec-4">4. Tabs</a></li>
-<li><a href="#sec-5">5. Menu bar</a></li>
-<li><a href="#sec-6">6. Winner mode</a></li>
-<li><a href="#sec-7">7. Windmove</a></li>
-<li><a href="#sec-8">8. Recent file list</a></li>
-<li><a href="#sec-9">9. Ido</a>
+<li><a href="#sec-5">5. Winner mode</a></li>
+<li><a href="#sec-6">6. Windmove</a></li>
+<li><a href="#sec-7">7. Recent file list</a></li>
+<li><a href="#sec-8">8. Ido</a>
 <ul>
-<li><a href="#sec-9-1">9.1. recentf</a></li>
+<li><a href="#sec-8-1">8.1. recentf</a></li>
 </ul>
 </li>
+<li><a href="#sec-9">9. Undo</a></li>
 <li><a href="#sec-10">10. Uniquify</a></li>
 <li><a href="#sec-11">11. Spelling</a></li>
 <li><a href="#sec-12">12. Key remappings</a></li>
 <li><a href="#sec-13">13. Misc.</a></li>
 <li><a href="#sec-14">14. Color theme</a></li>
 <li><a href="#sec-15">15. Splash screen</a></li>
-<li><a href="#sec-16">16. Mac OS X customizations</a></li>
+<li><a href="#sec-16">16. Display customizations</a>
+<ul>
+<li><a href="#sec-16-1">16.1. Menu bar</a></li>
+<li><a href="#sec-16-2">16.2. Frame positioning</a></li>
+<li><a href="#sec-16-3">16.3. Fonts</a></li>
+<li><a href="#sec-16-4">16.4. Clipboard and kill ring</a></li>
+<li><a href="#sec-16-5">16.5. Nyan-mode</a></li>
+<li><a href="#sec-16-6">16.6. Unused</a></li>
+</ul>
+</li>
 <li><a href="#sec-17">17. Text-files hooks</a></li>
 <li><a href="#sec-18">18. Deft</a></li>
 <li><a href="#sec-19">19. Org-mode</a>
@@ -41,22 +50,25 @@
 <li><a href="#sec-24-1">24.1. nrepl</a></li>
 <li><a href="#sec-24-2">24.2. rainbow delimiters</a></li>
 <li><a href="#sec-24-3">24.3. pretty lambda and co</a></li>
+<li><a href="#sec-24-4">24.4. auto-complete</a></li>
 </ul>
 </li>
-<li><a href="#sec-25">25. w3m</a></li>
-<li><a href="#sec-26">26. mu4e</a></li>
-<li><a href="#sec-27">27. ElDOC</a></li>
-<li><a href="#sec-28">28. Terminal hotkey</a></li>
-<li><a href="#sec-29">29. Flycheck</a></li>
-<li><a href="#sec-30">30. nyan-mode</a></li>
-<li><a href="#sec-31">31. web-mode</a></li>
-<li><a href="#sec-32">32. elisp</a>
+<li><a href="#sec-25">25. Ruby</a></li>
+<li><a href="#sec-26">26. w3m</a></li>
+<li><a href="#sec-27">27. ERC</a></li>
+<li><a href="#sec-28">28. mu4e</a></li>
+<li><a href="#sec-29">29. ElDOC</a></li>
+<li><a href="#sec-30">30. Terminal hotkey</a></li>
+<li><a href="#sec-31">31. Flycheck</a></li>
+<li><a href="#sec-32">32. web-mode</a></li>
+<li><a href="#sec-33">33. elisp</a>
 <ul>
-<li><a href="#sec-32-1">32.1. elisp-slime-nav</a></li>
-<li><a href="#sec-32-2">32.2. elisp-format</a></li>
+<li><a href="#sec-33-1">33.1. elisp-slime-nav</a></li>
+<li><a href="#sec-33-2">33.2. elisp-format</a></li>
+<li><a href="#sec-33-3">33.3. package development</a></li>
 </ul>
 </li>
-<li><a href="#sec-33">33. Global keys</a></li>
+<li><a href="#sec-34">34. Global keys</a></li>
 </ul>
 </div>
 </div>
@@ -102,12 +114,6 @@ Two-width tab stops, like I'm used to
     (setq tab-stop-list (number-sequence 2 200 2))
     (setq indent-tabs-mode nil)
 
-# Menu bar
-
-Disable menu-bar, invoke if necessary with \`menu-bar-mode
-
-    (menu-bar-mode -1)
-
 # Winner mode
 
     (winner-mode 1)
@@ -146,6 +152,10 @@ Make recentf use ido
       (if (find-file (ido-completing-read "Find recent file: " recentf-list)) 
           (message "Opening file...") 
         (message "Aborting")))
+
+# Undo
+
+    (global-undo-tree-mode)
 
 # Uniquify
 
@@ -197,21 +207,50 @@ Not sure it is needed.
 
     (setq inhibit-splash-screen t)
 
-# Mac OS X customizations
+# Display customizations
 
-Clipboard and kill ring
+## Menu bar
+
+We want a menu bar on graphical display systems, and none in the terminal.
+
+    (defun set-frame-menu-bar-lines (&optional frame)
+      (let ((want-menu (display-graphic-p frame)))
+        (set-frame-parameter frame 'menu-bar-lines (if want-menu 1 0))))
+    (add-hook 'after-make-frame-functions 'set-frame-menu-bar-lines)
+    (add-hook 'after-init-hook 'set-frame-menu-bar-lines)
+
+## Frame positioning
+
+    (setq default-frame-alist '((height . 44) (width . 120) (top . 20) (left . 200)))  
+
+## Fonts
+
+    (when (eq system-type 'darwin)
+      (add-to-list 'default-frame-alist '(font . "Menlo-14")))
+
+## Clipboard and kill ring
 
     (when (eq system-type 'darwin)
       (progn
-        (turn-on-pbcopy)
-        (setq default-frame-alist '((height . 44) (width . 120) (font . "Menlo-14") (top . 20) (left . 200)))
-        (setq initial-frame-alist '((top . 10) (left . 30)))))
+        (turn-on-pbcopy)))  
 
-[Braces and square braces in emacs](http://stackoverflow.com/questions/3376863/unable-to-type-braces-and-square-braces-in-emacs)
+[\*\* Braces and square braces in emacs](http://stackoverflow.com/questions/3376863/unable-to-type-braces-and-square-braces-in-emacs)
 
-    (setq mac-right-option-modifier nil
-          mac-option-key-is-meta t
-          x-select-enable-clipboard t)
+    (when (eq system-type 'darwin)
+      (setq mac-right-option-modifier nil
+            mac-option-key-is-meta t
+            x-select-enable-clipboard t))
+
+## Nyan-mode
+
+    (defun toggle-nyan-mode (&optional frame)
+      (if (display-graphic-p frame)
+          (nyan-mode t)
+        (nyan-mode -1)))
+    (add-hook 'after-init-hook 'toggle-nyan-mode)
+    (add-hook 'after-make-frame-functions 'toggle-nyan-mode)
+
+## Unused
 
     
     (defun reset-ui (&optional frame)
@@ -497,9 +536,13 @@ Open the hyperspec with w3m. \`C-c C-d h\`
 
 I was experimenting with integrated tools.namespace reloading in elisp as well, and I found a slightly nicer way to send commands to nrepl:
 
-    (defun nrepl-reset ()
+    (defun cider-reset ()
         (interactive)
-        (nrepl-interactive-eval "(user/reset)"))
+        (cider-interactive-eval "(user/reset)"))
+    
+    (defun cider-refresh ()
+        (interactive)
+        (cider-interactive-eval "(clojure.tools.namespace.repl/refresh)"))
 
 ## rainbow delimiters
 
@@ -528,6 +571,30 @@ I was experimenting with integrated tools.namespace reloading in elisp as well, 
                                                    (match-end 1) "∈")
                                    nil))))))
 
+## auto-complete
+
+In Clojure buffers.
+
+    (require 'auto-complete-config)
+    (ac-config-default)
+    (define-key ac-completing-map "\M-/" 'ac-stop) ; use M-/ to stop completion
+
+In Cider.
+
+    (require 'ac-nrepl)
+    (add-hook 'cider-repl-mode-hook 'ac-nrepl-setup)
+    (add-hook 'cider-mode-hook 'ac-nrepl-setup)
+    (eval-after-load "auto-complete"
+      '(add-to-list 'ac-modes 'cider-repl-mode))
+    (eval-after-load "cider"
+      '(define-key cider-mode-map (kbd "C-c C-d") 'ac-nrepl-popup-doc))
+
+# Ruby
+
+    (autoload 'inf-ruby "inf-ruby" "Run an inferior Ruby process" t)
+    (add-hook 'ruby-mode-hook 'inf-ruby-minor-mode)
+    (add-hook 'after-init-hook 'inf-ruby-switch-setup)
+
 # w3m
 
     (setq w3m-coding-system 'utf-8
@@ -536,6 +603,13 @@ I was experimenting with integrated tools.namespace reloading in elisp as well, 
               w3m-input-coding-system 'utf-8
               w3m-output-coding-system 'utf-8
               w3m-terminal-coding-system 'utf-8)
+
+# ERC
+
+    (setq erc-autojoin-channels-alist
+          '(("freenode.net" "#emacs" "#clojure")))
+    (defun myerc ()
+      (erc :server "irc.freenode.net" :port 6667 :nick "danielszmulewicz"))
 
 # mu4e
 
@@ -597,22 +671,6 @@ I was experimenting with integrated tools.namespace reloading in elisp as well, 
 
     (add-hook 'after-init-hook #'global-flycheck-mode)
 
-# nyan-mode
-
-    
-    (add-hook 'after-init-hook
-              (lambda ()
-                (if (display-graphic-p)
-                    (nyan-mode t)
-                  (nyan-mode -1)))) 
-    
-    
-    (add-hook 'after-make-frame-functions
-              (lambda (frame)
-                (if (display-graphic-p frame)
-                    (nyan-mode t)
-                  (nyan-mode -1)))) 
-
 # web-mode
 
     (add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
@@ -642,6 +700,12 @@ It's unavailable on the repos, so here is how to install it manually (commented 
 
     ;;(add-to-list 'load-path (expand-file-name "~/elisp"))
     ;;(require 'elisp-format)
+
+## package development
+
+    (when (string= system-name "Daniels-MacBook-Air-2.local")
+      (add-to-list 'load-path "~/Documents/elisp/imp.el")
+      (require 'impatient-mode))
 
 # Global keys
 

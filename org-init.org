@@ -570,6 +570,13 @@ In Cider.
           w3m-output-coding-system 'utf-8
           w3m-terminal-coding-system 'utf-8)
 #+END_SRC
+* EMMS
+#+BEGIN_SRC emacs-lisp
+  (require 'emms-setup)
+  (emms-all)
+  (emms-default-players)
+  (setq emms-stream-default-action "play")
+#+END_SRC
 * ERC
 #+BEGIN_SRC emacs-lisp
   (setq erc-autojoin-channels-alist

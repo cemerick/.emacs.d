@@ -181,11 +181,11 @@ We want a menu bar on graphical display systems, and none in the terminal.
 [[http://stackoverflow.com/questions/3376863/unable-to-type-braces-and-square-braces-in-emacs][** Braces and square braces in emacs]]
 
 #+BEGIN_SRC emacs-lisp
-  (setq mac-right-option-modifier nil
-        mac-option-key-is-meta t
-        x-select-enable-clipboard t)
+  (when (eq system-type 'darwin)
+    (setq mac-right-option-modifier nil
+          mac-option-key-is-meta t
+          x-select-enable-clipboard t))
 #+END_SRC
-
 ** Nyan-mode
 #+BEGIN_SRC emacs-lisp
   (defun toggle-nyan-mode (&optional frame)

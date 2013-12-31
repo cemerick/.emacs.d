@@ -582,6 +582,7 @@ In Cider.
   (setq erc-autojoin-channels-alist
         '(("freenode.net" "#emacs" "#clojure")))
   (defun myerc ()
+    (interactive)
     (erc :server "irc.freenode.net" :port 6667 :nick "danielszmulewicz"))
 #+END_SRC
 * mu4e
@@ -684,7 +685,7 @@ It's unavailable on the repos, so here is how to install it manually (commented 
 ** package development
 #+BEGIN_SRC emacs-lisp
     (when (string= system-name "Daniels-MacBook-Air-2.local")
-      (add-to-list 'load-path "~/Documents/elisp/imp.el")
+      (add-to-list 'load-path "~/Documents/elisp/impatient-mode/imp.el")
       (require 'impatient-mode))
 #+END_SRC
 * Global keys

@@ -301,7 +301,18 @@ Turn visual mode for text files
            (file+headline "" "Task")
            "* TODO %?\n  %i\n  %a")
           
-          ("i"
+           ("r"
+           "Recipes"
+            )
+          
+           ("rc"
+            "Cocktails"
+            entry
+            (file+headline "~/Dropbox/notes/recipes.org" "Cocktail recipe")
+            "* %^{Cocktail (title)}\n %? \n%u"
+            )
+          
+           ("i"
            "Idea")
           
           ("ia"
@@ -317,7 +328,7 @@ Turn visual mode for text files
            (file+headline "~/Dropbox/notes/ideas.org" "Blog ideas")
            "* %^{Blog idea (title)}\n %? \n%u"
            )
-
+  
           ("it"
            "T-shirt idea"
            entry

@@ -695,9 +695,9 @@ It's unavailable on the repos, so here is how to install it manually (commented 
 
 ** package development
 #+BEGIN_SRC emacs-lisp
-    (when (string= system-name "Daniels-MacBook-Air-2.local")
-      (add-to-list 'load-path "~/Documents/elisp/impatient-mode/imp.el")
-      (require 'impatient-mode))
+    ;(when (string= system-name "Daniels-MacBook-Air-2.local")
+      ;(add-to-list 'load-path "~/Documents/elisp/impatient-mode/imp.el")
+      ;(require 'impatient-mode))
 #+END_SRC
 * Global keys
 #+BEGIN_SRC emacs-lisp

@@ -421,20 +421,21 @@ Interactive function to enable the 1-click custom export command in Emacs:
 
 org-babel setup
 #+BEGIN_SRC emacs-lisp
+        
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((emacs-lisp . t)
+     (clojure . t)
+     (js . t)
+     (ruby . t)))
   
-  (when (locate-file "ob" load-path load-suffixes)
-    (require 'ob)
-    (require 'ob-tangle)
-    
-    (org-babel-do-load-languages
-     'org-babel-load-languages
-     '((emacs-lisp . t)
-       (clojure . t)
-       (js . t)
-       (ruby . t)))
-    
-    (setq org-src-fontify-natively t)
-    (setq org-confirm-babel-evaluate nil))
+  (setq org-babel-clojure-backend 'cider)
+  
+  ;; Let's have pretty source code blocks
+  (setq org-edit-src-content-indentation 0
+        org-src-tab-acts-natively t
+        org-src-fontify-natively t
+        org-confirm-babel-evaluate nil)
   
 #+END_SRC
 
@@ -489,20 +490,21 @@ Open the hyperspec with w3m. `C-c C-d h`
                                       ("." . browse-url-default-macosx-browser)))
 #+END_SRC
 * Clojure
-** nrepl
+** Cider
 #+BEGIN_SRC emacs-lisp
-  ;  (add-hook 'nrepl-interaction-mode-hook 'nrepl-turn-on-eldoc-mode)
+
 (add-hook 'cider-mode-hook 'cider-turn-on-eldoc-mode)
-  ;  (add-hook 'nrepl-interaction-mode-hook (lambda () (require 'nrepl-ritz)))
-  ;  (add-hook 'nrepl-repl-mode-hook 'subword-mode)
 (add-hook 'cider-repl-mode-hook 'subword-mode)
-  ;  (add-hook 'nrepl-repl-mode-hook 'rainbow-delimiters-mode)
 (add-hook 'cider-repl-mode-hook 'rainbow-delimiters-mode)
-(setq nrepl-hide-special-buffers t)
-;(setq nrepl-popup-stacktraces-in-repl t)
-(setq cider-popup-stacktraces nil)                                        
-(setq cider-auto-select-error-buffer t)
-(setq nrepl-buffer-name-show-port t)
+
+(setq nrepl-hide-special-buffers t
+      cider-repl-pop-to-buffer-on-connect nil
+      cider-popup-stacktraces nil
+      cider-repl-popup-stacktraces t
+      nrepl-buffer-name-show-port t
+      cider-auto-select-error-buffer t)
+
+
 ;(define-key nrepl-repl-mode-map (kbd "C-c C-i") 'nrepl-inspect)
 ;(add-to-list 'same-window-buffer-names "*nrepl*")
 #+END_SRC

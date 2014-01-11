@@ -439,6 +439,11 @@ org-babel setup
   
 #+END_SRC
 
+** Keybindings
+#+BEGIN_SRC emacs-lisp
+(org-defkey org-mode-map "\C-x\C-e" 'cider-eval-last-sexp)
+(org-defkey org-mode-map "\C-c\C-d" 'cider-doc)
+#+END_SRC
 * Ctags
 Find root (replace eproject-root): cd "$(git rev-parse --show-toplevel)"
 

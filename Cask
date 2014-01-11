@@ -15,6 +15,7 @@
 (depends-on "clojure-test-mode")
 (depends-on "clojurescript-mode")
 (depends-on "coffee-mode")
+(depends-on "cyberpunk-theme")
 (depends-on "dash")
 (depends-on "deft")
 (depends-on "dictionary")

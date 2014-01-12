@@ -140,7 +140,7 @@ Not sure it is needed.
 
 * Color theme
 #+BEGIN_SRC emacs-lisp
-(load-theme 'cyberpunk t)
+(load-theme 'zenburn t)
 #+END_SRC
   
 * Splash screen

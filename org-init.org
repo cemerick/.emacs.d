@@ -248,102 +248,102 @@ Turn visual mode for text files
 ** Capture templates
 
 #+BEGIN_SRC emacs-lisp
-       
-  (require 'org-element)
-          
-  (defun pn-get-headline ()
-    (let* ((headlines (org-map-entries '(org-element-property :title (org-element-at-point)) t 'file)) 
-           (headline (car headlines)) 
-           (listoftags (org-map-entries '(org-element-property :tags (org-element-at-point)) t 'file))
-           (tags (car listoftags)))
-      (org-capture-put :title headline)
-      (org-capture-put :tags tags)
-      headline))
-  
-  (defun pn-filename_from_title ()
-    (replace-regexp-in-string " " "-" (pn-get-headline)))
-  
-  (defun matching-post (title)
-    (directory-files (pn-get-property :publishing-directory) nil (concat "[0-9]\\{4\\}-[0-9]+-[0-9]+-" title ".html")))
-  
-  (defun pn-postp (title)
-    (matching-post title))
-  
-  (defun pn-date-from-file (title)
-    (substring (car (matching-post title)) 0 10))
-  
-  (defun get-date (title)
-    (if (pn-postp title)
-        (pn-date-from-file title)
-      (format-time-string "%Y-%m-%d")))
-  
-  (defun pn-capture-blog-path ()
-    (let ((name (pn-filename_from_title)))
-      (expand-file-name (format "%s-%s.org"
-                                (get-date name)
-                                name) "~/Dropbox/notes/blog")))
-  
-  (setq org-capture-templates  
+     
+(require 'org-element)
         
-        '(         
-          ("b" 
-           "Org to Blog entry" 
-           plain 
-           (file (pn-capture-blog-path)) 
-           "#+BEGIN_HTML\n---\ntitle: %(org-capture-get :title)\nlayout: post\ntags: %(mapconcat 'identity (org-capture-get :tags) \" \")\n---\n#+END_HTML\n\n%F"
-           :immediate-finish t
-           :kill-buffer t
-           )
-            
-          ("t" 
-           "Todo" 
-           entry 
-           (file+headline "" "Task")
-           "* TODO %?\n  %i\n  %a")
+(defun pn-get-headline ()
+  (let* ((headlines (org-map-entries '(org-element-property :title (org-element-at-point)) t 'file)) 
+         (headline (car headlines)) 
+         (listoftags (org-map-entries '(org-element-property :tags (org-element-at-point)) t 'file))
+         (tags (car listoftags)))
+    (org-capture-put :title headline)
+    (org-capture-put :tags tags)
+    headline))
+
+(defun pn-filename_from_title ()
+  (replace-regexp-in-string " " "-" (pn-get-headline)))
+
+(defun matching-post (title)
+  (directory-files (pn-get-property :publishing-directory) nil (concat "[0-9]\\{4\\}-[0-9]+-[0-9]+-" title ".html")))
+
+(defun pn-postp (title)
+  (matching-post title))
+
+(defun pn-date-from-file (title)
+  (substring (car (matching-post title)) 0 10))
+
+(defun get-date (title)
+  (if (pn-postp title)
+      (pn-date-from-file title)
+    (format-time-string "%Y-%m-%d")))
+
+(defun pn-capture-blog-path ()
+  (let ((name (pn-filename_from_title)))
+    (expand-file-name (format "%s-%s.org"
+                              (get-date name)
+                              name) "~/Dropbox/notes/blog")))
+
+(setq org-capture-templates  
+      
+      '(         
+        ("b" 
+         "Org to Blog entry" 
+         plain 
+         (file (pn-capture-blog-path)) 
+         "#+BEGIN_HTML\n---\ntitle: %(org-capture-get :title)\nlayout: post\ntags: %(mapconcat 'identity (org-capture-get :tags) \" \")\ncategories: %(mapconcat 'identity (org-capture-get :tags) \" \")\n---\n#+END_HTML\n\n%F"
+         :immediate-finish t
+         :kill-buffer t
+         )
           
-           ("r"
-           "Recipes"
-            )
-          
-           ("rc"
-            "Cocktails"
-            entry
-            (file+headline "~/Dropbox/notes/recipes.org" "Cocktail recipe")
-            "* %^{Cocktail (title)}\n %? \n%u"
-            )
-          
-           ("i"
-           "Idea")
-          
-          ("ia"
-           "app idea"
-           entry
-           (file+headline "~/Dropbox/notes/ideas.org" "App ideas")
-           "* %^{App idea (title)}\n %? \n%u"
-           )
-          
-          ("ib"
-           "blog idea"
-           entry
-           (file+headline "~/Dropbox/notes/ideas.org" "Blog ideas")
-           "* %^{Blog idea (title)}\n %? \n%u"
-           )
-  
-          ("it"
-           "T-shirt idea"
-           entry
-           (file+headline "~/Dropbox/notes/ideas.org" "T-shirt slogans")
-           "* %^{T-shirt slogan (title)}\n %? \n%u"
-           )
-          
-          ("j" 
-           "Journal" 
-           entry (file+datetree "")             
-           "* %?\nEntered on %U\n  %i\n  %a"))) 
-  
-  (setq org-capture-templates-contexts
-        '(("b" ((in-mode . "org-mode")))))
-  
+        ("t" 
+         "Todo" 
+         entry 
+         (file+headline "" "Task")
+         "* TODO %?\n  %i\n  %a")
+        
+         ("r"
+         "Recipes"
+          )
+        
+         ("rc"
+          "Cocktails"
+          entry
+          (file+headline "~/Dropbox/notes/recipes.org" "Cocktail recipe")
+          "* %^{Cocktail (title)}\n %? \n%u"
+          )
+        
+         ("i"
+         "Idea")
+        
+        ("ia"
+         "app idea"
+         entry
+         (file+headline "~/Dropbox/notes/ideas.org" "App ideas")
+         "* %^{App idea (title)}\n %? \n%u"
+         )
+        
+        ("ib"
+         "blog idea"
+         entry
+         (file+headline "~/Dropbox/notes/ideas.org" "Blog ideas")
+         "* %^{Blog idea (title)}\n %? \n%u"
+         )
+
+        ("it"
+         "T-shirt idea"
+         entry
+         (file+headline "~/Dropbox/notes/ideas.org" "T-shirt slogans")
+         "* %^{T-shirt slogan (title)}\n %? \n%u"
+         )
+        
+        ("j" 
+         "Journal" 
+         entry (file+datetree "")             
+         "* %?\nEntered on %U\n  %i\n  %a")))
+
+(setq org-capture-templates-contexts
+      '(("b" ((in-mode . "org-mode")))))
+
 #+END_SRC
 
 ** Project configuration
@@ -351,58 +351,59 @@ Turn visual mode for text files
 Publishing is configured almost entirely through setting the value of one variable, called `org-publish-project-alist
 
 #+BEGIN_SRC emacs-lisp
-  
-  (setq org-publish-project-alist
-        '(
-          ("org-perfumed-nightmare"
-           :base-directory "~/Dropbox/notes/blog"
-           :publishing-directory "~/Documents/danielsz.github.io/_posts"
-           :publishing-function org-html-publish-to-html
-           :preparation-function (lambda () (mapcar 'pn-expand-blog-file (pn-select-blog-files)))
-           :completion-function pn-delete-blog-files
-           :table-of-contents nil
-           :html-extension "html"
-           :body-only t 
-           :exclude "\\^\\([0-9]\\{4\\}-[0-9]+-[0-9]+\\)"
-           ))
-        )
-  
+
+(setq org-publish-project-alist
+      '(
+        ("org-perfumed-nightmare"
+         :base-directory "~/Dropbox/notes/blog"
+         :publishing-directory "~/Documents/danielsz.github.io/_posts"
+         :publishing-function org-html-publish-to-html
+         :preparation-function (lambda () (mapcar 'pn-expand-blog-file (pn-select-blog-files)))
+         :completion-function pn-delete-blog-files
+         :table-of-contents nil
+         :html-extension "html"
+         :body-only t 
+         :exclude "\\^\\([0-9]\\{4\\}-[0-9]+-[0-9]+\\)"
+         ))
+      )
+
 #+END_SRC
 
 These are my helper functions for the above project. One-click exporting to jekyll.
 
 #+begin_src emacs-lisp
-      
-  (defun pn-get-property (prop)
-    (plist-get (cdr (assoc "org-perfumed-nightmare" org-publish-project-alist)) prop))
-  
-  (defun pn-select-blog-files ()
-    (directory-files (pn-get-property :base-directory) t "\\([0-9]\\{4\\}-[0-9]+-[0-9]+\\)"))
-  
-  (defun pn-delete-blog-files ()
-    (mapcar (lambda (file)
-              (kill-buffer (find-buffer-visiting file))
-              (delete-file file)) (pn-select-blog-files))
-    ) 
-  (defun chomp (str)
-    "Chomp leading and trailing whitespace from STR."
-    (while (string-match "\\`\n+\\|^\\s-+\\|\\s-+$\\|\n+\\'"
-                         str)
-      (setq str (replace-match "" t t str)))
-    str)
-      
-  (defun pn-delete-line ()
-    (delete-region (point) (progn (forward-line -1) (point))))
-  
-  (defun pn-expand-blog-file (file)
-    (with-current-buffer (find-file-noselect file)
-      (end-of-buffer)
-      (beginning-of-line)
-      (let ((root-file (chomp (thing-at-point 'line))))
-        (pn-delete-line)
-        (insert-file-contents root-file)
-        (delete-region (point) (line-end-position)))))
-  
+    
+(defun pn-get-property (prop)
+  (plist-get (cdr (assoc "org-perfumed-nightmare" org-publish-project-alist)) prop))
+
+(defun pn-select-blog-files ()
+  (directory-files (pn-get-property :base-directory) t "\\([0-9]\\{4\\}-[0-9]+-[0-9]+\\)"))
+
+(defun pn-delete-blog-files ()
+  (mapcar (lambda (file)
+            (kill-buffer (find-buffer-visiting file))
+            (delete-file file)) (pn-select-blog-files))
+  ) 
+(defun chomp (str)
+  "Chomp leading and trailing whitespace from STR."
+  (while (string-match "\\`\n+\\|^\\s-+\\|\\s-+$\\|\n+\\'"
+                       str)
+    (setq str (replace-match "" t t str)))
+  str)
+    
+(defun pn-delete-line ()
+  (delete-region (point) (progn (forward-line -1) (point))))
+
+(defun pn-expand-blog-file (file)
+  (with-current-buffer (find-file-noselect file)
+    (end-of-buffer)
+    (beginning-of-line)
+    (let ((root-file (chomp (thing-at-point 'line))))
+      (pn-delete-line)
+      (insert-file-contents root-file)
+      (delete-region (point) (line-end-position)))
+    (save-buffer)))
+
 #+end_src
 
 Interactive function to enable the 1-click custom export command in Emacs:

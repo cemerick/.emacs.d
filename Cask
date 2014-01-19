@@ -25,7 +25,6 @@
 (depends-on "epl")
 (depends-on "f")
 (depends-on "flycheck")
-(depends-on "geiser")
 (depends-on "git-rebase-mode")
 (depends-on "helm")
 (depends-on "helm-dash")

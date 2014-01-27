@@ -260,7 +260,7 @@ Turn visual mode for text files
     (org-capture-put :tags tags)
     headline))
 
-(defun pn-filename_from_title ()
+(defun pn-filename-from-title ()
   (replace-regexp-in-string " " "-" (pn-get-headline)))
 
 (defun matching-post (title)
@@ -278,7 +278,7 @@ Turn visual mode for text files
     (format-time-string "%Y-%m-%d")))
 
 (defun pn-capture-blog-path ()
-  (let ((name (pn-filename_from_title)))
+  (let ((name (pn-filename-from-title)))
     (expand-file-name (format "%s-%s.org"
                               (get-date name)
                               name) "~/Dropbox/notes/blog")))

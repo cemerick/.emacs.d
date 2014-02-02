@@ -662,6 +662,14 @@ In Cider.
       (progn (delete-other-windows) (eshell))))
   
 #+END_SRC
+* Typopunct
+#+BEGIN_SRC emacs-lisp
+(add-hook 'org-mode-hook 'my-org-init)
+(defun my-org-init ()
+  (require 'typopunct)
+  (typopunct-change-language 'english)
+  (typopunct-mode 1))
+#+END_SRC
 * Flycheck
 #+BEGIN_SRC emacs-lisp
 (add-hook 'after-init-hook #'global-flycheck-mode)

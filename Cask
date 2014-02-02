@@ -65,6 +65,7 @@
 (depends-on "slamhound")
 (depends-on "smex")
 (depends-on "solarized-theme")
+(depends-on "typopunct")
 (depends-on "undo-tree")
 (depends-on "w3m")
 (depends-on "web")

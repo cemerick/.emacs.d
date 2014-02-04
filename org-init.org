@@ -670,6 +670,10 @@ In Cider.
   (typopunct-change-language 'english)
   (typopunct-mode 1))
 #+END_SRC
+* Palimpsest
+ #+BEGIN_SRC emacs-lisp
+ (add-hook 'org-mode-hook 'palimpsest-mode)
+ #+END_SRC
 * Flycheck
 #+BEGIN_SRC emacs-lisp
 (add-hook 'after-init-hook #'global-flycheck-mode)
